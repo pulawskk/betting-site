@@ -7,3 +7,17 @@ INSERT INTO appuser (id, active, email, last_name, name, password) VALUES (6, 1,
 INSERT INTO appuser (id, active, email, last_name, name, password) VALUES (8, 1, 'karolek11@gmail.com', 'karolek11', 'karolek11', '$2a$10$EsZFGk1QyUcEL3S9moG12uRQRF1y7R/8L7eGEzn2AgtV9WqCzAD9e');
 INSERT INTO appuser (id, active, email, last_name, name, password) VALUES (9, 1, 'karolek111@gmail.com', 'karolek111', 'karolek111', '$2a$10$VMYtAiLX4MhLQgWpXlVPYOANBDYLdYxXsQe1WhsTzicgn.Bd2.Z4S');
 INSERT INTO appuser (id, active, email, last_name, name, password) VALUES (10, 1, 'gosia11@gmail.com', 'gosia11', 'gosia11', '$2a$10$Gck.vDS8Fn8WV/0d21UFfOQFbh5s/O1QkNPMCHAemI/kDJ0SazVq.');
+
+INSERT INTO role (id, role) VALUES (1, 'USER');
+INSERT INTO role (id, role) VALUES (2, 'ADMIN');
+
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (1,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (1,2);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (2,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (3,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (4,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (5,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (6,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (8,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (9,1);
+INSERT INTO appuser_role (appuser_id, role_id) VALUES (10,1);

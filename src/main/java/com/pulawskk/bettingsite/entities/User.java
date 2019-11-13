@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "appuser")
@@ -25,7 +26,17 @@ public class User {
     @Column(name = "active")
     private int active;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "appuser_role", joinColumns = @JoinColumn(name = "appuser_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
     public User() {
+    }
+
+    public User(String password, String name, Set<Role> roles) {
+        this.password = password;
+        this.name = name;
+        this.roles = roles;
     }
 
     public Long getId() {
