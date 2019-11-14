@@ -24,4 +24,8 @@ public class UserServiceImpl implements UserService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email);
     }
+
+    public String displayAuthName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
 }

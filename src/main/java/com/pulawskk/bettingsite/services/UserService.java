@@ -8,4 +8,6 @@ public interface UserService {
     User findByEmail(String email);
 
     User userLoggedIn();
+
+    String displayAuthName();
 }
