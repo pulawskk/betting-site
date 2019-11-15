@@ -1,10 +1,17 @@
 package com.pulawskk.bettingsite.entities;
 
 import com.pulawskk.bettingsite.enums.BetType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @Entity
 @Table(name = "betslip")
@@ -26,31 +33,4 @@ public class BetSlip {
 
     @Column(name = "modified")
     private LocalDateTime modified;
-
-    public BetSlip() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BetType getBetType() {
-        return betType;
-    }
-
-    public void setBetType(BetType betType) {
-        this.betType = betType;
-    }
-
-    public List<BetLeg> getBetLegs() {
-        return betLegs;
-    }
-
-    public void setBetLegs(List<BetLeg> betLegs) {
-        this.betLegs = betLegs;
-    }
 }

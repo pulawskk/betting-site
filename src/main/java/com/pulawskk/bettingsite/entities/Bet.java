@@ -1,8 +1,16 @@
 package com.pulawskk.bettingsite.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @Entity
 @Table(name = "bet")

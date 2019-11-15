@@ -2,6 +2,13 @@ package com.pulawskk.bettingsite.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GameDto {
@@ -28,68 +35,4 @@ public class GameDto {
 
     @JsonProperty("oddsX")
     private String oddsX;
-
-    public String getStartGame() {
-        return startGame;
-    }
-
-    public void setStartGame(String startGame) {
-        this.startGame = startGame;
-    }
-
-    public String getEndGame() {
-        return endGame;
-    }
-
-    public void setEndGame(String endGame) {
-        this.endGame = endGame;
-    }
-
-    public String getGameStatus() {
-        return gameStatus;
-    }
-
-    public void setGameStatus(String gameStatus) {
-        this.gameStatus = gameStatus;
-    }
-
-    public String getTeamHome() {
-        return teamHome;
-    }
-
-    public void setTeamHome(String teamHome) {
-        this.teamHome = teamHome;
-    }
-
-    public String getTeamAway() {
-        return teamAway;
-    }
-
-    public void setTeamAway(String teamAway) {
-        this.teamAway = teamAway;
-    }
-
-    public String getOddsA() {
-        return oddsA;
-    }
-
-    public void setOddsA(String oddsA) {
-        this.oddsA = oddsA;
-    }
-
-    public String getOddsH() {
-        return oddsH;
-    }
-
-    public void setOddsH(String oddsH) {
-        this.oddsH = oddsH;
-    }
-
-    public String getOddsX() {
-        return oddsX;
-    }
-
-    public void setOddsX(String oddsX) {
-        this.oddsX = oddsX;
-    }
 }
