@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <h2>football events</h2>
+
+    <table>
+        <thead>
+        <td>game unique id</td>
+        <td>name</td>
+        <td>starts at</td>
+        <td>bet 1</td>
+        <td>bet X</td>
+        <td>bet 2</td>
+        </thead>
+
+        <tr th:each="event: ${events}">
+            <td th:text="${event.getUniqueId()}"></td>
+            <td th:text="${event.getName()}"></td>
+
+<!--            <td th:text="${#dates.format(event.getStartGame(),'dd/MM HH:MM:ss')}"></td>-->
+
+
+            <td th:text="${#temporals.format(event.getStartGame(), 'dd-MM-yyyy HH:mm:ss')}"></td>
+
+<!--            <td th:text="${event.getSelections().}"></td>-->
+
+
+            <td>
+<!--                <form th:action="@{/ticket/{game_id}/1/create(game_id = ${game.id})}" method="get">-->
+<!--                    <button name="playerId" th:text="${game.odd.homeOdd}" type="submit"></button>-->
+<!--                </form>-->
+            </td>
+            <td>
+<!--                <form th:action="@{/ticket/{game_id}/X/create(game_id = ${game.id})}" method="get">-->
+<!--                    <button name="playerId" th:text="${game.odd.drawOdd}" type="submit"></button>-->
+<!--                </form>-->
+            </td>
+            <td>
+<!--                <form th:action="@{/ticket/{game_id}/2/create(game_id = ${game.id})}" method="get">-->
+<!--                    <button name="playerId" th:text="${game.odd.awayOdd}" type="submit"></button>-->
+<!--                </form>-->
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

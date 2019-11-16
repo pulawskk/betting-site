@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -76,6 +77,11 @@ public class GameServiceImpl implements GameService {
     @Transactional
     public void persistResult(String jsonResult, String uniqueId) {
         gameRepository.persistResults(jsonResult, uniqueId);
+    }
+
+    @Override
+    public Set<Game> findAllPrematchGames() {
+        return gameRepository.findAllByGameStatusPrematch();
     }
 
 
