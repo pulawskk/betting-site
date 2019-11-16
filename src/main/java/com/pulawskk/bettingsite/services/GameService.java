@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 public interface GameService {
     Game savePrematchGameFromDto(GameDto gameDto);
 
-    void updateGameStatus(String gameStatus, Long id);
+    void updateGameStatus(String gameStatus, String uniqueId);
 }

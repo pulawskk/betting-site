@@ -20,6 +20,9 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(name = "unique_id")
+    private String uniqueId;
+
     @Column(name = "selection")
     private String selection;
 
@@ -42,7 +45,7 @@ public class Game {
     @Builder
     public Game(Long id, String selection, String competition,
                 LocalDateTime end_date, LocalDateTime start_date,
-                String name, GameStatus gameStatus) {
+                String name, GameStatus gameStatus, String uniqueId) {
         this.id = id;
         this.selection = selection;
         this.competition = competition;
@@ -50,5 +53,6 @@ public class Game {
         this.start_date = start_date;
         this.end_date = end_date;
         this.gameStatus = gameStatus;
+        this.uniqueId = uniqueId;
     }
 }

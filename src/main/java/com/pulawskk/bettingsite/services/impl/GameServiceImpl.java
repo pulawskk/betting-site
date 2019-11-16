@@ -59,6 +59,7 @@ public class GameServiceImpl implements GameService {
                 .name(gameName)
                 .competition(gameDto.getCompetition())
                 .selection(selection)
+                .uniqueId(gameDto.getUniqueId())
                 .gameStatus(gameStatus).build();
 
         Game savedGame = gameRepository.save(game);
@@ -67,7 +68,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
-    public void updateGameStatus(String gameStatus, Long id) {
+    public void updateGameStatus(String gameStatus, String id) {
         gameRepository.updateGameStatus(gameStatus, id);
     }
 

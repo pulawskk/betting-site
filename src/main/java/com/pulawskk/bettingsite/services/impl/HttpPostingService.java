@@ -22,7 +22,7 @@ public class HttpPostingService implements IncomingDataService {
 
     @Override
     public void receiveResultData(ResultDto resultDto) {
-        gameService.updateGameStatus("COMPLETED", 3L);
+        gameService.updateGameStatus("COMPLETED", resultDto.getUniqueId());
     }
 
 }
