@@ -26,7 +26,7 @@ public class IncomingDataController {
         System.out.println(gameDto.getOddsH());
         System.out.println(gameDto.getOddsX());
         System.out.println(gameDto.getOddsA());
-        httpPostingService.receiveData(gameDto);
+        httpPostingService.receiveGameData(gameDto);
         return "";
     }
 
@@ -36,6 +36,7 @@ public class IncomingDataController {
         System.out.println("new result is coming: ");
         System.out.println("Result: " + resultDto.getTeamHome() + " " + resultDto.getHomeScores() + "-"
                 + resultDto.getAwayScores() + " " + resultDto.getTeamAway());
+        httpPostingService.receiveResultData(resultDto);
         return "";
     }
 }

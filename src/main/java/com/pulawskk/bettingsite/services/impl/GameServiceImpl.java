@@ -63,4 +63,10 @@ public class GameServiceImpl implements GameService {
         Game savedGame = gameRepository.save(game);
         return savedGame;
     }
+
+    @Override
+    public void updateGameStatus(String gameStatus, Long id) {
+        gameRepository.updateGameStatus(gameStatus, id);
+    }
+
 }

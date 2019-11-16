@@ -1,10 +1,14 @@
 package com.pulawskk.bettingsite.services;
 
 import com.pulawskk.bettingsite.entities.Game;
+import com.pulawskk.bettingsite.enums.GameStatus;
 import com.pulawskk.bettingsite.models.GameDto;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface GameService {
     Game savePrematchGameFromDto(GameDto gameDto);
+
+    void updateGameStatus(String gameStatus, Long id);
 }
