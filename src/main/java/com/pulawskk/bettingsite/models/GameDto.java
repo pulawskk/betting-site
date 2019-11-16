@@ -37,10 +37,14 @@ public class GameDto {
     @JsonProperty("oddsX")
     private String oddsX;
 
+    @JsonProperty("competition")
+    private String competition;
+
     @Builder
     public GameDto(String startGame, String endGame, String gameStatus,
                    String teamHome, String teamAway,
-                   String oddsA, String oddsH, String oddsX) {
+                   String oddsA, String oddsH, String oddsX,
+                   String competition) {
         this.startGame = startGame;
         this.endGame = endGame;
         this.gameStatus = gameStatus;
@@ -49,5 +53,6 @@ public class GameDto {
         this.oddsA = oddsA;
         this.oddsH = oddsH;
         this.oddsX = oddsX;
+        this.competition = competition;
     }
 }

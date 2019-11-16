@@ -56,6 +56,7 @@ public class GameServiceImpl implements GameService {
                 .start_date(LocalDateTime.parse(gameDto.getStartGame()))
                 .end_date(LocalDateTime.parse(gameDto.getEndGame()))
                 .name(gameName)
+                .competition(gameDto.getCompetition())
                 .selection(selection)
                 .gameStatus(gameStatus).build();
 

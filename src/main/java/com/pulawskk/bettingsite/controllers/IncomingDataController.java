@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.models.GameDto;
+import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.impl.HttpPostingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,5 +30,12 @@ public class IncomingDataController {
         return "";
     }
 
-
+    @PostMapping("/result")
+    @ResponseBody
+    public String receiveResult(@RequestBody ResultDto resultDto) {
+        System.out.println("new result is coming: ");
+        System.out.println("Result: " + resultDto.getTeamHome() + " " + resultDto.getHomeScores() + "-"
+                + resultDto.getAwayScores() + " " + resultDto.getTeamAway());
+        return "";
+    }
 }
