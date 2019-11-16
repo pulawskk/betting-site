@@ -7,6 +7,7 @@ import com.pulawskk.bettingsite.repositories.GameRepository;
 import com.pulawskk.bettingsite.services.GameService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
@@ -65,6 +66,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Transactional
     public void updateGameStatus(String gameStatus, Long id) {
         gameRepository.updateGameStatus(gameStatus, id);
     }
