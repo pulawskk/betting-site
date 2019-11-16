@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface GameService {
-    Game saveGameFromDto(GameDto gameDto);
+    Game savePrematchGameFromDto(GameDto gameDto);
 }
