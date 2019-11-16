@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Modifying
-    @Query(value = "UPDATE game SET game_status = ?1 WHERE unique_id like ?2 AND game_status = 'PREMATCH'", nativeQuery = true)
+    @Query(value = "UPDATE game SET game_status = ?1 WHERE unique_id like ?2", nativeQuery = true)
     void updateGameStatus(String gameStatus, String uniqueId);
+
+    @Modifying
+    @Query(value = "UPDATE game SET result = ?1 WHERE unique_id like ?2", nativeQuery = true)
+    void persistResults(String jsonResult, String uniqueId);
 }

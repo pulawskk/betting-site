@@ -42,6 +42,9 @@ public class Game {
     @Column(name = "game_status")
     private GameStatus gameStatus;
 
+    @Column(name = "result")
+    private String result;
+
     @Builder
     public Game(Long id, String selection, String competition,
                 LocalDateTime end_date, LocalDateTime start_date,

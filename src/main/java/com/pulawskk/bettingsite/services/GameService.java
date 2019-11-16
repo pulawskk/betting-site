@@ -11,4 +11,6 @@ public interface GameService {
     Game savePrematchGameFromDto(GameDto gameDto);
 
     void updateGameStatus(String gameStatus, String uniqueId);
+
+    void persistResult(String jsonResult, String uniqueId);
 }

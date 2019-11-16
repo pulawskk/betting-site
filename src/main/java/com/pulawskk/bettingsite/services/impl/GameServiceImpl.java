@@ -72,4 +72,11 @@ public class GameServiceImpl implements GameService {
         gameRepository.updateGameStatus(gameStatus, id);
     }
 
+    @Override
+    @Transactional
+    public void persistResult(String jsonResult, String uniqueId) {
+        gameRepository.persistResults(jsonResult, uniqueId);
+    }
+
+
 }
