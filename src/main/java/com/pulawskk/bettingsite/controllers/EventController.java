@@ -30,4 +30,9 @@ public class EventController {
         }
         return "displayEvents";
     }
+
+    @GetMapping("/results")
+    public String displayAllResults(Model model) {
+        return "displayResults";
+    }
 }
