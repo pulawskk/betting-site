@@ -17,4 +17,6 @@ public interface GameService {
     void persistResult(String jsonResult, String uniqueId);
 
     Set<Game> findAllPrematchGames();
+
+    Set<Game> findAllCompletedGames();
 }

@@ -84,5 +84,10 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAllByGameStatusPrematch();
     }
 
+    @Override
+    public Set<Game> findAllCompletedGames() {
+        return gameRepository.findAllByGameStatusCompleted();
+    }
+
 
 }

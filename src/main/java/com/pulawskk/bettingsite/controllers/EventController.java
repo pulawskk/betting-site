@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.models.Event;
+import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ public class EventController {
         if (!events.isEmpty()) {
             model.addAttribute("events", events);
             events.forEach(event -> {
-                System.out.println("DISPLAYING events name -> " + event.getName());
+                System.out.println("DISPLAYING event name -> " + event.getName());
             });
         }
         return "displayEvents";
@@ -33,6 +34,13 @@ public class EventController {
 
     @GetMapping("/results")
     public String displayAllResults(Model model) {
+        List<Result> results = outcomingDataServiceImpl.prepareAllResults();
+        if(!results.isEmpty()) {
+            model.addAttribute("results", results);
+            results.forEach(result -> {
+                System.out.println("DISPLAYING result name -> " + result.getName());
+            });
+        }
         return "displayResults";
     }
 }
