@@ -7,42 +7,35 @@
 <body>
     <h2>football events</h2>
 
-    <table>
+    <table border="1">
         <thead>
         <td>game unique id</td>
         <td>name</td>
         <td>starts at</td>
-        <td>bet 1</td>
-        <td>bet X</td>
-        <td>bet 2</td>
+        <td>market name</td>
         </thead>
 
-        <tr th:each="event: ${events}">
+        <tr th:each="event : ${events}">
             <td th:text="${event.getUniqueId()}"></td>
             <td th:text="${event.getName()}"></td>
-
-<!--            <td th:text="${#dates.format(event.getStartGame(),'dd/MM HH:MM:ss')}"></td>-->
-
-
-            <td th:text="${#temporals.format(event.getStartGame(), 'dd-MM-yyyy HH:mm:ss')}"></td>
-
-<!--            <td th:text="${event.getSelections().}"></td>-->
-
+            <td th:text="${#temporals.format(event.getStartGame(), 'dd-MM HH:mm')}"></td>
 
             <td>
-<!--                <form th:action="@{/ticket/{game_id}/1/create(game_id = ${game.id})}" method="get">-->
-<!--                    <button name="playerId" th:text="${game.odd.homeOdd}" type="submit"></button>-->
-<!--                </form>-->
-            </td>
-            <td>
-<!--                <form th:action="@{/ticket/{game_id}/X/create(game_id = ${game.id})}" method="get">-->
-<!--                    <button name="playerId" th:text="${game.odd.drawOdd}" type="submit"></button>-->
-<!--                </form>-->
-            </td>
-            <td>
-<!--                <form th:action="@{/ticket/{game_id}/2/create(game_id = ${game.id})}" method="get">-->
-<!--                    <button name="playerId" th:text="${game.odd.awayOdd}" type="submit"></button>-->
-<!--                </form>-->
+                <table border="2">
+                    <tr th:each="market : ${event.getSelections()}">
+                        <td th:text="${market.getKey()}">
+                        </td>
+                        <td>
+                            <table border="3">
+                                <tr th:each="selection : ${market.getValue()}">
+                                    <td>
+                                        <button name="playerId" th:text="${selection.toPlainString()}" type="submit"></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

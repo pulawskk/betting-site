@@ -1,16 +1,12 @@
 package com.pulawskk.bettingsite.controllers;
 
-import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.models.Event;
-import com.pulawskk.bettingsite.services.OutcomingDataService;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.xml.ws.soap.Addressing;
 import java.util.List;
 
 @Controller
