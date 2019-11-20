@@ -3,20 +3,22 @@ package com.pulawskk.bettingsite.controllers;
 import com.pulawskk.bettingsite.models.GameDto;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.impl.HttpPostingService;
+import com.pulawskk.bettingsite.services.impl.JmsHandleService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/games")
 public class IncomingDataController {
 
     private final HttpPostingService httpPostingService;
+    private final JmsHandleService jmsHandleService;
 
-    public IncomingDataController(HttpPostingService httpPostingService) {
+    public IncomingDataController(HttpPostingService httpPostingService, JmsHandleService jmsHandleService) {
         this.httpPostingService = httpPostingService;
+        this.jmsHandleService = jmsHandleService;
     }
 
     @PostMapping("/game")
@@ -39,4 +41,11 @@ public class IncomingDataController {
         httpPostingService.receiveResultData(resultDto);
         return "";
     }
+
+    @GetMapping("/jms")
+    public String receiveJms() throws IOException {
+        jmsHandleService.receiveGameDataJms();
+        return "login";
+    }
+
 }
