@@ -3,6 +3,8 @@ package com.pulawskk.bettingsite.utils;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.enums.GameStatus;
 import com.pulawskk.bettingsite.models.GameDto;
+import com.pulawskk.bettingsite.models.ResultDto;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 
@@ -50,5 +52,21 @@ public interface GameUtils {
                 .uniqueId(gameDto.getUniqueId())
                 .gameStatus(gameStatus).build();
         return game;
+    }
+
+    default String processResultFromResultDto(ResultDto resultDto) {
+        JSONObject jsonResult = new JSONObject();
+        jsonResult.put("homeCorners", resultDto.getHomeCorners());
+        jsonResult.put("awayCorners", resultDto.getAwayCorners());
+        jsonResult.put("homeScores", resultDto.getHomeScores());
+        jsonResult.put("homeOffsides", resultDto.getHomeOffsides());
+        jsonResult.put("homeRedCards", resultDto.getHomeRedCards());
+        jsonResult.put("homeYellowCards",resultDto.getHomeYellowCards());
+        jsonResult.put("awayScores", resultDto.getAwayScores());
+        jsonResult.put("awayOffsides", resultDto.getAwayOffsides());
+        jsonResult.put("awayRedCards", resultDto.getAwayRedCards());
+        jsonResult.put("awayYellowCards", resultDto.getAwayYellowCards());
+
+        return jsonResult.toString();
     }
 }

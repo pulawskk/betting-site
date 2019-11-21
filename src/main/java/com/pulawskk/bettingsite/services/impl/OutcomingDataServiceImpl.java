@@ -43,6 +43,7 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
 
                 Event event = Event.builder()
                         .startGame(game.getStart_date())
+                        .competition(game.getCompetition())
                         .uniqueId(game.getUniqueId())
                         .selections(selections)
                         .name(game.getName()).build();
