@@ -1,26 +1,32 @@
 package com.pulawskk.bettingsite.services.impl;
 
 import com.google.gson.Gson;
+import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.models.GameDto;
 import com.pulawskk.bettingsite.models.ResultDto;
+import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.IncomingDataService;
+import com.pulawskk.bettingsite.utils.GameUtils;
 import com.rabbitmq.client.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class JmsHandleService implements IncomingDataService {
+public class JmsHandleService implements IncomingDataService, GameUtils {
 
     private static final String GAME_QUEUE = "FA CUP prematch";
     private static final String RESULT_QUEUE = "FA CUP result";
+
+    private final GameService gameService;
 
     private final ConnectionFactory connectionFactory;
     private final Connection connection;
     private final Channel channelGame;
     private final Channel channelResult;
 
-    public JmsHandleService(ConnectionFactory connectionFactory) throws IOException {
+    public JmsHandleService(GameService gameService, ConnectionFactory connectionFactory) throws IOException {
+        this.gameService = gameService;
         this.connectionFactory = connectionFactory;
         this.connection = this.connectionFactory.newConnection();
         this.channelGame = this.connection.createChannel();
@@ -45,9 +51,12 @@ public class JmsHandleService implements IncomingDataService {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
-                ResultDto resultDto = gson.fromJson(message, ResultDto.class);
+                GameDto gameDto = gson.fromJson(message, GameDto.class);
                 System.out.println("message: " + message);
-                System.out.println(resultDto.getTeamHome() + " VS " + resultDto.getTeamAway());
+                System.out.println(gameDto.getTeamHome() + " VS " + gameDto.getTeamAway());
+
+                Game game = processGameFromGameDto(gameDto);
+                gameService.savePrematchGame(game);
             }
         };
         channelGame.basicConsume(GAME_QUEUE, true, consumer);

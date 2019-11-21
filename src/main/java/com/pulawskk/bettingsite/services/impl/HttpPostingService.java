@@ -6,13 +6,14 @@ import com.pulawskk.bettingsite.models.GameDto;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.IncomingDataService;
+import com.pulawskk.bettingsite.utils.GameUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
-public class HttpPostingService implements IncomingDataService {
+public class HttpPostingService implements IncomingDataService, GameUtils {
 
     private final GameService gameService;
 
@@ -22,47 +23,7 @@ public class HttpPostingService implements IncomingDataService {
 
     @Override
     public void receiveGameData(GameDto gameDto) {
-        StringBuilder sb = new StringBuilder();
-
-        String gameName = sb.append(gameDto.getTeamHome())
-                .append(" vs ")
-                .append(gameDto.getTeamAway()).toString();
-
-        sb.setLength(0);
-        String selection = sb.append(gameDto.getOddsH())
-                .append(";")
-                .append(gameDto.getOddsX())
-                .append(";")
-                .append(gameDto.getOddsA()).toString();
-
-        GameStatus gameStatus = null;
-        switch (gameDto.getGameStatus()) {
-            case "PREMATCH" :
-                gameStatus = GameStatus.PREMATCH;
-                break;
-            case "ACTIVE" :
-                gameStatus = GameStatus.ACTIVE;
-                break;
-            case "COMPLETED" :
-                gameStatus = GameStatus.COMPLETED;
-                break;
-            case "RESULTED" :
-                gameStatus = GameStatus.RESULTED;
-                break;
-            default:
-                gameStatus = GameStatus.PREMATCH;
-                break;
-        }
-
-        Game game = Game.builder()
-                .start_date(LocalDateTime.parse(gameDto.getStartGame()))
-                .end_date(LocalDateTime.parse(gameDto.getEndGame()))
-                .name(gameName)
-                .competition(gameDto.getCompetition())
-                .selection(selection)
-                .uniqueId(gameDto.getUniqueId())
-                .gameStatus(gameStatus).build();
-
+        Game game = processGameFromGameDto(gameDto);
         gameService.savePrematchGame(game);
     }
 
@@ -88,5 +49,4 @@ public class HttpPostingService implements IncomingDataService {
         gameService.persistResult(jsonResultString, uniqueId);
         gameService.updateGameStatus(statusToUpdate, uniqueId);
     }
-
 }
