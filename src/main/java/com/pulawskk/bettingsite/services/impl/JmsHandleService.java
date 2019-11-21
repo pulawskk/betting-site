@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.pulawskk.bettingsite.models.GameDto;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.IncomingDataService;
-//import com.rabbitmq.client.*;
 import com.rabbitmq.client.*;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +17,16 @@ public class JmsHandleService implements IncomingDataService {
 
     private final ConnectionFactory connectionFactory;
     private final Connection connection;
-    private final Channel channel;
+    private final Channel channelGame;
+    private final Channel channelResult;
 
     public JmsHandleService(ConnectionFactory connectionFactory) throws IOException {
         this.connectionFactory = connectionFactory;
         this.connection = this.connectionFactory.newConnection();
-        this.channel = this.connection.createChannel();
-        this.channel.queueDeclare(GAME_QUEUE, false, false, false, null);
+        this.channelGame = this.connection.createChannel();
+        this.channelResult = this.connection.createChannel();
+        this.channelGame.queueDeclare(GAME_QUEUE, false, false, false, null);
+        this.channelResult.queueDeclare(RESULT_QUEUE, false, false, false, null);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class JmsHandleService implements IncomingDataService {
 
     public void receiveGameDataJms() throws IOException {
         Gson gson = new Gson();
-        Consumer consumer = new DefaultConsumer(this.channel) {
+        Consumer consumer = new DefaultConsumer(this.channelGame) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
@@ -48,7 +50,7 @@ public class JmsHandleService implements IncomingDataService {
                 System.out.println(resultDto.getTeamHome() + " VS " + resultDto.getTeamAway());
             }
         };
-        channel.basicConsume(GAME_QUEUE, true, consumer);
+        channelGame.basicConsume(GAME_QUEUE, true, consumer);
     }
 
     public void receiveResultDataJms() {

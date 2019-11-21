@@ -45,6 +45,7 @@ public class IncomingDataController {
     @GetMapping("/jms")
     public String receiveJms() throws IOException {
         jmsHandleService.receiveGameDataJms();
+        jmsHandleService.receiveResultDataJms();
         return "login";
     }
 
