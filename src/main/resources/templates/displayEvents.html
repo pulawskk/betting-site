@@ -10,6 +10,7 @@
     <table border="1">
         <thead>
         <td>game unique id</td>
+        <td>competition</td>
         <td>name</td>
         <td>starts at</td>
         <td>market name</td>
@@ -17,6 +18,7 @@
 
         <tr th:each="event : ${events}">
             <td th:text="${event.getUniqueId()}"></td>
+            <td th:text="${event.getCompetition()}"></td>
             <td th:text="${event.getName()}"></td>
             <td th:text="${#temporals.format(event.getStartGame(), 'dd-MM HH:mm')}"></td>
 
