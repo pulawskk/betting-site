@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <h2>football events</h2>
+
+    <table border="1">
+        <thead>
+        <td>game unique id</td>
+        <td>competition</td>
+        <td>name</td>
+        <td>starts at</td>
+        <td>market name</td>
+        </thead>
+
+        <tr th:each="event : ${events}">
+            <td th:text="${event.getUniqueId()}"></td>
+            <td th:text="${event.getCompetition()}"></td>
+            <td th:text="${event.getName()}"></td>
+            <td th:text="${#temporals.format(event.getStartGame(), 'dd-MM HH:mm')}"></td>
+
+            <td>
+                <table border="2">
+                    <tr th:each="market : ${event.getSelections()}">
+                        <td th:text="${market.getKey()}">
+                        </td>
+                        <td>
+                            <table border="3">
+                                <tr th:each="selection : ${market.getValue()}">
+                                    <td>
+                                        <button name="playerId" th:text="${selection.toPlainString()}" type="submit"></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

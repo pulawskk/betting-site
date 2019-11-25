@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+<body>
+    <h2>football events</h2>
+
+    <table border="1">
+        <thead>
+        <td>game unique id</td>
+        <td>competition</td>
+        <td>end at</td>
+        <td>name</td>
+        </thead>
+
+        <tr th:each="result : ${results}">
+            <td th:text="${result.getUniqueId()}"></td>
+            <td th:text="${result.getCompetition()}"></td>
+            <td th:text="${#temporals.format(result.getEndGame(), 'dd-MM HH:mm')}"></td>
+            <td th:text="${result.getName()}"></td>
+        </tr>
+    </table>
+</body>
+</html>
