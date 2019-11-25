@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "game")
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
+    @SequenceGenerator(name="new_generator", sequenceName = "game_seq", initialValue = 101)
     private Long id;
 
     @Column(name = "unique_id")
