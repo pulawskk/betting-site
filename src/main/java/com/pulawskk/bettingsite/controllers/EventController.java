@@ -2,6 +2,7 @@ package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.models.Event;
 import com.pulawskk.bettingsite.models.Result;
+import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +22,10 @@ public class EventController {
     }
 
     @GetMapping("/football")
-    public String displayAvailableEvents(Model model) {
+    public String displayAvailableEvents(Model model, Selection selection) {
         List<Event> events = outcomingDataServiceImpl.preparePrematchEvents();
         if (!events.isEmpty()) {
             model.addAttribute("events", events);
-            events.forEach(event -> {
-                System.out.println("DISPLAYING event name -> " + event.getName());
-            });
         }
         return "displayEvents";
     }
