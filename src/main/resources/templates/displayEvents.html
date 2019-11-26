@@ -29,9 +29,22 @@
                         </td>
                         <td>
                             <table border="3">
-                                <tr th:each="selection : ${market.getValue()}">
+                                <tr th:each="selection, iterStat : ${market.getValue()}">
                                     <td>
-                                        <button name="playerId" th:text="${selection.toPlainString()}" type="submit"></button>
+                                        <span th:if="${iterStat.index == 0}">1</span>
+                                        <span th:if="${iterStat.index == 1}">X</span>
+                                        <span th:if="${iterStat.index == 2}">2</span>
+                                    </td>
+                                    <td>
+                                        <form th:action="@{/settler/bet}" method="post">
+                                            <input type="hidden" name="value" th:value="${selection.toPlainString()}" th:object="${selection}">
+                                            <input type="hidden" name="marketName" th:value="${event.getName()}" th:object="${selection}">
+                                            <input type="hidden" name="uniqueId" th:value="${event.getUniqueId()}" th:object="${selection}">
+                                            <input type="hidden" name="competition" th:value="${event.getCompetition()}" th:object="${selection}">
+                                            <input type="hidden" name="marketType" th:value="${market.getKey().toString()}" th:object="${selection}">
+                                            <input type="hidden" name="userType" th:value="${iterStat.index}" th:object="${selection}">
+                                            <button name="selection" th:text="${selection.toPlainString()}" type="submit"></button>
+                                        </form>
                                     </td>
                                 </tr>
                             </table>
@@ -39,6 +52,13 @@
                     </tr>
                 </table>
             </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr th:each="selection : ${session.selections}">
+            <!--/*@thymesVar id="value" type="com.pulawskk.bettingsite.models.Selection"*/-->
+            <td th:text="${selection.value}"></td>
         </tr>
     </table>
 </body>
