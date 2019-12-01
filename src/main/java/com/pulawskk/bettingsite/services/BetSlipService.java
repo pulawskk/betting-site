@@ -9,5 +9,5 @@ import java.util.List;
 @Service
 public interface BetSlipService {
 
-    BetSlip saveBetSlip(List<Selection> selections);
+    BetSlip saveBetSlip(List<Selection> selections, String stake);
 }

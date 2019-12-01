@@ -24,8 +24,10 @@ public class BetSlipServiceImpl implements BetSlipService {
     }
 
     @Override
-    public BetSlip saveBetSlip(List<Selection> selections) {
-        BetLeg betLeg = BetLeg.builder().betLegName("first").created(now()).modified(now()).build();
+    public BetSlip saveBetSlip(List<Selection> selections, String stake) {
+        BetLeg betLeg = BetLeg.builder().betLegName("first")
+                .created(now()).modified(now())
+                .stake(new BigDecimal(stake)).build();
         BetSlipType betSlipType = selections.size() > 0 ? BetSlipType.MULTIPLE : BetSlipType.SINGLE;
         BetSlip betSlip = BetSlip.builder().betSlipType(betSlipType).created(now()).modified(now()).build();
 

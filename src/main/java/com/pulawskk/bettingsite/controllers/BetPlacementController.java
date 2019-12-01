@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +35,18 @@ public class BetPlacementController {
     }
 
     @PostMapping("/placeBet")
-    public String placeBetSlip(Model model) {
+    public String placeBetSlip(HttpServletRequest request, Model model) {
         List<Selection> selections = (List<Selection>) model.getAttribute("selections");
         if(selections == null) {
             selections = new ArrayList<>();
         }
-        betSlipService.saveBetSlip(selections);
+        String stakeRequest = request.getParameter("stake");
+        betSlipService.saveBetSlip(selections, stakeRequest);
+
         if (selections.size() == 0) {
 
         } else {
-            System.out.println(">>> BETSLIP: ");
+            System.out.println(">>> BETSLIP stake -> " + stakeRequest);
             selections.forEach(selection -> {
                 System.out.print(selection.getUniqueId());
                 System.out.print(" | ");

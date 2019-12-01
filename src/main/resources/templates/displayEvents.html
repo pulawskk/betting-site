@@ -64,6 +64,7 @@
 
     <span th:if="${!session.selections.empty}">
         <form th:action="@{/settler/placeBet}" method="post">
+            <input type="number" name="stake" placeholder="your stake...">
             <button name="placeBetSlip" type="submit">PLACE BETSLIP</button>
         </form>
     </span>
