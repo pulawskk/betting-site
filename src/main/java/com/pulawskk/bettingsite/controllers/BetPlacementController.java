@@ -25,4 +25,26 @@ public class BetPlacementController {
         System.out.println(selections.size());
         return "redirect:/events/football";
     }
+
+    @PostMapping("/placeBet")
+    public String placeBetSlip(Model model) {
+        List<Selection> selections = (List<Selection>) model.getAttribute("selections");
+        if(selections == null) {
+            selections = new ArrayList<>();
+        }
+
+        if (selections.size() == 0) {
+
+        } else {
+            selections.forEach(selection -> {
+                System.out.print(selection.getUniqueId());
+                System.out.print(" | ");
+                System.out.print(selection.getMarketName());
+                System.out.print(" | ");
+                System.out.print(selection.getUserType());
+                System.out.println("\n");
+            });
+        }
+        return "redirect:/events/football";
+    }
 }
