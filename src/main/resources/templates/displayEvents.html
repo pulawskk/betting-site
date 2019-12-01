@@ -61,5 +61,11 @@
             <td th:text="${selection.value}"></td>
         </tr>
     </table>
+
+    <span th:if="${!session.selections.empty}">
+        <form>
+            <button name="placeBetSlip" type="submit">PLACE BETSLIP</button>
+        </form>
+    </span>
 </body>
 </html>
