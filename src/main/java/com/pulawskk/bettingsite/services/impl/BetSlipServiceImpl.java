@@ -45,6 +45,17 @@ public class BetSlipServiceImpl implements BetSlipService {
                     .build());
         });
 
+        BigDecimal betLegStake = betLeg.getStake();
+        BigDecimal betLegOdds = betLeg.getBets().stream()
+                .map(bet -> bet.getOdd())
+                .reduce(BigDecimal.ONE, BigDecimal::multiply);
+
+        BigDecimal betLegWin = betLegStake.multiply(betLegOdds);
+        betLeg.setBetLegWin(betLegWin);
+
+        BigDecimal betSlipWin = betLegWin;
+        betSlip.setBetSlipWin(betLegWin);
+
         betSlip.addBetLeg(betLeg);
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
 
