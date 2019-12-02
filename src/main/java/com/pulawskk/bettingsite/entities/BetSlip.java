@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +38,18 @@ public class BetSlip {
     @Column(name = "modified")
     private LocalDateTime modified;
 
+    @Column(name = "bet_slip_win")
+    private BigDecimal betSlipWin;
+
     @Builder
-    public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created, LocalDateTime modified) {
+    public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created,
+                   LocalDateTime modified, BigDecimal betSlipWin) {
         this.id = id;
         this.betSlipType = betSlipType;
         this.betLegs = betLegs;
         this.created = created;
         this.modified = modified;
+        this.betSlipWin = betSlipWin;
     }
 
     public void addBetLeg(BetLeg betLeg) {

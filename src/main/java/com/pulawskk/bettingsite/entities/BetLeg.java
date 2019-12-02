@@ -41,9 +41,12 @@ public class BetLeg {
     @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL)
     private List<Bet> bets;
 
+    @Column(name = "bet_leg_win")
+    private BigDecimal betLegWin;
+
     @Builder
     public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,
-                  List<Bet> bets, BigDecimal stake) {
+                  List<Bet> bets, BigDecimal stake, BigDecimal betLegWin) {
         this.id = id;
         this.betLegName = betLegName;
         this.created = created;
@@ -51,6 +54,7 @@ public class BetLeg {
         this.betSlip = betSlip;
         this.bets = bets;
         this.stake = stake;
+        this.betLegWin = betLegWin;
     }
 
     public void addBet(Bet bet) {
