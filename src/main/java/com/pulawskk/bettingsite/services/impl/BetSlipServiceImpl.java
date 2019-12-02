@@ -5,6 +5,8 @@ import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.BetSlip;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import com.pulawskk.bettingsite.models.Selection;
+import com.pulawskk.bettingsite.repositories.BetLegRepository;
+import com.pulawskk.bettingsite.repositories.BetRepository;
 import com.pulawskk.bettingsite.repositories.BetSlipRepository;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,13 @@ import static java.time.LocalDateTime.*;
 public class BetSlipServiceImpl implements BetSlipService {
 
     private final BetSlipRepository betSlipRepository;
+    private final BetLegRepository betLegRepository;
+    private final BetRepository betRepository;
 
-    public BetSlipServiceImpl(BetSlipRepository betSlipRepository) {
+    public BetSlipServiceImpl(BetSlipRepository betSlipRepository, BetLegRepository betLegRepository, BetRepository betRepository) {
         this.betSlipRepository = betSlipRepository;
+        this.betLegRepository = betLegRepository;
+        this.betRepository = betRepository;
     }
 
     @Override
@@ -41,6 +47,21 @@ public class BetSlipServiceImpl implements BetSlipService {
 
         betSlip.addBetLeg(betLeg);
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
+
+        BetLeg savedBetLeg = null;
+        if(betLeg.getBetSlip() == null) {
+            betLeg.setBetSlip(savedBetSlip);
+            savedBetLeg = betLegRepository.save(betLeg);
+        }
+
+        BetLeg betLegForLambda = savedBetLeg;
+        savedBetLeg.getBets().forEach(bet ->{
+            if(bet.getBetLeg() == null) {
+                bet.setBetLeg(betLegForLambda);
+                betRepository.save(bet);
+            }
+        });
+
         return savedBetSlip;
     }
 
