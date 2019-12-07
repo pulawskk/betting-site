@@ -47,9 +47,12 @@ public class BetPlacementController {
         String multi = request.getParameter("multiBetSlip");
         System.out.println("bet slip type: " + single);
         System.out.println("bet slip type: " + multi);
+        List<String> betSlipTypeList = new ArrayList<>();
+        betSlipTypeList.add(single);
+        betSlipTypeList.add(multi);
 
         String stakeRequest = request.getParameter("stake");
-        betSlipService.saveBetSlip(selections, stakeRequest);
+        betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList);
         if (model.containsAttribute("selections")) {
             selections.clear();
             model.addAttribute("selections", selections);
