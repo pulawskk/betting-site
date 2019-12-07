@@ -44,6 +44,9 @@ public class BetLeg {
     @Column(name = "bet_leg_win")
     private BigDecimal betLegWin;
 
+    @Column(name = "result")
+    private String result;
+
     @Builder
     public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,
                   List<Bet> bets, BigDecimal stake, BigDecimal betLegWin) {

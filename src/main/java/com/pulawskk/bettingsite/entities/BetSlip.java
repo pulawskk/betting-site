@@ -46,6 +46,10 @@ public class BetSlip {
     @Column(name = "bet_slip_status")
     private BetSlipStatus betSlipStatus;
 
+    @Column(name = "result")
+    private String result;
+
+
     @Builder
     public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created,
                    LocalDateTime modified, BigDecimal betSlipWin,
