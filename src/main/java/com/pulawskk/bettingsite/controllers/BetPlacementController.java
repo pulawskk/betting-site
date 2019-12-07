@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.pulawskk.bettingsite.models.BetSlipDto;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import org.springframework.stereotype.Controller;
@@ -35,14 +36,24 @@ public class BetPlacementController {
     }
 
     @PostMapping("/placeBet")
-    public String placeBetSlip(HttpServletRequest request, Model model) {
+    public String placeBetSlip(@ModelAttribute BetSlipDto betSlip, HttpServletRequest request, Model model) {
         List<Selection> selections = (List<Selection>) model.getAttribute("selections");
         if(selections == null) {
             selections = new ArrayList<>();
         }
+
+        System.out.println("STAKE: <--> " + betSlip.getStake());
+        String single = request.getParameter("singleBetSlip");
+        String multi = request.getParameter("multiBetSlip");
+        System.out.println("bet slip type: " + single);
+        System.out.println("bet slip type: " + multi);
+
         String stakeRequest = request.getParameter("stake");
         betSlipService.saveBetSlip(selections, stakeRequest);
-
+        if (model.containsAttribute("selections")) {
+            selections.clear();
+            model.addAttribute("selections", selections);
+        }
         if (selections.size() == 0) {
 
         } else {
