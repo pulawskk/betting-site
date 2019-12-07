@@ -31,6 +31,9 @@ public class Bet {
     @Column(name = "odd")
     private BigDecimal odd;
 
+    @Column(name = "result")
+    private String result;
+
     @ManyToOne
     private BetLeg betLeg;
 
