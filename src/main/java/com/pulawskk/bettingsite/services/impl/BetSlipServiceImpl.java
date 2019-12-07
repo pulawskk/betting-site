@@ -4,6 +4,7 @@ import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.BetSlip;
 import com.pulawskk.bettingsite.enums.BetSlipType;
+import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.repositories.BetLegRepository;
 import com.pulawskk.bettingsite.repositories.BetRepository;
@@ -43,6 +44,7 @@ public class BetSlipServiceImpl implements BetSlipService {
                     .odd(new BigDecimal(selection.getValue()))
                     .selectionId(selection.getUniqueId())
                     .type(convertUserType(selection.getUserType()))
+                    .betStatus(BetStatus.PREMATCH)
                     .build());
         });
 
