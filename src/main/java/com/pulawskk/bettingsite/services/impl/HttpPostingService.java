@@ -5,6 +5,7 @@ import com.pulawskk.bettingsite.models.GameDto;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.IncomingDataService;
+import com.pulawskk.bettingsite.services.SettlementService;
 import com.pulawskk.bettingsite.utils.GameUtils;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 public class HttpPostingService implements IncomingDataService, GameUtils {
 
     private final GameService gameService;
+    private final SettlementService settlementService;
 
-    public HttpPostingService(GameService gameService) {
+    public HttpPostingService(GameService gameService, SettlementService settlementService) {
         this.gameService = gameService;
+        this.settlementService = settlementService;
     }
 
     @Override
@@ -31,5 +34,7 @@ public class HttpPostingService implements IncomingDataService, GameUtils {
 
         gameService.persistResult(jsonResultString, uniqueId);
         gameService.updateGameStatus(statusToUpdate, uniqueId);
+
+        settlementService.processResultingBets(uniqueId);
     }
 }

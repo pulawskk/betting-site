@@ -14,4 +14,6 @@ public interface GameService {
     Set<Game> findAllPrematchGames();
 
     Set<Game> findAllCompletedGames();
+
+    Game findGameById(String uniqueId);
 }

@@ -24,5 +24,11 @@ public class BetServiceImpl implements BetService {
         return prematchBets;
     }
 
+    @Override
+    public List<Bet> findAllBetsByUniqueEventId(String uniqueId) {
+        List<Bet> bets = betRepository.findAllBySelectionId(uniqueId);
+        return bets;
+    }
+
 
 }

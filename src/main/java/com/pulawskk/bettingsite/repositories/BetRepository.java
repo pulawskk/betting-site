@@ -12,4 +12,6 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     @Query(value = "SELECT * FROM bet WHERE bet_status LIKE 'PREMATCH'", nativeQuery = true)
     List<Bet> findAllPrematchBets();
+
+    List<Bet> findAllBySelectionId(String uniqueId);
 }

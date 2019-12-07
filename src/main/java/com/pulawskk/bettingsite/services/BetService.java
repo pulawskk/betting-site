@@ -7,4 +7,6 @@ import java.util.List;
 public interface BetService {
 
     List<Bet> findAllPrematchBets();
+
+    List<Bet> findAllBetsByUniqueEventId(String uniqueId);
 }
