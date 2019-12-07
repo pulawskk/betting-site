@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.entities;
 
+import com.pulawskk.bettingsite.enums.BetStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,10 @@ public class Bet {
 
     @Column(name = "result")
     private String result;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bet_status")
+    private BetStatus betStatus;
 
     @ManyToOne
     private BetLeg betLeg;
