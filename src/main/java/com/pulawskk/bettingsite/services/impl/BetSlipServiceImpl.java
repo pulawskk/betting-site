@@ -3,6 +3,7 @@ package com.pulawskk.bettingsite.services.impl;
 import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.BetSlip;
+import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.models.Selection;
@@ -58,6 +59,7 @@ public class BetSlipServiceImpl implements BetSlipService {
 
         BigDecimal betSlipWin = betLegWin;
         betSlip.setBetSlipWin(betLegWin);
+        betSlip.setBetSlipStatus(BetSlipStatus.ACTIVE);
 
         betSlip.addBetLeg(betLeg);
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
