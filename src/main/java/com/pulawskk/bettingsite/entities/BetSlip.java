@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.entities;
 
+import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,15 +42,21 @@ public class BetSlip {
     @Column(name = "bet_slip_win")
     private BigDecimal betSlipWin;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bet_slip_status")
+    private BetSlipStatus betSlipStatus;
+
     @Builder
     public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created,
-                   LocalDateTime modified, BigDecimal betSlipWin) {
+                   LocalDateTime modified, BigDecimal betSlipWin,
+                   BetSlipStatus betSlipStatus) {
         this.id = id;
         this.betSlipType = betSlipType;
         this.betLegs = betLegs;
         this.created = created;
         this.modified = modified;
         this.betSlipWin = betSlipWin;
+        this.betSlipStatus = betSlipStatus;
     }
 
     public void addBetLeg(BetLeg betLeg) {
