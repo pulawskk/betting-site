@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.entities;
 
+import com.pulawskk.bettingsite.enums.ResultType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,8 @@ public class BetLeg {
     private BigDecimal betLegWin;
 
     @Column(name = "result")
-    private String result;
+    @Enumerated(EnumType.STRING)
+    private ResultType result;
 
     @Builder
     public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,

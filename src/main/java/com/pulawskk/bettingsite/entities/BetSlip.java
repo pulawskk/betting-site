@@ -2,6 +2,7 @@ package com.pulawskk.bettingsite.entities;
 
 import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
+import com.pulawskk.bettingsite.enums.ResultType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,7 +48,8 @@ public class BetSlip {
     private BetSlipStatus betSlipStatus;
 
     @Column(name = "result")
-    private String result;
+    @Enumerated(EnumType.STRING)
+    private ResultType result;
 
 
     @Builder

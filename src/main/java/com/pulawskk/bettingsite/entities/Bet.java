@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.entities;
 
 import com.pulawskk.bettingsite.enums.BetStatus;
+import com.pulawskk.bettingsite.enums.ResultType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,8 @@ public class Bet {
     private BigDecimal odd;
 
     @Column(name = "result")
-    private String result;
+    @Enumerated(EnumType.STRING)
+    private ResultType result;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "bet_status")

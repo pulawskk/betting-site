@@ -3,6 +3,7 @@ package com.pulawskk.bettingsite.services.impl;
 import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.enums.BetStatus;
+import com.pulawskk.bettingsite.enums.ResultType;
 import com.pulawskk.bettingsite.services.BetService;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.SettlementService;
@@ -36,9 +37,9 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         String gameResult = eventResult1X2(game);
         bets.forEach(bet -> {
             if(bet.getType().equals(gameResult)) {
-                bet.setResult("WIN");
+                bet.setResult(ResultType.WIN);
             } else {
-                bet.setResult("LOSE");
+                bet.setResult(ResultType.LOSE);
             }
             bet.setBetStatus(BetStatus.RESULTED);
         });
