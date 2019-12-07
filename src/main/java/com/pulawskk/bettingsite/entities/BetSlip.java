@@ -1,12 +1,15 @@
 package com.pulawskk.bettingsite.entities;
 
-import com.pulawskk.bettingsite.enums.BetType;
+import com.pulawskk.bettingsite.enums.BetSlipType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -22,10 +25,10 @@ public class BetSlip {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "bet_type")
-    private BetType betType;
+    @Column(name = "bet_slip_type")
+    private BetSlipType betSlipType;
 
-    @OneToMany(mappedBy = "betSlip")
+    @OneToMany(mappedBy = "betSlip", cascade = CascadeType.ALL)
     @Column(name = "bet_legs")
     private List<BetLeg> betLegs;
 
@@ -34,4 +37,25 @@ public class BetSlip {
 
     @Column(name = "modified")
     private LocalDateTime modified;
+
+    @Column(name = "bet_slip_win")
+    private BigDecimal betSlipWin;
+
+    @Builder
+    public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created,
+                   LocalDateTime modified, BigDecimal betSlipWin) {
+        this.id = id;
+        this.betSlipType = betSlipType;
+        this.betLegs = betLegs;
+        this.created = created;
+        this.modified = modified;
+        this.betSlipWin = betSlipWin;
+    }
+
+    public void addBetLeg(BetLeg betLeg) {
+        if (betLegs == null) {
+            betLegs = new ArrayList<>();
+        }
+        betLegs.add(betLeg);
+    }
 }

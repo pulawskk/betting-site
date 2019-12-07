@@ -1,6 +1,6 @@
 package com.pulawskk.bettingsite.enums;
 
-public enum BetType {
+public enum BetSlipType {
     SINGLE,
     MULTIPLE
 }

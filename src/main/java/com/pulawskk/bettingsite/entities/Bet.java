@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,9 +28,6 @@ public class Bet {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "stake")
-    private BigDecimal stake;
-
     @Column(name = "odd")
     private BigDecimal odd;
 
@@ -42,5 +40,14 @@ public class Bet {
     @Column(name = "modified")
     private LocalDateTime modified;
 
-
+    @Builder
+    public Bet(Long id, String selectionId, String type, BigDecimal odd, BetLeg betLeg, LocalDateTime created, LocalDateTime modified) {
+        this.id = id;
+        this.selectionId = selectionId;
+        this.type = type;
+        this.odd = odd;
+        this.betLeg = betLeg;
+        this.created = created;
+        this.modified = modified;
+    }
 }

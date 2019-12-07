@@ -61,5 +61,35 @@
             <td th:text="${selection.value}"></td>
         </tr>
     </table>
+
+    <h3>new</h3>
+
+    <div>
+        <form th:action="@{/settler/placeBet}" method="post">
+            <input type="number" name="stake" placeholder="your stake..." th:object="${betSlipDto}">
+                <span th:if="${session.selections.size() == 1}">
+                    <div>
+                        single:
+                        <input type="checkbox" name="singleBetSlip" value="single" checked="checked">
+                    </div>
+                    <div>
+                        multiple:
+                        <input type="checkbox" name="multiBetSlip" value="multi" disabled="disabled">
+                    </div>
+                </span>
+                <span th:if="${session.selections.size() > 1}">
+                    <div>
+                        single:
+                        <input type="checkbox" name="singleBetSlip" value="single">
+                    </div>
+                    <div>
+                        multiple:
+                        <input type="checkbox" name="multiBetSlip" value="multi" checked="checked">
+                    </div>
+                </span>
+
+            <button name="betSlip" th:text="'PLACE BETSLIP'" type="submit"></button>
+        </form>
+    </div>
 </body>
 </html>

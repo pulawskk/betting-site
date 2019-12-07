@@ -1,11 +1,14 @@
 package com.pulawskk.bettingsite.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -32,6 +35,33 @@ public class BetLeg {
     @ManyToOne
     private BetSlip betSlip;
 
-    @OneToMany(mappedBy = "betLeg")
+    @Column(name = "stake")
+    private BigDecimal stake;
+
+    @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL)
     private List<Bet> bets;
+
+    @Column(name = "bet_leg_win")
+    private BigDecimal betLegWin;
+
+    @Builder
+    public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,
+                  List<Bet> bets, BigDecimal stake, BigDecimal betLegWin) {
+        this.id = id;
+        this.betLegName = betLegName;
+        this.created = created;
+        this.modified = modified;
+        this.betSlip = betSlip;
+        this.bets = bets;
+        this.stake = stake;
+        this.betLegWin = betLegWin;
+    }
+
+    public void addBet(Bet bet) {
+        if(bets == null) {
+            bets = new ArrayList<>();
+        }
+        bets.add(bet);
+    }
 }
+
