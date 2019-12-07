@@ -42,6 +42,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
                 bet.setResult(ResultType.LOSE);
             }
             bet.setBetStatus(BetStatus.RESULTED);
+            betService.saveBet(bet);
         });
     }
 

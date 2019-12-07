@@ -30,5 +30,10 @@ public class BetServiceImpl implements BetService {
         return bets;
     }
 
+    @Override
+    public Bet saveBet(Bet bet) {
+        return betRepository.save(bet);
+    }
+
 
 }

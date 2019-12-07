@@ -9,4 +9,6 @@ public interface BetService {
     List<Bet> findAllPrematchBets();
 
     List<Bet> findAllBetsByUniqueEventId(String uniqueId);
+
+    Bet saveBet(Bet bet);
 }
