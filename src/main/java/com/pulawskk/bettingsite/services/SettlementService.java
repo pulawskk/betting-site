@@ -1,4 +1,4 @@
 package com.pulawskk.bettingsite.services;
 
-public interface BetPlacementService {
+public interface SettlementService {
 }

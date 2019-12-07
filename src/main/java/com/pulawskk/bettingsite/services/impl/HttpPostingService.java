@@ -8,7 +8,6 @@ import com.pulawskk.bettingsite.services.IncomingDataService;
 import com.pulawskk.bettingsite.utils.GameUtils;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class HttpPostingService implements IncomingDataService, GameUtils {
 
