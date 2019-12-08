@@ -2,7 +2,7 @@ package com.pulawskk.bettingsite.services;
 
 public interface SettlementService {
 
-    void runBetChecking();
+    void runBetLegChecking();
 
     void processResultingBets(String uniqueId);
 }

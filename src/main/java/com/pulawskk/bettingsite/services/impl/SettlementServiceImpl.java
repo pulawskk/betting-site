@@ -1,9 +1,11 @@
 package com.pulawskk.bettingsite.services.impl;
 
 import com.pulawskk.bettingsite.entities.Bet;
+import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.enums.ResultType;
+import com.pulawskk.bettingsite.services.BetLegService;
 import com.pulawskk.bettingsite.services.BetService;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.SettlementService;
@@ -12,21 +14,59 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 @Service
 public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
     private final BetService betService;
+    private final BetLegService betLegService;
     private final GameService gameService;
 
-    public SettlementServiceImpl(BetService betService, GameService gameService) {
+    public SettlementServiceImpl(BetService betService, BetLegService betLegService, GameService gameService) {
         this.betService = betService;
+        this.betLegService = betLegService;
         this.gameService = gameService;
     }
 
     @Override
-    public void runBetChecking() {
-        betService.findAllPrematchBets();
+    public void runBetLegChecking() {
+        List<BetLeg> betLegList = betLegService.findAllUnresulted();
+        betLegList.forEach(betLeg -> {
+
+            //TODO lazy loading, open new connection
+            List<Bet> bets = betLeg.getBets();
+
+            if(isAnyLostBet(bets)) {
+               betLeg.setResult(ResultType.LOSE);
+            }
+
+            if(isAnyUnresultedBet(bets)) {
+                return;
+            }
+
+            if(isAllBetsWin(bets)) {
+                betLeg.setResult(ResultType.WIN);
+            }
+            betLegService.save(betLeg);
+        });
+    }
+
+    private Boolean isAnyUnresultedBet(List<Bet> bets) {
+        return bets.stream()
+                .map(bet -> bet.getResult())
+                .anyMatch(Objects::isNull);
+    }
+
+    private Boolean isAnyLostBet(List<Bet> bets) {
+        return bets.stream()
+                .anyMatch(b -> b.getResult().equals(ResultType.LOSE));
+    }
+
+    private Boolean isAllBetsWin(List<Bet> bets) {
+        return bets.stream()
+                .allMatch(b -> b.getResult().equals(ResultType.WIN));
     }
 
     @Override
@@ -49,6 +89,6 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
     @Scheduled(cron = "10/20 0/1 * * * ?")
     void scheduleRunning() {
         System.out.println("start checking");
-        runBetChecking();
+        runBetLegChecking();
     }
 }
