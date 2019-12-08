@@ -46,7 +46,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
             if(isAnyLostBet(bets)) {
                betLeg.setResult(ResultType.LOSE);
-                System.out.println("betleg is lost");
+               System.out.println("betleg is lost");
             }
 
             if(isAnyUnresultedBet(bets)) {
@@ -70,12 +70,12 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
     private Boolean isAnyLostBet(List<Bet> bets) {
         return bets.stream()
-                .anyMatch(b -> b.getResult().equals(ResultType.LOSE));
+                .anyMatch(b -> ResultType.LOSE.equals(b.getResult()));
     }
 
     private Boolean isAllBetsWin(List<Bet> bets) {
         return bets.stream()
-                .allMatch(b -> b.getResult().equals(ResultType.WIN));
+                .allMatch(b -> ResultType.WIN.equals(b.getResult()));
     }
 
     @Override

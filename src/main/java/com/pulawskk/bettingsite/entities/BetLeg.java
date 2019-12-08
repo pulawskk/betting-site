@@ -39,7 +39,7 @@ public class BetLeg {
     @Column(name = "stake")
     private BigDecimal stake;
 
-    @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bet> bets;
 
     @Column(name = "bet_leg_win")
