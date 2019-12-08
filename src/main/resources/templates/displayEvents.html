@@ -66,7 +66,7 @@
 
         <form th:action="@{/settler/placeBet}" method="post">
             <!--/*@thymesVar id="betSlipDto" type="com.pulawskk.bettingsite.models.BetSlipDto"*/-->
-            <input type="number" name="stake" placeholder="your stake..." th:object="${betSlipDto}">
+            <input type="number" name="stake" placeholder="2" value="2" th:object="${betSlipDto}">
                 <span th:if="${session.selections.size() == 1}">
                     <div>
                         single:
