@@ -81,6 +81,16 @@ public class BetSlipServiceImpl implements BetSlipService {
         return savedBetSlip;
     }
 
+    @Override
+    public List<BetSlip> findAllUnresulted() {
+        return betSlipRepository.findAllUnresulted();
+    }
+
+    @Override
+    public BetSlip save(BetSlip betSlip) {
+        return betSlipRepository.save(betSlip);
+    }
+
     private String convertUserType(String typeFromSite) {
         switch (typeFromSite) {
             case "0":

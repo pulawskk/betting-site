@@ -72,6 +72,11 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
     }
 
     @Override
+    public void runBetSlipChecking() {
+
+    }
+
+    @Override
     public void processResultingBets(String uniqueId) {
         System.out.println("that bet is going to be resulted: " + uniqueId);
         List<Bet> bets = betService.findAllBetsByUniqueEventId(uniqueId);

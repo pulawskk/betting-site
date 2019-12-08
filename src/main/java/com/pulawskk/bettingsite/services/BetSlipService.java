@@ -8,4 +8,8 @@ import java.util.List;
 public interface BetSlipService {
 
     BetSlip saveBetSlip(List<Selection> selections, String stake, List<String> betSlipTypeList);
+
+    List<BetSlip> findAllUnresulted();
+
+    BetSlip save(BetSlip betSlip);
 }
