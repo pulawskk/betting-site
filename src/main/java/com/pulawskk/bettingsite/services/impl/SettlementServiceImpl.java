@@ -10,9 +10,14 @@ import com.pulawskk.bettingsite.services.BetService;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.SettlementService;
 import com.pulawskk.bettingsite.utils.ResultUtils;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -30,24 +35,28 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         this.gameService = gameService;
     }
 
+    @Transactional
     @Override
     public void runBetLegChecking() {
         List<BetLeg> betLegList = betLegService.findAllUnresulted();
         betLegList.forEach(betLeg -> {
 
-            //TODO lazy loading, open new connection
+
             List<Bet> bets = betLeg.getBets();
 
             if(isAnyLostBet(bets)) {
                betLeg.setResult(ResultType.LOSE);
+                System.out.println("betleg is lost");
             }
 
             if(isAnyUnresultedBet(bets)) {
+                System.out.println("betleg is still unresulted");
                 return;
             }
 
             if(isAllBetsWin(bets)) {
                 betLeg.setResult(ResultType.WIN);
+                System.out.println("betleg is win");
             }
             betLegService.save(betLeg);
         });

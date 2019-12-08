@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface BetLegRepository extends JpaRepository<BetLeg, Long> {
     @Query(value = "SELECT * FROM betleg as bl " +
-                    "JOIN Bet b " +
-                    "ON bl.id = b.bet_leg_id " +
                     "WHERE bl.result IS NULL", nativeQuery = true)
     List<BetLeg> findAllUnresulted();
 }
