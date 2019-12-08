@@ -44,5 +44,10 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAllByGameStatusCompleted();
     }
 
+    @Override
+    public Game findGameById(String uniqueId) {
+        return gameRepository.findGameByUniqueId(uniqueId);
+    }
+
 
 }

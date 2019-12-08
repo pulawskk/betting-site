@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Events</title>
@@ -54,19 +54,19 @@
             </td>
         </tr>
     </table>
+    
+    <div th:if="${session.selections != null}">
 
-    <table>
-        <tr th:each="selection : ${session.selections}">
-            <!--/*@thymesVar id="value" type="com.pulawskk.bettingsite.models.Selection"*/-->
-            <td th:text="${selection.value}"></td>
-        </tr>
-    </table>
+        <table>
+            <tr th:each="selection : ${session.selections}">
+                <!--/*@thymesVar id="value" type="com.pulawskk.bettingsite.models.Selection"*/-->
+                <td th:text="${selection.value}"></td>
+            </tr>
+        </table>
 
-    <h3>new</h3>
-
-    <div>
         <form th:action="@{/settler/placeBet}" method="post">
-            <input type="number" name="stake" placeholder="your stake..." th:object="${betSlipDto}">
+            <!--/*@thymesVar id="betSlipDto" type="com.pulawskk.bettingsite.models.BetSlipDto"*/-->
+            <input type="number" name="stake" placeholder="2" value="2" th:object="${betSlipDto}">
                 <span th:if="${session.selections.size() == 1}">
                     <div>
                         single:

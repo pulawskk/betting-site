@@ -1,11 +1,9 @@
 package com.pulawskk.bettingsite.services;
 
 import com.pulawskk.bettingsite.entities.Game;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Service
 public interface GameService {
     void savePrematchGame(Game game);
 
@@ -16,4 +14,6 @@ public interface GameService {
     Set<Game> findAllPrematchGames();
 
     Set<Game> findAllCompletedGames();
+
+    Game findGameById(String uniqueId);
 }

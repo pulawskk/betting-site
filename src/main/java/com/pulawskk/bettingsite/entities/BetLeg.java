@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.entities;
 
+import com.pulawskk.bettingsite.enums.ResultType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,11 +39,15 @@ public class BetLeg {
     @Column(name = "stake")
     private BigDecimal stake;
 
-    @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "betLeg", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bet> bets;
 
     @Column(name = "bet_leg_win")
     private BigDecimal betLegWin;
+
+    @Column(name = "result")
+    @Enumerated(EnumType.STRING)
+    private ResultType result;
 
     @Builder
     public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,

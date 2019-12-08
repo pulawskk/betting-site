@@ -24,4 +24,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query(value = "SELECT * FROM game WHERE game_status LIKE 'COMPLETED'", nativeQuery = true)
     Set<Game> findAllByGameStatusCompleted();
+
+    Game findGameByUniqueId(String uniqueId);
 }

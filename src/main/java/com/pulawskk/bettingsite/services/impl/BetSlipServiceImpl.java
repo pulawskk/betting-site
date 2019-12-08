@@ -3,7 +3,9 @@ package com.pulawskk.bettingsite.services.impl;
 import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.BetSlip;
+import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
+import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.repositories.BetLegRepository;
 import com.pulawskk.bettingsite.repositories.BetRepository;
@@ -43,6 +45,7 @@ public class BetSlipServiceImpl implements BetSlipService {
                     .odd(new BigDecimal(selection.getValue()))
                     .selectionId(selection.getUniqueId())
                     .type(convertUserType(selection.getUserType()))
+                    .betStatus(BetStatus.PREMATCH)
                     .build());
         });
 
@@ -56,6 +59,7 @@ public class BetSlipServiceImpl implements BetSlipService {
 
         BigDecimal betSlipWin = betLegWin;
         betSlip.setBetSlipWin(betLegWin);
+        betSlip.setBetSlipStatus(BetSlipStatus.ACTIVE);
 
         betSlip.addBetLeg(betLeg);
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
@@ -75,6 +79,16 @@ public class BetSlipServiceImpl implements BetSlipService {
         });
 
         return savedBetSlip;
+    }
+
+    @Override
+    public List<BetSlip> findAllUnresulted() {
+        return betSlipRepository.findAllUnresulted();
+    }
+
+    @Override
+    public BetSlip save(BetSlip betSlip) {
+        return betSlipRepository.save(betSlip);
     }
 
     private String convertUserType(String typeFromSite) {

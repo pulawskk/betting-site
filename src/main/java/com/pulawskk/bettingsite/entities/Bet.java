@@ -1,5 +1,7 @@
 package com.pulawskk.bettingsite.entities;
 
+import com.pulawskk.bettingsite.enums.BetStatus;
+import com.pulawskk.bettingsite.enums.ResultType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,14 @@ public class Bet {
     @Column(name = "odd")
     private BigDecimal odd;
 
+    @Column(name = "result")
+    @Enumerated(EnumType.STRING)
+    private ResultType result;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bet_status")
+    private BetStatus betStatus;
+
     @ManyToOne
     private BetLeg betLeg;
 
@@ -41,7 +51,7 @@ public class Bet {
     private LocalDateTime modified;
 
     @Builder
-    public Bet(Long id, String selectionId, String type, BigDecimal odd, BetLeg betLeg, LocalDateTime created, LocalDateTime modified) {
+    public Bet(Long id, String selectionId, String type, BigDecimal odd, BetLeg betLeg, LocalDateTime created, LocalDateTime modified, BetStatus betStatus) {
         this.id = id;
         this.selectionId = selectionId;
         this.type = type;
@@ -49,5 +59,6 @@ public class Bet {
         this.betLeg = betLeg;
         this.created = created;
         this.modified = modified;
+        this.betStatus = betStatus;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
@@ -16,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Configuration
 @EnableJms
+@EnableScheduling
 public class AppConfig {
 
     @Bean

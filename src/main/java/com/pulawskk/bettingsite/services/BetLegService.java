@@ -1,7 +1,12 @@
 package com.pulawskk.bettingsite.services;
 
-import org.springframework.stereotype.Service;
+import com.pulawskk.bettingsite.entities.BetLeg;
 
-@Service
+import java.util.List;
+
 public interface BetLegService {
+
+    List<BetLeg> findAllUnresulted();
+
+    BetLeg save(BetLeg betLeg);
 }
