@@ -30,7 +30,7 @@ public class BetSlip {
     @Column(name = "bet_slip_type")
     private BetSlipType betSlipType;
 
-    @OneToMany(mappedBy = "betSlip", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "betSlip", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Column(name = "bet_legs")
     private List<BetLeg> betLegs;
 
