@@ -10,17 +10,12 @@ import com.pulawskk.bettingsite.services.BetService;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.SettlementService;
 import com.pulawskk.bettingsite.utils.ResultUtils;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 @Service
 public class SettlementServiceImpl implements SettlementService, ResultUtils {
@@ -40,8 +35,6 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
     public void runBetLegChecking() {
         List<BetLeg> betLegList = betLegService.findAllUnresulted();
         betLegList.forEach(betLeg -> {
-
-
             List<Bet> bets = betLeg.getBets();
 
             if(isAnyLostBet(bets)) {
