@@ -22,6 +22,16 @@ INSERT INTO appuser_role (appuser_id, role_id) VALUES (8,1);
 INSERT INTO appuser_role (appuser_id, role_id) VALUES (9,1);
 INSERT INTO appuser_role (appuser_id, role_id) VALUES (10,1);
 
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (1, 100, '2019-11-25 21:59:30.037000', 1);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (2, 100, '2019-11-25 21:59:30.037000', 2);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (3, 100, '2019-11-25 21:59:30.037000', 3);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (4, 100, '2019-11-25 21:59:30.037000', 4);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (5, 100, '2019-11-25 21:59:30.037000', 5);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (6, 100, '2019-11-25 21:59:30.037000', 6);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (8, 100, '2019-11-25 21:59:30.037000', 8);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (9, 100, '2019-11-25 21:59:30.037000', 9);
+INSERT INTO wallet (id, balance, modified, user_id) VALUES (10, 100, '2019-11-25 21:59:30.037000', 10);
+
 INSERT INTO public.game (id, competition, end_date, game_status, name, result, selection, start_date, unique_id) VALUES (1, 'FA Cup', '2019-11-25 21:57:30.048000', 'COMPLETED', 'Barnsley vs Aston Villa', '{"homeRedCards":"9","homeScores":"1","awayRedCards":"5","awayYellowCards":"1","homeYellowCards":"6","homeOffsides":"1","awayOffsides":"3","awayCorners":"8","homeCorners":"7","awayScores":"3"}', '3.59;6.04;1.26', '2019-11-25 21:52:30.048000', 'f0e6bc0');
 INSERT INTO public.game (id, competition, end_date, game_status, name, result, selection, start_date, unique_id) VALUES (2, 'FA Cup', '2019-11-25 21:57:30.048000', 'COMPLETED', 'Manchester United vs Norwich', '{"homeRedCards":"6","homeScores":"6","awayRedCards":"6","awayYellowCards":"9","homeYellowCards":"6","homeOffsides":"4","awayOffsides":"5","awayCorners":"1","homeCorners":"1","awayScores":"8"}', '6.02;6.56;1.64', '2019-11-25 21:52:30.048000', '53ca780');
 INSERT INTO public.game (id, competition, end_date, game_status, name, result, selection, start_date, unique_id) VALUES (3, 'FA Cup', '2019-11-25 21:57:30.048000', 'COMPLETED', 'Brentford vs Brighton', '{"homeRedCards":"8","homeScores":"4","awayRedCards":"6","awayYellowCards":"2","homeYellowCards":"1","homeOffsides":"5","awayOffsides":"1","awayCorners":"6","homeCorners":"9","awayScores":"6"}', '1.65;2.76;5.96', '2019-11-25 21:52:30.048000', 'e585d5f');
