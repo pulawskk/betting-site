@@ -30,13 +30,17 @@ public class User {
     @JoinTable(name = "appuser_role", joinColumns = @JoinColumn(name = "appuser_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    private Wallet wallet;
+
     public User() {
     }
 
-    public User(String password, String name, Set<Role> roles) {
+    public User(String password, String name, Set<Role> roles, Wallet wallet) {
         this.password = password;
         this.name = name;
         this.roles = roles;
+        this.wallet = wallet;
     }
 
     public Long getId() {
