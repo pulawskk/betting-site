@@ -38,17 +38,21 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         betLegList.forEach(betLeg -> {
             List<Bet> bets = betLeg.getBets();
 
-            if(isAnyLostBet(bets)) {
+            FindSpecificBet findAnyNullBet = (betList) -> betList.stream().map(Bet::getResult).anyMatch(Objects::isNull);
+            FindSpecificBet findAnyLoseBet = (betList) -> betList.stream().anyMatch(b -> ResultType.LOSE.equals(b.getResult()));
+            FindSpecificBet findAllWinBets = (betList) -> betList.stream().allMatch(b -> ResultType.WIN.equals(b.getResult()));
+
+            if(findAnyLoseBet.action(bets)) {
                betLeg.setResult(ResultType.LOSE);
                System.out.println("betleg is lost");
             }
 
-            if(isAnyUnresultedBet(bets)) {
+            if(findAnyNullBet.action(bets)) {
                 System.out.println("betleg is still unresulted");
                 return;
             }
 
-            if(isAllBetsWin(bets)) {
+            if(findAllWinBets.action(bets)) {
                 betLeg.setResult(ResultType.WIN);
                 System.out.println("betleg is win");
             }
@@ -56,20 +60,9 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         });
     }
 
-    private Boolean isAnyUnresultedBet(List<Bet> bets) {
-        return bets.stream()
-                .map(Bet::getResult)
-                .anyMatch(Objects::isNull);
-    }
-
-    private Boolean isAnyLostBet(List<Bet> bets) {
-        return bets.stream()
-                .anyMatch(b -> ResultType.LOSE.equals(b.getResult()));
-    }
-
-    private Boolean isAllBetsWin(List<Bet> bets) {
-        return bets.stream()
-                .allMatch(b -> ResultType.WIN.equals(b.getResult()));
+    @FunctionalInterface
+    public interface FindSpecificBet {
+        boolean action(List<Bet> betsList);
     }
 
     @Transactional
