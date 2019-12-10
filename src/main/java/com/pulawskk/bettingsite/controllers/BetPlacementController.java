@@ -62,7 +62,7 @@ public class BetPlacementController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findByEmail(authentication.getName());
 
-        betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList);
+        betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList, currentUser);
         if (model.containsAttribute("selections")) {
             selections.clear();
             model.addAttribute("selections", selections);
