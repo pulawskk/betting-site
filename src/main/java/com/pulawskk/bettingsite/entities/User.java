@@ -1,6 +1,8 @@
 package com.pulawskk.bettingsite.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +34,9 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Wallet wallet;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<BetSlip> betSlips;
 
     public User() {
     }
@@ -93,5 +98,9 @@ public class User {
 
     public Wallet getWallet() {
         return wallet;
+    }
+
+    public List<BetSlip> getBetSlips() {
+        return betSlips;
     }
 }

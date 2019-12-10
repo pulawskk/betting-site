@@ -51,11 +51,13 @@ public class BetSlip {
     @Enumerated(EnumType.STRING)
     private ResultType result;
 
+    @ManyToOne
+    private User user;
 
     @Builder
     public BetSlip(Long id, BetSlipType betSlipType, List<BetLeg> betLegs, LocalDateTime created,
                    LocalDateTime modified, BigDecimal betSlipWin,
-                   BetSlipStatus betSlipStatus) {
+                   BetSlipStatus betSlipStatus, User user) {
         this.id = id;
         this.betSlipType = betSlipType;
         this.betLegs = betLegs;
@@ -63,6 +65,7 @@ public class BetSlip {
         this.modified = modified;
         this.betSlipWin = betSlipWin;
         this.betSlipStatus = betSlipStatus;
+        this.user = user;
     }
 
     public void addBetLeg(BetLeg betLeg) {
