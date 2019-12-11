@@ -1,9 +1,13 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.models.Event;
 import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.models.Selection;
+import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +20,11 @@ import java.util.List;
 public class EventController {
 
     private OutcomingDataServiceImpl outcomingDataServiceImpl;
+    private final UserService userService;
 
-    public EventController(OutcomingDataServiceImpl outcomingDataServiceImpl) {
+    public EventController(OutcomingDataServiceImpl outcomingDataServiceImpl, UserService userService) {
         this.outcomingDataServiceImpl = outcomingDataServiceImpl;
+        this.userService = userService;
     }
 
     @GetMapping("/football")
@@ -27,6 +33,9 @@ public class EventController {
         if (!events.isEmpty()) {
             model.addAttribute("events", events);
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findByEmail(authentication.getName());
+        model.addAttribute("currentUser", currentUser);
         return "displayEvents";
     }
 

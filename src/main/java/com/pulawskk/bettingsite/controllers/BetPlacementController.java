@@ -1,8 +1,12 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.models.BetSlipDto;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.BetSlipService;
+import com.pulawskk.bettingsite.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +21,11 @@ import java.util.List;
 public class BetPlacementController {
 
     private final BetSlipService betSlipService;
+    private final UserService userService;
 
-    public BetPlacementController(BetSlipService betSlipService) {
+    public BetPlacementController(BetSlipService betSlipService, UserService userService) {
         this.betSlipService = betSlipService;
+        this.userService = userService;
     }
 
     @PostMapping("/bet")
@@ -52,7 +58,11 @@ public class BetPlacementController {
         betSlipTypeList.add(multi);
 
         String stakeRequest = request.getParameter("stake");
-        betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findByEmail(authentication.getName());
+
+        betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList, currentUser);
         if (model.containsAttribute("selections")) {
             selections.clear();
             model.addAttribute("selections", selections);

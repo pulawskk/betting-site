@@ -3,6 +3,7 @@ package com.pulawskk.bettingsite.services.impl;
 import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.entities.BetLeg;
 import com.pulawskk.bettingsite.entities.BetSlip;
+import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import com.pulawskk.bettingsite.enums.BetStatus;
@@ -11,6 +12,7 @@ import com.pulawskk.bettingsite.repositories.BetLegRepository;
 import com.pulawskk.bettingsite.repositories.BetRepository;
 import com.pulawskk.bettingsite.repositories.BetSlipRepository;
 import com.pulawskk.bettingsite.services.BetSlipService;
+import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,15 +26,17 @@ public class BetSlipServiceImpl implements BetSlipService {
     private final BetSlipRepository betSlipRepository;
     private final BetLegRepository betLegRepository;
     private final BetRepository betRepository;
+    private final WalletService walletService;
 
-    public BetSlipServiceImpl(BetSlipRepository betSlipRepository, BetLegRepository betLegRepository, BetRepository betRepository) {
+    public BetSlipServiceImpl(BetSlipRepository betSlipRepository, BetLegRepository betLegRepository, BetRepository betRepository, WalletService walletService) {
         this.betSlipRepository = betSlipRepository;
         this.betLegRepository = betLegRepository;
         this.betRepository = betRepository;
+        this.walletService = walletService;
     }
 
     @Override
-    public BetSlip saveBetSlip(List<Selection> selections, String stake, List<String> betSlipTypeList) {
+    public BetSlip saveBetSlip(List<Selection> selections, String stake, List<String> betSlipTypeList, User user) {
         BetLeg betLeg = BetLeg.builder().betLegName("first")
                 .created(now()).modified(now())
                 .stake(new BigDecimal(stake)).build();
@@ -60,8 +64,10 @@ public class BetSlipServiceImpl implements BetSlipService {
         BigDecimal betSlipWin = betLegWin;
         betSlip.setBetSlipWin(betLegWin);
         betSlip.setBetSlipStatus(BetSlipStatus.ACTIVE);
+        betSlip.setUser(user);
 
         betSlip.addBetLeg(betLeg);
+        walletService.subtractBetPlaceStake(new BigDecimal(stake).doubleValue(), user.getId());
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
 
         BetLeg savedBetLeg = null;

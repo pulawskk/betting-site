@@ -1,9 +1,6 @@
 package com.pulawskk.bettingsite.services.impl;
 
-import com.pulawskk.bettingsite.entities.Bet;
-import com.pulawskk.bettingsite.entities.BetLeg;
-import com.pulawskk.bettingsite.entities.BetSlip;
-import com.pulawskk.bettingsite.entities.Game;
+import com.pulawskk.bettingsite.entities.*;
 import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.enums.ResultType;
@@ -13,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,12 +21,14 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
     private final BetLegService betLegService;
     private final BetSlipService betSlipService;
     private final GameService gameService;
+    private final WalletService walletService;
 
-    public SettlementServiceImpl(BetService betService, BetLegService betLegService, BetSlipService betSlipService, GameService gameService) {
+    public SettlementServiceImpl(BetService betService, BetLegService betLegService, BetSlipService betSlipService, GameService gameService, WalletService walletService) {
         this.betService = betService;
         this.betLegService = betLegService;
         this.betSlipService = betSlipService;
         this.gameService = gameService;
+        this.walletService = walletService;
     }
 
     @Transactional
@@ -65,7 +65,6 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         boolean action(List<Bet> betsList);
     }
 
-    @Transactional
     @Override
     public void runBetSlipChecking() {
         List<BetSlip> betSlips = betSlipService.findAllUnresulted();
@@ -86,6 +85,12 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
             if(isAllBetLegsWin(betLegs)) {
                 betSlip.setResult(ResultType.WIN);
                 betSlip.setBetSlipStatus(BetSlipStatus.RESULTED);
+                User user = betSlip.getUser();
+                BigDecimal winning = betSlip.getBetSlipWin();
+                BigDecimal currentBalance = walletService.findBalanceForUser(user.getId());
+                System.out.println("current balance: " + currentBalance);
+                BigDecimal newAmount = currentBalance.add(winning);
+                walletService.updateBalance(newAmount.doubleValue(), user.getId());
                 System.out.println("bet slip is win");
             }
             betSlipService.save(betSlip);

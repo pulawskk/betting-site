@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <title>Events</title>
@@ -90,6 +92,12 @@
 
             <button name="betSlip" th:text="'PLACE BETSLIP'" type="submit"></button>
         </form>
+    </div>
+
+    <div>
+        <p>zalogowany jako: <span sec:authentication="name"></span></p>
+        <!--/*@thymesVar id="wallet" type="com.pulawskk.bettingsite.entities.User"*/-->
+        <p th:text="'current balance: ' + ${currentUser.wallet.balance}"></p>
     </div>
 </body>
 </html>

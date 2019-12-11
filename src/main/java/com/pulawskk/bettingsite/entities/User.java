@@ -1,6 +1,8 @@
 package com.pulawskk.bettingsite.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,13 +32,20 @@ public class User {
     @JoinTable(name = "appuser_role", joinColumns = @JoinColumn(name = "appuser_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    private Wallet wallet;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<BetSlip> betSlips;
+
     public User() {
     }
 
-    public User(String password, String name, Set<Role> roles) {
+    public User(String password, String name, Set<Role> roles, Wallet wallet) {
         this.password = password;
         this.name = name;
         this.roles = roles;
+        this.wallet = wallet;
     }
 
     public Long getId() {
@@ -85,5 +94,13 @@ public class User {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public List<BetSlip> getBetSlips() {
+        return betSlips;
     }
 }
