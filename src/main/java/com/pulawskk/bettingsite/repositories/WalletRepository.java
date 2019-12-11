@@ -21,4 +21,8 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
     @Modifying
     @Query(value = "UPDATE wallet SET balance = ?1 WHERE user_id = ?2", nativeQuery = true)
     void updateBalanceForUser(double newAmount, Long userId);
+
+    @Modifying
+    @Query(value = "UPDATE wallet SET balance = (SELECT balance FROM wallet WHERE user_id = ?2) - ?1 WHERE user_id = ?2", nativeQuery = true)
+    void updateBalanceForPlaceBet(double subtractAmount, Long userId);
 }

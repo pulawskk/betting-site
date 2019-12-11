@@ -27,4 +27,10 @@ public class WalletServiceImpl implements WalletService {
     public void updateBalance(double newAmount, Long userId) {
         walletRepository.updateBalanceForUser(newAmount, userId);
     }
+
+    @Override
+    @Transactional
+    public void subtractBetPlaceStake(double subtractAmount, Long userId) {
+        walletRepository.updateBalanceForPlaceBet(subtractAmount, userId);
+    }
 }

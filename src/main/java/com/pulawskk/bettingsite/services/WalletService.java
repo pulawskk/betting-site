@@ -10,4 +10,6 @@ public interface WalletService {
     BigDecimal findBalanceForUser(Long userId);
 
     void updateBalance(double newAmount, Long userId);
+
+    void subtractBetPlaceStake(double subtractAmount, Long userId);
 }
