@@ -12,6 +12,13 @@ import java.math.BigDecimal;
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
 
     @Modifying
-    @Query(value = "UPDATE wallet SET balance = (SELECT balance FROM wallet WHERE user_id = ?2) + ?1 WHERE user_id = ?2;", nativeQuery = true)
+    @Query(value = "UPDATE wallet SET balance = (SELECT balance FROM wallet WHERE user_id = ?2) + ?1 WHERE user_id = ?2", nativeQuery = true)
     void addWinningToCurrentBalance(BigDecimal amountWinning, Long userId);
+
+    @Query(value = "SELECT balance FROM wallet WHERE user_id = ?1", nativeQuery = true)
+    BigDecimal findBalanceForUser(Long userId);
+
+    @Modifying
+    @Query(value = "UPDATE wallet SET balance = ?1 WHERE user_id = ?2", nativeQuery = true)
+    void updateBalanceForUser(double newAmount, Long userId);
 }

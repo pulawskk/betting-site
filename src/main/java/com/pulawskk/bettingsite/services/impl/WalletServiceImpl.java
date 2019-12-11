@@ -1,8 +1,10 @@
 package com.pulawskk.bettingsite.services.impl;
 
+import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.repositories.WalletRepository;
 import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -16,7 +18,13 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public BigDecimal addWinning(BigDecimal winningAmount) {
-        return null;
+    public BigDecimal findBalanceForUser(Long userId) {
+        return walletRepository.findBalanceForUser(userId);
+    }
+
+    @Override
+    @Transactional
+    public void updateBalance(double newAmount, Long userId) {
+        walletRepository.updateBalanceForUser(newAmount, userId);
     }
 }
