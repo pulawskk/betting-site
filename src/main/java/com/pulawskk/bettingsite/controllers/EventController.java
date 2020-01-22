@@ -36,7 +36,7 @@ public class EventController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findByEmail(authentication.getName());
         model.addAttribute("currentUser", currentUser);
-        return "displayEvents";
+        return "displayEventsDecorated";
     }
 
     @GetMapping("/results")
