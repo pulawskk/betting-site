@@ -1,4 +1,6 @@
 .right-content-layout {
     width: 20%;
     float: right;
+    background-color: rgba(114, 162, 175, 0.54);
+    text-decoration-color: #f8f9fa;
 }

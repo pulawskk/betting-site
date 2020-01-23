@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -273,6 +274,15 @@
             </div>
           </li>
 
+          <li>
+            <div>
+              <p>logged as: <span sec:authentication="name"></span></p>
+              <!--/*@thymesVar id="wallet" type="com.pulawskk.bettingsite.entities.User"*/-->
+              <!--/*@thymesVar id="currentUser" type="com.pulawskk.bettingsite.entities.Wallet"*/-->
+<!--              <p th:text="'current balance: ' + ${currentUser.getBalance()}"></p>-->
+            </div>
+          </li>
+
           <!-- Nav Item - Alerts -->
           <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -383,7 +393,7 @@
           <!-- Nav Item - User Information -->
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small" sec:authentication="name"></span>
               <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
             </a>
             <!-- Dropdown - User Information -->
@@ -430,7 +440,16 @@
             </div>
           </div>
           <div class="right-content-layout" id="right-content">
-            <p>right</p>
+
+            <div>
+              <h2>bet slip</h2>
+
+
+            </div>
+
+            <div>
+              <h2>chats</h2>
+            </div>
 
             <p th:name="test_area">12345</p>
 

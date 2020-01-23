@@ -56,6 +56,10 @@
                                                     <button name="selection" th:text="${selection.toPlainString()}" type="submit"></button>
                                                 </form>
                                             </td>
+                                            <td>
+                                                <button th:name="${'odd_button_' + event.getUniqueId() + '_' + selection.toPlainString() + '_' + iterStat.index}"
+                                                        th:text="${'new' + selection.toPlainString()}"></button>
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -102,11 +106,7 @@
                 </form>
             </div>
 
-            <div>
-                <p>logged as: <span sec:authentication="name"></span></p>
-                <!--/*@thymesVar id="wallet" type="com.pulawskk.bettingsite.entities.User"*/-->
-                <p th:text="'current balance: ' + ${currentUser.wallet.balance}"></p>
-            </div>
+
         </div>
     </body>
 
