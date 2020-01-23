@@ -3,4 +3,40 @@
     float: right;
     background-color: rgba(114, 162, 175, 0.54);
     text-decoration-color: #f8f9fa;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 400px;
+}
+
+.right-content-tiles{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-evenly;
+
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.betslip-content {
+    background-color: #a5a57c;
+    width: 90%;
+
+    min-height: 40%;
+
+    padding-top: 2%;
+    text-align: center;
+}
+
+.chat-content {
+    background-color: #a5a57c;
+    width: 90%;
+
+    min-height: 40%;
+
+    padding-top: 2%;
+    text-align: center;
 }
