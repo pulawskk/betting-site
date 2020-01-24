@@ -4,24 +4,36 @@
     background-color: rgba(114, 162, 175, 0.54);
     text-decoration-color: #f8f9fa;
 
-    display: flex;
+    /*display: flex;*/
     flex-direction: column;
 
-    min-height: 400px;
-}
-
-.right-content-tiles{
-    display: flex;
-    flex-direction: column;
+    display: table;
+    border-spacing: 10px;
+    /*flex-direction: column;*/
 
     justify-content: space-evenly;
 
     align-items: center;
-    height: 100%;
-    width: 100%;
+
+    /*overflow: auto;*/
 }
 
+/*.right-content-tiles{*/
+/*    display: table;*/
+/*    border-spacing: 10px;*/
+/*    flex-direction: column;*/
+
+/*    justify-content: space-evenly;*/
+
+/*    align-items: center;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+
+/*    overflow: auto;*/
+/*}*/
+
 .betslip-content {
+    display: table-row;
     background-color: #a5a57c;
     width: 90%;
 
@@ -32,6 +44,7 @@
 }
 
 .chat-content {
+    display: table-row;
     background-color: #a5a57c;
     width: 90%;
 
