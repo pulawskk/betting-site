@@ -31,7 +31,7 @@ public class HomeController {
     @GetMapping(value = {"/home"})
     public String homePage(HttpSession session) {
         if(userService.userLoggedIn() != null) {
-            session.setAttribute("loggedIn", true);
+            session.setAttribute("isLoggedIn", true);
         }
         System.out.println("home -> " + userService.displayAuthName());
         return "indexMain";
