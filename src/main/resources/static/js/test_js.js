@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function tableBetCreate(oddButton) {
     const tbl = document.createElement("table");
     tbl.style.width = "90%";
+    tbl.style.margin = "auto";
+    tbl.style.marginTop = "2px";
+    tbl.style.marginBottom = "2px";
+    tbl.style.backgroundColor = "#a584a1";
+    tbl.style.color = "#0529a5";
     tbl.setAttribute("border", "1");
 
     const tblBody = document.createElement("tbody");
