@@ -10,11 +10,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 const betSlipContent = document.getElementsByClassName("betslip-content")[0];
                 const betDiv = document.createElement("div");
-                betDiv.innerText = "test";
+
+                const betTable = tableBetCreate();
+                betDiv.appendChild(betTable);
                 betSlipContent.appendChild(betDiv);
             });
         }
     }
 
 });
+
+function tableBetCreate() {
+    var tbl = document.createElement("table");
+    tbl.style.width = "90%";
+    tbl.setAttribute("border", "1");
+
+    var tblBody = document.createElement("tbody");
+    for (var i = 0; i < 2; i++) {
+        var tr = document.createElement("tr");
+        for (var j = 0; j < 2; j++) {
+            var td = document.createElement("td");
+            td.appendChild(document.createTextNode("test " + i + "-" + j));
+            tr.appendChild(td);
+        }
+        tblBody.appendChild(tr)
+    }
+    tbl.appendChild(tblBody);
+    return tbl;
+}
 
