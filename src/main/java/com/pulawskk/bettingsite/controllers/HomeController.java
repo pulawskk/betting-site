@@ -34,7 +34,7 @@ public class HomeController {
             session.setAttribute("isLoggedIn", true);
         }
         System.out.println("home -> " + userService.displayAuthName());
-        return "indexMain";
+        return "index";
     }
 
     @GetMapping(value = "/login")
