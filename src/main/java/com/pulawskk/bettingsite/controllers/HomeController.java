@@ -42,4 +42,12 @@ public class HomeController {
         System.out.println("login -> " + userService.displayAuthName());
         return "login";
     }
+
+    @GetMapping(value = {"/logout"})
+    public String logout(HttpSession session) {
+        session.setAttribute("isLoggedIn", null);
+        System.out.println("sucessfully logged out!");
+        System.out.println("home -> " + userService.displayAuthName());
+        return "homeView";
+    }
 }
