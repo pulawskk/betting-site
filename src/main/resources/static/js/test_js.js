@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    let betCounter = 0;
+    let betStakeCounter = 1;
     const button_odds = document.getElementsByTagName("button");
     for (let i = 0; i < button_odds.length; i++) {
-        let betCounter = 0;
 
         const but = button_odds[i];
 
@@ -18,16 +19,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 betSlipContent.appendChild(betDiv);
 
                 betCounter++;
+                const oddValue = but.getAttribute("data-el_selection");
+                betStakeCounter = betStakeCounter * Number(oddValue);
 
                 if(betCounter > 0) {
                     const betSummarizeContentOld = document.getElementsByClassName("betslip-summarize")[0];
                     const betSummarizeContent = betSummarizeContentOld.cloneNode(true);
 
-
                     betSummarizeContent.innerText = "bet summarize";
                     betSummarizeContent.style.height = "50px";
 
-                    const betSummarizeTable = tableBetSummarizeCreate();
+                    const betSummarizeTable = tableBetSummarizeCreate(betCounter, betStakeCounter);
                     betSummarizeContent.appendChild(betSummarizeTable);
 
                     const betPlacementButtons = tableBetPlacementCreate();
@@ -86,7 +88,7 @@ function tableBetCreate(oddButton) {
     return tbl;
 }
 
-function tableBetSummarizeCreate() {
+function tableBetSummarizeCreate(betCounter, betStakeCounter) {
     const tbl = document.createElement("table");
     tbl.style.width = "90%";
     tbl.style.margin = "auto";
@@ -101,7 +103,7 @@ function tableBetSummarizeCreate() {
     const tr0 = document.createElement("tr");
     const td01 = document.createElement("td");
     td01.colSpan = 2;
-    td01.innerText = "betslip id";
+    td01.innerText = "chosen bets: " + betCounter + " course: " + betStakeCounter.toFixed(2);
     tr0.appendChild(td01);
     tblBody.appendChild(tr0);
 
@@ -119,6 +121,7 @@ function tableBetSummarizeCreate() {
     numberInput.style.width = "50%";
     numberInput.style.height = "75%";
     numberInput.placeholder = "5.00";
+    const customerStake = numberInput.value;
     td12.innerText = "stake: ";
     td12.appendChild(numberInput);
     tr1.appendChild(td12);
@@ -136,7 +139,11 @@ function tableBetSummarizeCreate() {
     const td22 = document.createElement("td");
     const potentialWinDiv = document.createElement("div");
     potentialWinDiv.style.backgroundColor = "#fbfffb";
-    potentialWinDiv.innerText = "0.00";
+
+    //TODO how to keep value from input
+    const potentialWinNumber = betStakeCounter * 5;
+
+    potentialWinDiv.innerText = potentialWinNumber.toFixed(2).toString();
     td22.innerText = "potential win: ";
     td22.appendChild(potentialWinDiv);
     tr2.appendChild(td22);
