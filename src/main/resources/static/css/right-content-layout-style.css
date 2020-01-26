@@ -1,0 +1,47 @@
+.right-content-layout {
+    width: 20%;
+    float: right;
+    background-color: rgba(114, 162, 175, 0.54);
+    text-decoration-color: #f8f9fa;
+
+    /*display: flex;*/
+    flex-direction: column;
+
+    display: table;
+    border-spacing: 10px;
+    /*flex-direction: column;*/
+
+    justify-content: space-evenly;
+
+    align-items: center;
+}
+
+.betslip-content {
+    display: table-row;
+    background-color: #a5a57c;
+
+    min-height: 40%;
+
+    padding-top: 2%;
+    text-align: center;
+}
+
+.betslip-summarize {
+    display: table-row;
+    background-color: #a5a57c;
+
+    min-height: 0%;
+
+    padding-top: 2%;
+    text-align: center;
+}
+
+.chat-content {
+    display: table-row;
+    background-color: #a5a57c;
+
+    min-height: 40%;
+
+    padding-top: 2%;
+    text-align: center;
+}

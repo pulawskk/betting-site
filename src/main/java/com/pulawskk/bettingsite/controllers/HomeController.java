@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 
@@ -13,6 +15,7 @@ public class HomeController {
 
     @GetMapping(value = {"/", "/index"})
     public String indexPage() {
+
         return "homeView";
     }
 
@@ -26,14 +29,25 @@ public class HomeController {
     }
 
     @GetMapping(value = {"/home"})
-    public String homePage() {
+    public String homePage(HttpSession session) {
+        if(userService.userLoggedIn() != null) {
+            session.setAttribute("isLoggedIn", true);
+        }
         System.out.println("home -> " + userService.displayAuthName());
-        return "homeView";
+        return "index";
     }
 
     @GetMapping(value = "/login")
     public String loginCheck() {
         System.out.println("login -> " + userService.displayAuthName());
         return "login";
+    }
+
+    @GetMapping(value = {"/logout"})
+    public String logout(HttpSession session) {
+        session.setAttribute("isLoggedIn", null);
+        System.out.println("sucessfully logged out!");
+        System.out.println("home -> " + userService.displayAuthName());
+        return "homeView";
     }
 }
