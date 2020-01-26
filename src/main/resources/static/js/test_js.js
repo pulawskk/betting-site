@@ -39,6 +39,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
 
                     watchCustomerStakeInput(betStakeCounter);
+
+                    //after bet place click
+
+                    const placeBetButton = document.getElementsByName("bet-place-button")[0];
+                    console.dir(placeBetButton);
+
+                    placeBetButton.addEventListener("click", function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:8081/after",
+                            data: {
+                                "foo": "bar",
+                                "chelsea": "drogba"
+                            },
+                            success: function (msg) {
+                                alert("wow" + msg);
+                            }
+
+                        });
+                    })
                 }
             });
         }
@@ -172,6 +192,7 @@ function tableBetPlacementCreate() {
     const td01 = document.createElement("td");
     const bt1 = document.createElement("button");
     bt1.innerText = "PLACE BET";
+    bt1.name = "bet-place-button";
     td01.style.width = "70%";
     td01.appendChild(bt1);
     tr0.appendChild(td01);
