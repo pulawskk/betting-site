@@ -30,6 +30,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     const betSummarizeTable = tableBetSummarizeCreate();
                     betSummarizeContent.appendChild(betSummarizeTable);
 
+                    const betPlacementButtons = tableBetPlacementCreate();
+                    betSummarizeContent.appendChild(betPlacementButtons);
+
                     rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
                 }
             });
@@ -97,18 +100,18 @@ function tableBetSummarizeCreate() {
 
     const tr0 = document.createElement("tr");
     const td01 = document.createElement("td");
-    td01.colSpan = 3;
-    td01.innerText = "betslip summarize";
+    td01.colSpan = 2;
+    td01.innerText = "betslip id";
     tr0.appendChild(td01);
     tblBody.appendChild(tr0);
 
     const tr1 = document.createElement("tr");
     const td11 = document.createElement("td");
     td11.innerText = "A";
+    td11.style.width = "30%";
     tr1.appendChild(td11);
     const td12 = document.createElement("td");
     td12.innerText = "B";
-    td12.colSpan = 2;
     tr1.appendChild(td12);
 
     tblBody.appendChild(tr1);
@@ -117,27 +120,40 @@ function tableBetSummarizeCreate() {
     const td21 = document.createElement("td");
     td21.innerText = "A";
     tr2.appendChild(td21);
+    td21.style.width = "30%";
     const td22 = document.createElement("td");
-    td22.colSpan = 2;
     td22.innerText = "B";
     tr2.appendChild(td22);
 
     tblBody.appendChild(tr2);
 
-    const tr3 = document.createElement("tr");
-    const td31 = document.createElement("td");
-    td31.innerText = "A";
-    tr3.appendChild(td31);
-    const td32 = document.createElement("td");
-    td32.innerText = "B";
-    tr3.appendChild(td32);
-    const td33 = document.createElement("td");
-    td33.innerText = "C";
-    tr3.appendChild(td33);
+    tbl.appendChild(tblBody);
+    return tbl;
+}
 
-    tblBody.appendChild(tr3);
+function tableBetPlacementCreate() {
+    const tbl = document.createElement("table");
+    tbl.style.width = "90%";
+    tbl.style.margin = "auto";
+    tbl.style.marginTop = "2px";
+    tbl.style.marginBottom = "2px";
+    tbl.style.backgroundColor = "#a584a1";
+    tbl.style.color = "#0529a5";
+    tbl.setAttribute("border", "1");
 
+    const tblBody = document.createElement("tbody");
 
+    const tr0 = document.createElement("tr");
+    const td01 = document.createElement("td");
+    td01.innerText = "place bet";
+    td01.style.width = "70%";
+    tr0.appendChild(td01);
+
+    const td02 = document.createElement("td");
+    td02.innerText = "clear";
+    tr0.appendChild(td02);
+
+    tblBody.appendChild(tr0);
     tbl.appendChild(tblBody);
     return tbl;
 }
