@@ -107,22 +107,38 @@ function tableBetSummarizeCreate() {
 
     const tr1 = document.createElement("tr");
     const td11 = document.createElement("td");
-    td11.innerText = "A";
+    const cb1 = document.createElement("input");
+    cb1.type = "checkbox";
+    td11.innerText = "single:  ";
+    td11.appendChild(cb1);
     td11.style.width = "30%";
     tr1.appendChild(td11);
     const td12 = document.createElement("td");
-    td12.innerText = "B";
+    const numberInput = document.createElement("input");
+    numberInput.type = "number";
+    numberInput.style.width = "50%";
+    numberInput.style.height = "75%";
+    numberInput.placeholder = "5.00";
+    td12.innerText = "stake: ";
+    td12.appendChild(numberInput);
     tr1.appendChild(td12);
 
     tblBody.appendChild(tr1);
 
     const tr2 = document.createElement("tr");
     const td21 = document.createElement("td");
-    td21.innerText = "A";
+    const cb2 = document.createElement("input");
+    cb2.type = "checkbox";
+    td21.innerText = "multi:  ";
+    td21.appendChild(cb2);
     tr2.appendChild(td21);
     td21.style.width = "30%";
     const td22 = document.createElement("td");
-    td22.innerText = "B";
+    const potentialWinDiv = document.createElement("div");
+    potentialWinDiv.style.backgroundColor = "#fbfffb";
+    potentialWinDiv.innerText = "0.00";
+    td22.innerText = "potential win: ";
+    td22.appendChild(potentialWinDiv);
     tr2.appendChild(td22);
 
     tblBody.appendChild(tr2);
@@ -145,12 +161,16 @@ function tableBetPlacementCreate() {
 
     const tr0 = document.createElement("tr");
     const td01 = document.createElement("td");
-    td01.innerText = "place bet";
+    const bt1 = document.createElement("button");
+    bt1.innerText = "PLACE BET";
     td01.style.width = "70%";
+    td01.appendChild(bt1);
     tr0.appendChild(td01);
 
     const td02 = document.createElement("td");
-    td02.innerText = "clear";
+    const bt2 = document.createElement("button");
+    bt2.innerText = "CLEAR";
+    td02.appendChild(bt2);
     tr0.appendChild(td02);
 
     tblBody.appendChild(tr0);
