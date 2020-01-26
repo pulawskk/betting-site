@@ -19,9 +19,18 @@
 .betslip-content {
     display: table-row;
     background-color: #a5a57c;
-    width: 90%;
 
     min-height: 40%;
+
+    padding-top: 2%;
+    text-align: center;
+}
+
+.betslip-summarize {
+    display: table-row;
+    background-color: #a5a57c;
+
+    min-height: 0%;
 
     padding-top: 2%;
     text-align: center;
@@ -30,7 +39,6 @@
 .chat-content {
     display: table-row;
     background-color: #a5a57c;
-    width: 90%;
 
     min-height: 40%;
 
