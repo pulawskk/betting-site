@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let betCounter = 0;
     let betStakeCounter = 1;
     const button_odds = document.getElementsByTagName("button");
+
     for (let i = 0; i < button_odds.length; i++) {
 
         const but = button_odds[i];
@@ -36,13 +37,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     betSummarizeContent.appendChild(betPlacementButtons);
 
                     rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
+
+                    watchCustomerStakeInput(betStakeCounter);
                 }
             });
         }
-
-
     }
-
 });
 
 function tableBetCreate(oddButton) {
@@ -117,6 +117,7 @@ function tableBetSummarizeCreate(betCounter, betStakeCounter) {
     tr1.appendChild(td11);
     const td12 = document.createElement("td");
     const numberInput = document.createElement("input");
+    numberInput.name = "customer-stake";
     numberInput.type = "number";
     numberInput.style.width = "50%";
     numberInput.style.height = "75%";
@@ -139,6 +140,7 @@ function tableBetSummarizeCreate(betCounter, betStakeCounter) {
     const td22 = document.createElement("td");
     const potentialWinDiv = document.createElement("div");
     potentialWinDiv.style.backgroundColor = "#fbfffb";
+    potentialWinDiv.setAttribute("name", "potential-win-div");
 
     //TODO how to keep value from input
     const potentialWinNumber = betStakeCounter * 5;
@@ -184,3 +186,21 @@ function tableBetPlacementCreate() {
     tbl.appendChild(tblBody);
     return tbl;
 }
+
+function watchCustomerStakeInput(betStakeCounter) {
+    // get input element
+    const customerStakeValue = document.getElementsByName("customer-stake")[0];
+
+    customerStakeValue.addEventListener("input", updateCustomerStakeValue);
+
+    function updateCustomerStakeValue(e) {
+        const numGetFromInput = e.target.value;
+
+        // get potential win div
+        const currentPotentialWinDiv = document.getElementsByName("potential-win-div")[0];
+        console.dir(currentPotentialWinDiv);
+        const newPotentialWin = betStakeCounter * numGetFromInput;
+        currentPotentialWinDiv.innerText = newPotentialWin.toFixed(2).toString();
+    }
+}
+
