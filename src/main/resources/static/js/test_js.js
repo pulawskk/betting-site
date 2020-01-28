@@ -47,6 +47,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         const betSlipContentChosen = document.getElementsByClassName("betslip-content");
                         const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
 
+                        let competition_cell = null;
+                        let event_time_cell = null;
+                        let event_name_cell = null;
+                        let market_type_cell = null;
+                        let odd_value_cell = null;
+                        let user_type_cell = null;
+                        let betSlipType = null;
+
                         for (let i = 0; i < betsChosen.length; i++) {
                             const betChosenTable = betsChosen[i].firstElementChild;
 
@@ -55,37 +63,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
                             const tableBody = betChosenTable.firstChild;
                             const tableRows = tableBody.childNodes;
 
-                            const competition_cell = tableRows[0].firstChild.firstChild.nodeValue;
-                            const event_time_cell = tableRows[0].lastChild.firstChild.nodeValue;
-                            const event_name_cell = tableRows[1].firstChild.firstChild.nodeValue;
-                            const market_type_cell = tableRows[1].lastChild.firstChild.nodeValue;
-                            const odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
-                            const user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
+                            competition_cell = tableRows[0].firstChild.firstChild.nodeValue;
+                            event_time_cell = tableRows[0].lastChild.firstChild.nodeValue;
+                            event_name_cell = tableRows[1].firstChild.firstChild.nodeValue;
+                            market_type_cell = tableRows[1].lastChild.firstChild.nodeValue;
+                            odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
+                            user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
 
-                            const betSlipType = betsChosen.length > 1 ? "multi" : "single";
+                            betSlipType = betsChosen.length > 1 ? "multi" : "single";
 
-                            $.ajax({
-                                type: "POST",
-                                url: "http://localhost:8081/after",
-                                data: {
-                                    "betslipType": betSlipType.toString(),
+                            console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
+                        }
+
+                        $.post("http://localhost:8081/after", { json_string:JSON.stringify(
+                                {
+                                    "betslipType": "test123",
                                     "bets" :
                                         {
                                             "bet" :
                                                 {
-                                                    "uniqueId" : uniqueId.toString(),
-                                                    "userType": user_type_cell.toString()
+                                                    "uniqueId" : "test123",
+                                                    "userType": "test123"
                                                 }
                                         }
-                                },
-                                success: function (msg) {
-                                    alert("wow" + msg);
                                 }
+                            )});
 
-                            });
-
-                            console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
-                        }
+                        // $.ajax({
+                        //     type: "POST",
+                        //     url: "http://localhost:8081/after",
+                        //     data: {
+                        //         "betslipType": betSlipType.toString(),
+                        //         "bets" :
+                        //             {
+                        //                 "bet" :
+                        //                     {
+                        //                         "uniqueId" : uniqueId.toString(),
+                        //                         "userType": user_type_cell.toString()
+                        //                     }
+                        //             }
+                        //     },
+                        //     success: function (msg) {
+                        //         alert("wow" + msg);
+                        //     }
+                        //
+                        // });
                     })
                 }
             });
