@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 const rightContentLayout = document.getElementsByClassName("right-content-layout")[0];
                 const betSlipContent = document.getElementsByClassName("betslip-content")[0];
                 const betDiv = document.createElement("div");
+                betDiv.className = "bet-chosen-content";
 
                 const betTable = tableBetCreate(but);
                 betDiv.appendChild(betTable);
@@ -40,24 +41,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                     watchCustomerStakeInput(betStakeCounter);
 
-                    //after bet place click
-
                     const placeBetButton = document.getElementsByName("bet-place-button")[0];
-                    console.dir(placeBetButton);
 
                     placeBetButton.addEventListener("click", function () {
-                        $.ajax({
-                            type: "POST",
-                            url: "http://localhost:8081/after",
-                            data: {
-                                "foo": "bar",
-                                "chelsea": "drogba"
-                            },
-                            success: function (msg) {
-                                alert("wow" + msg);
-                            }
+                        const betSlipContentChosen = document.getElementsByClassName("betslip-content");
+                        const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
 
-                        });
+                        for (let i = 0; i < betsChosen.length; i++) {
+                            const betChosenTable = betsChosen[i].firstElementChild;
+
+                            const uniqueId = betChosenTable.getAttribute("event_id");
+
+                            const tableBody = betChosenTable.firstChild;
+                            const tableRows = tableBody.childNodes;
+
+                            const competition_cell = tableRows[0].firstChild.firstChild.nodeValue;
+                            const event_time_cell = tableRows[0].lastChild.firstChild.nodeValue;
+                            const event_name_cell = tableRows[1].firstChild.firstChild.nodeValue;
+                            const market_type_cell = tableRows[1].lastChild.firstChild.nodeValue;
+                            const odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
+                            const user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
+
+                            const betSlipType = betsChosen.length > 1 ? "multi" : "single";
+
+                            $.ajax({
+                                type: "POST",
+                                url: "http://localhost:8081/after",
+                                data: {
+                                    "betslipType": betSlipType.toString(),
+                                    "bets" :
+                                        {
+                                            "bet" :
+                                                {
+                                                    "uniqueId" : uniqueId.toString(),
+                                                    "userType": user_type_cell.toString()
+                                                }
+                                        }
+                                },
+                                success: function (msg) {
+                                    alert("wow" + msg);
+                                }
+
+                            });
+
+                            console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
+                        }
                     })
                 }
             });
@@ -74,6 +102,8 @@ function tableBetCreate(oddButton) {
     tbl.style.backgroundColor = "#a584a1";
     tbl.style.color = "#0529a5";
     tbl.setAttribute("border", "1");
+    tbl.setAttribute("name", "123");
+    tbl.setAttribute("event_id", oddButton.getAttribute("data-el_event-id"));
 
     const tblBody = document.createElement("tbody");
 
@@ -219,7 +249,6 @@ function watchCustomerStakeInput(betStakeCounter) {
 
         // get potential win div
         const currentPotentialWinDiv = document.getElementsByName("potential-win-div")[0];
-        console.dir(currentPotentialWinDiv);
         const newPotentialWin = betStakeCounter * numGetFromInput;
         currentPotentialWinDiv.innerText = newPotentialWin.toFixed(2).toString();
     }
