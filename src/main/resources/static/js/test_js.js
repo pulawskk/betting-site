@@ -1,5 +1,24 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    const buttonGetDataFromSession = document.getElementsByClassName("get-session-data")[0];
+    if (buttonGetDataFromSession != null) {
+        buttonGetDataFromSession.addEventListener("click", function () {
+            if (sessionStorage) {
+                const dataFromSession = sessionStorage.getItem("betslip-content-session");
+
+                //create DOM from string
+                // const divFromSession = document.createElement("div");
+                // divFromSession.innerHTML = dataFromSession;
+
+                const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
+                newBetSlipContent.innerHTML = dataFromSession;
+
+                console.dir(dataFromSession);
+                alert(dataFromSession);
+            }
+        })
+    }
+
     let betCounter = 0;
     let betStakeCounter = 1;
     const button_odds = document.getElementsByTagName("button");
@@ -47,6 +66,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         const betSlipContentChosen = document.getElementsByClassName("betslip-content");
                         const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
 
+                        //session save
+                        const lastAccess = new Date().getTime();
+                        if (sessionStorage) {
+                            sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
+                        }
+
                         let competition_cell = null;
                         let event_time_cell = null;
                         let event_name_cell = null;
@@ -74,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                             console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
                         }
+
 
                         $.post("http://localhost:8081/after", { json_string:JSON.stringify(
                                 {
@@ -109,6 +135,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         //
                         // });
                     })
+
+                    const time = sessionStorage.getItem("myapp_time");
+                    alert(time);
                 }
             });
         }
