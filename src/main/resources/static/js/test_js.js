@@ -6,15 +6,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
             if (sessionStorage) {
                 const dataFromSession = sessionStorage.getItem("betslip-content-session");
 
-                //create DOM from string
-                // const divFromSession = document.createElement("div");
-                // divFromSession.innerHTML = dataFromSession;
+                //trim the very first div
+
+                //first '>' sign is on position:
+                const startTrimPosition = dataFromSession.indexOf(">", 0);
+                //last '<' sign is on position:
+                const endTrimPosition = dataFromSession.indexOf("<", dataFromSession.length - 8);
+                console.dir("start: " + startTrimPosition + " end: " + endTrimPosition);
+
+                const dataFromSessionTrimmed = dataFromSession.substring(startTrimPosition + 1, endTrimPosition);
 
                 const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
-                newBetSlipContent.innerHTML = dataFromSession;
+                newBetSlipContent.innerHTML = dataFromSessionTrimmed;
 
-                console.dir(dataFromSession);
-                alert(dataFromSession);
+                console.dir(dataFromSessionTrimmed);
+                alert(dataFromSessionTrimmed);
             }
         })
     }
