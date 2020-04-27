@@ -5,22 +5,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
         buttonGetDataFromSession.addEventListener("click", function () {
             if (sessionStorage) {
                 const dataFromSession = sessionStorage.getItem("betslip-content-session");
+                if (dataFromSession !== "null") {
+                    console.dir("DATA FROM SESSION -> " + dataFromSession.length);
+                    //trim the very first div
 
-                //trim the very first div
+                    //first '>' sign is on position:
+                    const startTrimPosition = dataFromSession.indexOf(">", 0);
+                    //last '<' sign is on position:
+                    const endTrimPosition = dataFromSession.indexOf("<", dataFromSession.length - 8);
+                    console.dir("start: " + startTrimPosition + " end: " + endTrimPosition);
 
-                //first '>' sign is on position:
-                const startTrimPosition = dataFromSession.indexOf(">", 0);
-                //last '<' sign is on position:
-                const endTrimPosition = dataFromSession.indexOf("<", dataFromSession.length - 8);
-                console.dir("start: " + startTrimPosition + " end: " + endTrimPosition);
+                    const dataFromSessionTrimmed = dataFromSession.substring(startTrimPosition + 1, endTrimPosition);
 
-                const dataFromSessionTrimmed = dataFromSession.substring(startTrimPosition + 1, endTrimPosition);
+                    const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
 
-                const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
-                newBetSlipContent.innerHTML = dataFromSessionTrimmed;
+                    newBetSlipContent.innerHTML = dataFromSessionTrimmed;
 
-                console.dir(dataFromSessionTrimmed);
-                alert(dataFromSessionTrimmed);
+                    console.dir(dataFromSessionTrimmed);
+                    alert(dataFromSessionTrimmed);
+                }
             }
         })
     }
@@ -64,19 +67,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                     rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
 
+                    const betSlipContentChosen = document.getElementsByClassName("betslip-content");
+                    const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
+
+                    // todo add betsummarize content to session
+                    //save session
+                    if (sessionStorage) {
+                        sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
+                        sessionStorage.setItem("betslip-summarize-session", betSummarizeContent.outerHTML);
+                    }
+
                     watchCustomerStakeInput(betStakeCounter);
 
                     const placeBetButton = document.getElementsByName("bet-place-button")[0];
 
                     placeBetButton.addEventListener("click", function () {
-                        const betSlipContentChosen = document.getElementsByClassName("betslip-content");
-                        const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
-
-                        //session save
                         const lastAccess = new Date().getTime();
-                        if (sessionStorage) {
-                            sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
-                        }
 
                         let competition_cell = null;
                         let event_time_cell = null;
@@ -140,6 +146,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         //     }
                         //
                         // });
+
+                        sessionStorage.setItem("betslip-content-session", null);
                     })
 
                     const time = sessionStorage.getItem("myapp_time");
