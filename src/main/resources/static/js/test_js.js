@@ -1,8 +1,42 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
+
+    if (sessionStorage.getItem("betslip-content-session")) {
+        const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
+        const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
+
+        if (betSlipFromSession !== "null") {
+            console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
+
+            // trim the very first div
+            // first '>' sign is on position:
+            const startTrimPosition = betSlipFromSession.indexOf(">", 0);
+            //last '<' sign is on position:
+            const endTrimPosition = betSlipFromSession.indexOf("<", betSlipFromSession.length - 8);
+            const betSlipFromSessionTrimmed = betSlipFromSession.substring(startTrimPosition + 1, endTrimPosition);
+
+            const startTrimPosition2 = betSummarizeFromSession.indexOf(">", 0);
+            const endTrimPosition2 = betSummarizeFromSession.indexOf("<", betSummarizeFromSession.length - 8);
+            const betSummarizeFromSessionTrimmed = betSummarizeFromSession.substring(startTrimPosition2 + 1, endTrimPosition2);
+            const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
+            const newBetSlipSummarize = document.getElementsByClassName("betslip-summarize")[0];
+
+            newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
+            newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
+            alert(betSlipFromSessionTrimmed);
+        }
+    }
+
+
+
     const buttonGetDataFromSession = document.getElementsByClassName("get-session-data")[0];
     if (buttonGetDataFromSession != null) {
         buttonGetDataFromSession.addEventListener("click", function () {
+
+
+
+
+
             if (sessionStorage) {
                 const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
                 const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
