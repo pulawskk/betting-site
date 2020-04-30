@@ -4,25 +4,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if (buttonGetDataFromSession != null) {
         buttonGetDataFromSession.addEventListener("click", function () {
             if (sessionStorage) {
-                const dataFromSession = sessionStorage.getItem("betslip-content-session");
-                if (dataFromSession !== "null") {
-                    console.dir("DATA FROM SESSION -> " + dataFromSession.length);
-                    //trim the very first div
+                const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
+                const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
 
-                    //first '>' sign is on position:
-                    const startTrimPosition = dataFromSession.indexOf(">", 0);
+                if (betSlipFromSession !== "null") {
+                    console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
+
+                    // trim the very first div
+                    // first '>' sign is on position:
+                    const startTrimPosition = betSlipFromSession.indexOf(">", 0);
                     //last '<' sign is on position:
-                    const endTrimPosition = dataFromSession.indexOf("<", dataFromSession.length - 8);
-                    console.dir("start: " + startTrimPosition + " end: " + endTrimPosition);
+                    const endTrimPosition = betSlipFromSession.indexOf("<", betSlipFromSession.length - 8);
+                    const betSlipFromSessionTrimmed = betSlipFromSession.substring(startTrimPosition + 1, endTrimPosition);
 
-                    const dataFromSessionTrimmed = dataFromSession.substring(startTrimPosition + 1, endTrimPosition);
-
+                    const startTrimPosition2 = betSummarizeFromSession.indexOf(">", 0);
+                    const endTrimPosition2 = betSummarizeFromSession.indexOf("<", betSummarizeFromSession.length - 8);
+                    const betSummarizeFromSessionTrimmed = betSummarizeFromSession.substring(startTrimPosition2 + 1, endTrimPosition2);
                     const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
+                    const newBetSlipSummarize = document.getElementsByClassName("betslip-summarize")[0];
 
-                    newBetSlipContent.innerHTML = dataFromSessionTrimmed;
-
-                    console.dir(dataFromSessionTrimmed);
-                    alert(dataFromSessionTrimmed);
+                    newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
+                    newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
+                    alert(betSlipFromSessionTrimmed);
                 }
             }
         })
@@ -40,119 +43,148 @@ document.addEventListener("DOMContentLoaded", function(event) {
             but.addEventListener("click", function () {
 
                 const rightContentLayout = document.getElementsByClassName("right-content-layout")[0];
-                const betSlipContent = document.getElementsByClassName("betslip-content")[0];
+
+                var betSlipContent = document.getElementsByClassName("betslip-content")[0];
+
+
                 const betDiv = document.createElement("div");
                 betDiv.className = "bet-chosen-content";
 
                 const betTable = tableBetCreate(but);
                 betDiv.appendChild(betTable);
+
                 betSlipContent.appendChild(betDiv);
 
-                betCounter++;
-                const oddValue = but.getAttribute("data-el_selection");
-                betStakeCounter = betStakeCounter * Number(oddValue);
+                var betSummarizeContentOld = document.getElementsByClassName("betslip-summarize")[0];
 
-                if(betCounter > 0) {
-                    const betSummarizeContentOld = document.getElementsByClassName("betslip-summarize")[0];
-                    const betSummarizeContent = betSummarizeContentOld.cloneNode(true);
+                var betSummarizeContent = betSummarizeContentOld.cloneNode(true);
 
-                    betSummarizeContent.innerText = "bet summarize";
-                    betSummarizeContent.style.height = "50px";
+                if (betSummarizeContent.childElementCount.valueOf() === 0) {
+
+                    betCounter = 1;
+
+                    const oddValue = but.getAttribute("data-el_selection");
+                    betStakeCounter = betStakeCounter * Number(oddValue);
+
+                    const betSummarizeTitle = document.createElement("h5");
+                    betSummarizeTitle.innerText = "bet summarize";
+                    betSummarizeContent.appendChild(betSummarizeTitle);
+                    console.dir("bet summarize content(=0): " + betSummarizeContent.childElementCount.valueOf());
 
                     const betSummarizeTable = tableBetSummarizeCreate(betCounter, betStakeCounter);
+
                     betSummarizeContent.appendChild(betSummarizeTable);
-
                     const betPlacementButtons = tableBetPlacementCreate();
+
                     betSummarizeContent.appendChild(betPlacementButtons);
+                } else {
+                    console.dir("bet summarize content(>0): " + betSummarizeContent.childElementCount.valueOf());
 
-                    rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
+                    betCounter = parseInt(sessionStorage.getItem("betslip-bet-counter"));
+                    betStakeCounter = parseFloat(sessionStorage.getItem("betslip-bet-stakeCounter"));
 
-                    const betSlipContentChosen = document.getElementsByClassName("betslip-content");
-                    const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
+                    betCounter++;
+                    const oddValue = but.getAttribute("data-el_selection");
+                    betStakeCounter = betStakeCounter * Number(oddValue);
 
-                    // todo add betsummarize content to session
-                    //save session
-                    if (sessionStorage) {
-                        sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
-                        sessionStorage.setItem("betslip-summarize-session", betSummarizeContent.outerHTML);
+                    console.dir("bet counter: " + betCounter + " | bet stake counter: " + betStakeCounter);
+
+                    const betSummarizeTable = tableBetSummarizeCreate(betCounter, betStakeCounter);
+
+                    betSummarizeContent.replaceChild(betSummarizeTable, betSummarizeContent.children[1]);
+                    const betPlacementButtons = tableBetPlacementCreate();
+                    betSummarizeContent.replaceChild(betPlacementButtons, betSummarizeContent.lastChild);
+
+                }
+
+                rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
+
+                const betSlipContentChosen = document.getElementsByClassName("betslip-content");
+                const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
+
+                watchCustomerStakeInput(betStakeCounter);
+
+                //save session
+                if (sessionStorage) {
+                    sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
+                    sessionStorage.setItem("betslip-summarize-session", betSummarizeContent.outerHTML);
+                    sessionStorage.setItem("betslip-bet-counter", betCounter.toString());
+                    sessionStorage.setItem("betslip-bet-stakeCounter", betStakeCounter.toString());
+                }
+
+                const placeBetButton = document.getElementsByName("bet-place-button")[0];
+
+                placeBetButton.addEventListener("click", function () {
+                    const lastAccess = new Date().getTime();
+
+                    let competition_cell = null;
+                    let event_time_cell = null;
+                    let event_name_cell = null;
+                    let market_type_cell = null;
+                    let odd_value_cell = null;
+                    let user_type_cell = null;
+                    let betSlipType = null;
+
+                    for (let i = 0; i < betsChosen.length; i++) {
+                        const betChosenTable = betsChosen[i].firstElementChild;
+
+                        const uniqueId = betChosenTable.getAttribute("event_id");
+
+                        const tableBody = betChosenTable.firstChild;
+                        const tableRows = tableBody.childNodes;
+
+                        competition_cell = tableRows[0].firstChild.firstChild.nodeValue;
+                        event_time_cell = tableRows[0].lastChild.firstChild.nodeValue;
+                        event_name_cell = tableRows[1].firstChild.firstChild.nodeValue;
+                        market_type_cell = tableRows[1].lastChild.firstChild.nodeValue;
+                        odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
+                        user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
+
+                        betSlipType = betsChosen.length > 1 ? "multi" : "single";
+
+                        console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
                     }
 
-                    watchCustomerStakeInput(betStakeCounter);
+                    $.post("http://localhost:8081/after", { json_string:JSON.stringify(
+                            {
+                                "betslipType": "test123",
+                                "bets" :
+                                    {
+                                        "bet" :
+                                            {
+                                                "uniqueId" : "test123",
+                                                "userType": "test123"
+                                            }
+                                    }
+                            }
+                        )});
 
-                    const placeBetButton = document.getElementsByName("bet-place-button")[0];
+                    // $.ajax({
+                    //     type: "POST",
+                    //     url: "http://localhost:8081/after",
+                    //     data: {
+                    //         "betslipType": betSlipType.toString(),
+                    //         "bets" :
+                    //             {
+                    //                 "bet" :
+                    //                     {
+                    //                         "uniqueId" : uniqueId.toString(),
+                    //                         "userType": user_type_cell.toString()
+                    //                     }
+                    //             }
+                    //     },
+                    //     success: function (msg) {
+                    //         alert("wow" + msg);
+                    //     }
+                    //
+                    // });
 
-                    placeBetButton.addEventListener("click", function () {
-                        const lastAccess = new Date().getTime();
+                    sessionStorage.setItem("betslip-content-session", null);
+                })
 
-                        let competition_cell = null;
-                        let event_time_cell = null;
-                        let event_name_cell = null;
-                        let market_type_cell = null;
-                        let odd_value_cell = null;
-                        let user_type_cell = null;
-                        let betSlipType = null;
+                const time = sessionStorage.getItem("myapp_time");
+                alert(time);
 
-                        for (let i = 0; i < betsChosen.length; i++) {
-                            const betChosenTable = betsChosen[i].firstElementChild;
-
-                            const uniqueId = betChosenTable.getAttribute("event_id");
-
-                            const tableBody = betChosenTable.firstChild;
-                            const tableRows = tableBody.childNodes;
-
-                            competition_cell = tableRows[0].firstChild.firstChild.nodeValue;
-                            event_time_cell = tableRows[0].lastChild.firstChild.nodeValue;
-                            event_name_cell = tableRows[1].firstChild.firstChild.nodeValue;
-                            market_type_cell = tableRows[1].lastChild.firstChild.nodeValue;
-                            odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
-                            user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
-
-                            betSlipType = betsChosen.length > 1 ? "multi" : "single";
-
-                            console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
-                        }
-
-
-                        $.post("http://localhost:8081/after", { json_string:JSON.stringify(
-                                {
-                                    "betslipType": "test123",
-                                    "bets" :
-                                        {
-                                            "bet" :
-                                                {
-                                                    "uniqueId" : "test123",
-                                                    "userType": "test123"
-                                                }
-                                        }
-                                }
-                            )});
-
-                        // $.ajax({
-                        //     type: "POST",
-                        //     url: "http://localhost:8081/after",
-                        //     data: {
-                        //         "betslipType": betSlipType.toString(),
-                        //         "bets" :
-                        //             {
-                        //                 "bet" :
-                        //                     {
-                        //                         "uniqueId" : uniqueId.toString(),
-                        //                         "userType": user_type_cell.toString()
-                        //                     }
-                        //             }
-                        //     },
-                        //     success: function (msg) {
-                        //         alert("wow" + msg);
-                        //     }
-                        //
-                        // });
-
-                        sessionStorage.setItem("betslip-content-session", null);
-                    })
-
-                    const time = sessionStorage.getItem("myapp_time");
-                    alert(time);
-                }
             });
         }
     }
