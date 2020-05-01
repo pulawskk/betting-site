@@ -203,20 +203,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     //
                     // });
 
-                    sessionStorage.setItem("betslip-content-session", null);
-                    sessionStorage.setItem("betslip-summarize-session", null);
-                    sessionStorage.setItem("betslip-bet-counter", null);
-                    sessionStorage.setItem("betslip-bet-stakeCounter", null);
-
-                    var betSlipContentToDelete = document.getElementsByClassName("betslip-content")[0];
-                    while (betSlipContentToDelete.children.length > 1) {
-                        betSlipContentToDelete.lastChild.remove();
-                    }
-
-                    var betSlipSummarizeToDelete = document.getElementsByClassName("betslip-summarize")[0];
-                    while (betSlipSummarizeToDelete.children.length > 0) {
-                        betSlipSummarizeToDelete.firstChild.remove();
-                    }
+                    clearBetSlip();
                 });
 
                 const time = sessionStorage.getItem("myapp_time");
@@ -226,6 +213,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 });
+
+function clearBetSlip() {
+    sessionStorage.setItem("betslip-content-session", null);
+    sessionStorage.setItem("betslip-summarize-session", null);
+    sessionStorage.setItem("betslip-bet-counter", null);
+    sessionStorage.setItem("betslip-bet-stakeCounter", null);
+
+    var betSlipContentToDelete = document.getElementsByClassName("betslip-content")[0];
+    while (betSlipContentToDelete.children.length > 1) {
+        betSlipContentToDelete.lastChild.remove();
+    }
+
+    var betSlipSummarizeToDelete = document.getElementsByClassName("betslip-summarize")[0];
+    while (betSlipSummarizeToDelete.children.length > 0) {
+        betSlipSummarizeToDelete.firstChild.remove();
+    }
+}
 
 function tableBetCreate(oddButton) {
     const tbl = document.createElement("table");
