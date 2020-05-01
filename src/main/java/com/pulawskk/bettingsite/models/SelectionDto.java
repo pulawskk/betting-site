@@ -1,11 +1,8 @@
 package com.pulawskk.bettingsite.models;
 
-import com.pulawskk.bettingsite.enums.BetSlipType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Setter
 @Getter
@@ -16,6 +13,8 @@ public class SelectionDto {
     private String marketType;
     private String odd;
     private String userType;
+    private String eventName;
+    private String competition;
 
     @Override
     public String toString() {
@@ -23,6 +22,8 @@ public class SelectionDto {
                 ", marketType='" + marketType + '\'' +
                 ", odd='" + odd + '\'' +
                 ", userType='" + userType + '\'' +
+                ", eventName='" + eventName + '\'' +
+                ", competition='" + competition + '\'' +
                 '}';
     }
 }

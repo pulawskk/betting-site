@@ -164,8 +164,10 @@ function placeBetSlip() {
 
         var selection = '{"uniqueId":"' + uniqueId
             + '","marketType":"' + market_type_cell
-            + '","odd":"' + odd_value_cell + '","userType":"'
-            + user_type_cell + '"}';
+            + '","odd":"' + odd_value_cell
+            + '","eventName":"' + event_name_cell
+            + '","competition":"' + competition_cell
+            + '","userType":"' + user_type_cell + '"}';
 
         selections = selections.concat(selection).concat(',');
         console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
