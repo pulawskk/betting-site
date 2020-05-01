@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,5 +21,15 @@ public class Selection {
         return uniqueId + " | " + marketName + " | "
                 + competition + " | " + marketType + " | "
                 + userType + " | " + value;
+    }
+
+    @Builder
+    public Selection(String marketType, String value, String marketName, String uniqueId, String competition, String userType) {
+        this.marketType = marketType;
+        this.value = value;
+        this.marketName = marketName;
+        this.uniqueId = uniqueId;
+        this.competition = competition;
+        this.userType = userType;
     }
 }
