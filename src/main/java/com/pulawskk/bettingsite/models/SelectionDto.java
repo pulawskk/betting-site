@@ -12,5 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 public class SelectionDto {
 
-//    private String
+    private String uniqueId;
+    private String marketType;
+    private String odd;
+    private String userType;
+
+    @Override
+    public String toString() {
+        return "uniqueId='" + uniqueId + '\'' +
+                ", marketType='" + marketType + '\'' +
+                ", odd='" + odd + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
+    }
 }

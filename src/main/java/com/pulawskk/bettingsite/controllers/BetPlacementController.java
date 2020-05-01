@@ -92,6 +92,7 @@ public class BetPlacementController {
         System.out.println("after -> " + userService.displayAuthName());
         System.out.println("type: " + s.getStake());
         System.out.println("types: " + s.getTypes());
+        s.getSelections().forEach(System.out::println);
         return "redirect:/events/football";
     }
 }

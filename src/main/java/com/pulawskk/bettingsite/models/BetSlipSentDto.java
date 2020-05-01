@@ -15,4 +15,7 @@ public class BetSlipSentDto {
     private List<BetSlipType> types;
 
     private String stake;
+
+    private List<SelectionDto> selections;
+
 }

@@ -137,13 +137,13 @@ function placeBetSlip() {
 
     let placedStake = document.getElementById("customer-stake").value;
 
-    console.dir(placedStake.length);
-
     if (placedStake.length === 0) {
         placedStake = '5';
     }
 
     const betsChosen = document.getElementsByClassName("bet-chosen-content");
+
+    var selections = '"selections":[';
 
     for (let i = 0; i < betsChosen.length; i++) {
         const betChosenTable = betsChosen[i].firstElementChild;
@@ -161,15 +161,18 @@ function placeBetSlip() {
         user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
 
         betSlipType = betsChosen.length > 1 ? "MULTIPLE" : "SINGLE";
-        const selection = "                    \"bet\" :\n" +
-            "                        {\n" +
-            "                            \"uniqueId\" : \"test123\",\n" +
-            "                            \"userType\": \"test123\"\n" +
-            "                        }";
+
+        var selection = '{"uniqueId":"' + uniqueId
+            + '","marketType":"' + market_type_cell
+            + '","odd":"' + odd_value_cell + '","userType":"'
+            + user_type_cell + '"}';
+
+        selections = selections.concat(selection).concat(',');
         console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
     }
-
-    var data = '{"stake":" ' + placedStake + ' ","types":["' + betSlipType + '"]}';
+    selections = selections.substring(0, selections.length-1);
+    selections = selections.concat(']');
+    var data = '{"stake":" ' + placedStake + ' ","types":["' + betSlipType + '"],' + selections + '}';
 
     $.ajax({
         type: "POST",
