@@ -1,13 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-
-
     if (sessionStorage.getItem("betslip-content-session")) {
         const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
         const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
 
         if (betSlipFromSession !== "null") {
-            console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
-
             // trim the very first div
             // first '>' sign is on position:
             const startTrimPosition = betSlipFromSession.indexOf(">", 0);
@@ -27,43 +23,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
-
-
-    const buttonGetDataFromSession = document.getElementsByClassName("get-session-data")[0];
-    if (buttonGetDataFromSession != null) {
-        buttonGetDataFromSession.addEventListener("click", function () {
-
-
-
-
-
-            if (sessionStorage) {
-                const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
-                const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
-
-                if (betSlipFromSession !== "null") {
-                    console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
-
-                    // trim the very first div
-                    // first '>' sign is on position:
-                    const startTrimPosition = betSlipFromSession.indexOf(">", 0);
-                    //last '<' sign is on position:
-                    const endTrimPosition = betSlipFromSession.indexOf("<", betSlipFromSession.length - 8);
-                    const betSlipFromSessionTrimmed = betSlipFromSession.substring(startTrimPosition + 1, endTrimPosition);
-
-                    const startTrimPosition2 = betSummarizeFromSession.indexOf(">", 0);
-                    const endTrimPosition2 = betSummarizeFromSession.indexOf("<", betSummarizeFromSession.length - 8);
-                    const betSummarizeFromSessionTrimmed = betSummarizeFromSession.substring(startTrimPosition2 + 1, endTrimPosition2);
-                    const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
-                    const newBetSlipSummarize = document.getElementsByClassName("betslip-summarize")[0];
-
-                    newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
-                    newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
-                    alert(betSlipFromSessionTrimmed);
-                }
-            }
-        })
-    }
+    //
+    // const buttonGetDataFromSession = document.getElementsByClassName("get-session-data")[0];
+    // if (buttonGetDataFromSession != null) {
+    //     buttonGetDataFromSession.addEventListener("click", function () {
+    //
+    //
+    //
+    //
+    //
+    //         if (sessionStorage) {
+    //             const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
+    //             const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
+    //
+    //             if (betSlipFromSession !== "null") {
+    //                 console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
+    //
+    //                 // trim the very first div
+    //                 // first '>' sign is on position:
+    //                 const startTrimPosition = betSlipFromSession.indexOf(">", 0);
+    //                 //last '<' sign is on position:
+    //                 const endTrimPosition = betSlipFromSession.indexOf("<", betSlipFromSession.length - 8);
+    //                 const betSlipFromSessionTrimmed = betSlipFromSession.substring(startTrimPosition + 1, endTrimPosition);
+    //
+    //                 const startTrimPosition2 = betSummarizeFromSession.indexOf(">", 0);
+    //                 const endTrimPosition2 = betSummarizeFromSession.indexOf("<", betSummarizeFromSession.length - 8);
+    //                 const betSummarizeFromSessionTrimmed = betSummarizeFromSession.substring(startTrimPosition2 + 1, endTrimPosition2);
+    //                 const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
+    //                 const newBetSlipSummarize = document.getElementsByClassName("betslip-summarize")[0];
+    //
+    //                 newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
+    //                 newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
+    //                 alert(betSlipFromSessionTrimmed);
+    //             }
+    //         }
+    //     })
+    // }
 
     let betCounter = 0;
     let betStakeCounter = 1;
@@ -76,10 +71,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         if (but.name.includes("odd_button_", 0)) {
             but.addEventListener("click", function () {
 
+                var rightContentLayoutTemplate = null;
                 const rightContentLayout = document.getElementsByClassName("right-content-layout")[0];
 
                 var betSlipContent = document.getElementsByClassName("betslip-content")[0];
-
 
                 const betDiv = document.createElement("div");
                 betDiv.className = "bet-chosen-content";
@@ -94,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 var betSummarizeContent = betSummarizeContentOld.cloneNode(true);
 
                 if (betSummarizeContent.childElementCount.valueOf() === 0) {
-
+                    rightContentLayoutTemplate = rightContentLayout.outerHTML;
                     betCounter = 1;
 
                     const oddValue = but.getAttribute("data-el_selection");
@@ -103,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     const betSummarizeTitle = document.createElement("h5");
                     betSummarizeTitle.innerText = "bet summarize";
                     betSummarizeContent.appendChild(betSummarizeTitle);
-                    console.dir("bet summarize content(=0): " + betSummarizeContent.childElementCount.valueOf());
 
                     const betSummarizeTable = tableBetSummarizeCreate(betCounter, betStakeCounter);
 
@@ -112,16 +106,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                     betSummarizeContent.appendChild(betPlacementButtons);
                 } else {
-                    console.dir("bet summarize content(>0): " + betSummarizeContent.childElementCount.valueOf());
-
                     betCounter = parseInt(sessionStorage.getItem("betslip-bet-counter"));
                     betStakeCounter = parseFloat(sessionStorage.getItem("betslip-bet-stakeCounter"));
 
                     betCounter++;
                     const oddValue = but.getAttribute("data-el_selection");
                     betStakeCounter = betStakeCounter * Number(oddValue);
-
-                    console.dir("bet counter: " + betCounter + " | bet stake counter: " + betStakeCounter);
 
                     const betSummarizeTable = tableBetSummarizeCreate(betCounter, betStakeCounter);
 
@@ -214,7 +204,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     // });
 
                     sessionStorage.setItem("betslip-content-session", null);
-                })
+                    sessionStorage.setItem("betslip-summarize-session", null);
+                    sessionStorage.setItem("betslip-bet-counter", null);
+                    sessionStorage.setItem("betslip-bet-stakeCounter", null);
+
+                    var betSlipContentToDelete = document.getElementsByClassName("betslip-content")[0];
+                    while (betSlipContentToDelete.children.length > 1) {
+                        betSlipContentToDelete.lastChild.remove();
+                    }
+
+                    var betSlipSummarizeToDelete = document.getElementsByClassName("betslip-summarize")[0];
+                    while (betSlipSummarizeToDelete.children.length > 0) {
+                        betSlipSummarizeToDelete.firstChild.remove();
+                    }
+                });
 
                 const time = sessionStorage.getItem("myapp_time");
                 alert(time);
