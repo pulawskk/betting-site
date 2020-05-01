@@ -135,6 +135,14 @@ function placeBetSlip() {
     let user_type_cell = null;
     let betSlipType = null;
 
+    let placedStake = document.getElementById("customer-stake").value;
+
+    console.dir(placedStake.length);
+
+    if (placedStake.length === 0) {
+        placedStake = '5';
+    }
+
     const betsChosen = document.getElementsByClassName("bet-chosen-content");
 
     for (let i = 0; i < betsChosen.length; i++) {
@@ -161,7 +169,7 @@ function placeBetSlip() {
         console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
     }
 
-    var data = '{"type":"SINGLE"}';
+    var data = '{"stake":" ' + placedStake + ' ","types":["' + betSlipType + '"]}';
 
     $.ajax({
         type: "POST",
@@ -267,6 +275,7 @@ function tableBetSummarizeCreate(betCounter, betStakeCounter) {
     const td12 = document.createElement("td");
     const numberInput = document.createElement("input");
     numberInput.name = "customer-stake";
+    numberInput.id = "customer-stake";
     numberInput.type = "number";
     numberInput.style.width = "50%";
     numberInput.style.height = "75%";

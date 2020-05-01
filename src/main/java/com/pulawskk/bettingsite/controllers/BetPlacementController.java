@@ -8,6 +8,7 @@ import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import com.pulawskk.bettingsite.services.UserService;
 import org.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -86,10 +87,11 @@ public class BetPlacementController {
         return "redirect:/events/football";
     }
 
-    @PostMapping(value = "/post")
+    @PostMapping(value = "/post", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String afterPage(@RequestBody BetSlipSentDto s) {
         System.out.println("after -> " + userService.displayAuthName());
-        System.out.println("types: " + s.getType());
+        System.out.println("type: " + s.getStake());
+        System.out.println("types: " + s.getTypes());
         return "redirect:/events/football";
     }
 }

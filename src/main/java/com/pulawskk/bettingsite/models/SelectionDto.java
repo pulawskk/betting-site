@@ -10,9 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
-public class BetSlipSentDto {
+public class SelectionDto {
 
-    private List<BetSlipType> types;
-
-    private String stake;
+//    private String
 }
