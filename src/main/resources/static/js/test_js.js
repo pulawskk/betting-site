@@ -20,76 +20,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
             newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
             newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
 
-
-
             const placeBetButton = document.getElementsByName("bet-place-button")[0];
 
             placeBetButton.addEventListener("click", function () {
                 placeBetSlip();
             });
 
-
-
             const clearButton = document.getElementsByName("bet-clear-button")[0];
             clearButton.addEventListener("click", function () {
                 betStakeCounter = 1;
                 clearBetSlip();
             });
-
-
-
-
-            alert(betSlipFromSessionTrimmed);
         }
     }
-
-    //
-    // const buttonGetDataFromSession = document.getElementsByClassName("get-session-data")[0];
-    // if (buttonGetDataFromSession != null) {
-    //     buttonGetDataFromSession.addEventListener("click", function () {
-    //
-    //
-    //
-    //
-    //
-    //         if (sessionStorage) {
-    //             const betSlipFromSession = sessionStorage.getItem("betslip-content-session");
-    //             const betSummarizeFromSession = sessionStorage.getItem("betslip-summarize-session");
-    //
-    //             if (betSlipFromSession !== "null") {
-    //                 console.dir("DATA FROM SESSION -> " + betSlipFromSession.length);
-    //
-    //                 // trim the very first div
-    //                 // first '>' sign is on position:
-    //                 const startTrimPosition = betSlipFromSession.indexOf(">", 0);
-    //                 //last '<' sign is on position:
-    //                 const endTrimPosition = betSlipFromSession.indexOf("<", betSlipFromSession.length - 8);
-    //                 const betSlipFromSessionTrimmed = betSlipFromSession.substring(startTrimPosition + 1, endTrimPosition);
-    //
-    //                 const startTrimPosition2 = betSummarizeFromSession.indexOf(">", 0);
-    //                 const endTrimPosition2 = betSummarizeFromSession.indexOf("<", betSummarizeFromSession.length - 8);
-    //                 const betSummarizeFromSessionTrimmed = betSummarizeFromSession.substring(startTrimPosition2 + 1, endTrimPosition2);
-    //                 const newBetSlipContent = document.getElementsByClassName("betslip-content")[0];
-    //                 const newBetSlipSummarize = document.getElementsByClassName("betslip-summarize")[0];
-    //
-    //                 newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
-    //                 newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
-    //                 alert(betSlipFromSessionTrimmed);
-    //             }
-    //         }
-    //     })
-    // }
-
-    // var clearButtonElement = document.getElementsByName("bet-clear-button");
-    // if (clearButtonElement !== null) {
-    //     console.dir("yes");
-    //     console.dir(clearButtonElement.length);
-    //     const clearButton = clearButtonElement[0];
-    //     clearButton.addEventListener("click", function () {
-    //         clearBetSlip();
-    //     });
-    // }
-
 
     let betCounter = 0;
     let betStakeCounter = 1;
@@ -149,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     betSummarizeContent.replaceChild(betSummarizeTable, betSummarizeContent.children[1]);
                     const betPlacementButtons = tableBetPlacementCreate();
                     betSummarizeContent.replaceChild(betPlacementButtons, betSummarizeContent.lastChild);
-
                 }
 
                 rightContentLayout.replaceChild(betSummarizeContent, betSummarizeContentOld);
@@ -158,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 const betsChosen = betSlipContentChosen[0].getElementsByClassName("bet-chosen-content");
 
                 watchCustomerStakeInput(betStakeCounter);
-
 
                 //save session
                 if (sessionStorage) {
@@ -178,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 placeBetButton.addEventListener("click", function () {
                     placeBetSlip();
+                    betStakeCounter = 1;
                 });
             });
         }
