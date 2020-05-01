@@ -1,10 +1,13 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.google.gson.JsonObject;
 import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.models.BetSlipDto;
+import com.pulawskk.bettingsite.models.BetSlipSentDto;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import com.pulawskk.bettingsite.services.UserService;
+import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -80,6 +83,13 @@ public class BetPlacementController {
                 System.out.print("\n");
             });
         }
+        return "redirect:/events/football";
+    }
+
+    @PostMapping(value = "/post")
+    public String afterPage(@RequestBody BetSlipSentDto s) {
+        System.out.println("after -> " + userService.displayAuthName());
+        System.out.println("types: " + s.getType());
         return "redirect:/events/football";
     }
 }

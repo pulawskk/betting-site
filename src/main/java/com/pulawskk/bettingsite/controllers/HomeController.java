@@ -21,13 +21,6 @@ public class HomeController {
         return "homeView";
     }
 
-    @PostMapping(value = "/after")
-    public void afterPage(@RequestBody String s) {
-        System.out.println("after -> " + userService.displayAuthName());
-        System.out.println("info from get: " + s);
-        return;
-    }
-
     @GetMapping(value = {"/home"})
     public String homePage(HttpSession session) {
         if(userService.userLoggedIn() != null) {

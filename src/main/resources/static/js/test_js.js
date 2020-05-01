@@ -152,44 +152,23 @@ function placeBetSlip() {
         odd_value_cell = tableRows[2].firstChild.firstChild.nodeValue;
         user_type_cell = tableRows[2].lastChild.firstChild.nodeValue;
 
-        betSlipType = betsChosen.length > 1 ? "multi" : "single";
-
+        betSlipType = betsChosen.length > 1 ? "MULTIPLE" : "SINGLE";
+        const selection = "                    \"bet\" :\n" +
+            "                        {\n" +
+            "                            \"uniqueId\" : \"test123\",\n" +
+            "                            \"userType\": \"test123\"\n" +
+            "                        }";
         console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
     }
 
-    $.post("http://localhost:8081/after", { json_string:JSON.stringify(
-            {
-                "betslipType": "test123",
-                "bets" :
-                    {
-                        "bet" :
-                            {
-                                "uniqueId" : "test123",
-                                "userType": "test123"
-                            }
-                    }
-            }
-        )});
+    var data = '{"type":"SINGLE"}';
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: "http://localhost:8081/after",
-    //     data: {
-    //         "betslipType": betSlipType.toString(),
-    //         "bets" :
-    //             {
-    //                 "bet" :
-    //                     {
-    //                         "uniqueId" : uniqueId.toString(),
-    //                         "userType": user_type_cell.toString()
-    //                     }
-    //             }
-    //     },
-    //     success: function (msg) {
-    //         alert("wow" + msg);
-    //     }
-    //
-    // });
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8081/settler/post",
+        data: data,
+        contentType: "application/json",
+    });
 
     //clear betStakeCounter
     betStakeCounter = 1;
