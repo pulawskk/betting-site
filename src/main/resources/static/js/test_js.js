@@ -19,6 +19,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             newBetSlipContent.innerHTML = betSlipFromSessionTrimmed;
             newBetSlipSummarize.innerHTML = betSummarizeFromSessionTrimmed;
+
+
+
+
+
+
+
+            const clearButton = document.getElementsByName("bet-clear-button")[0];
+            clearButton.addEventListener("click", function () {
+                betStakeCounter = 1;
+                clearBetSlip();
+            });
+
+
+
+
             alert(betSlipFromSessionTrimmed);
         }
     }
@@ -59,6 +75,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //         }
     //     })
     // }
+
+    // var clearButtonElement = document.getElementsByName("bet-clear-button");
+    // if (clearButtonElement !== null) {
+    //     console.dir("yes");
+    //     console.dir(clearButtonElement.length);
+    //     const clearButton = clearButtonElement[0];
+    //     clearButton.addEventListener("click", function () {
+    //         clearBetSlip();
+    //     });
+    // }
+
 
     let betCounter = 0;
     let betStakeCounter = 1;
@@ -128,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 watchCustomerStakeInput(betStakeCounter);
 
+
                 //save session
                 if (sessionStorage) {
                     sessionStorage.setItem("betslip-content-session", betSlipContentChosen[0].outerHTML);
@@ -135,6 +163,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     sessionStorage.setItem("betslip-bet-counter", betCounter.toString());
                     sessionStorage.setItem("betslip-bet-stakeCounter", betStakeCounter.toString());
                 }
+
+                const clearButton = document.getElementsByName("bet-clear-button")[0];
+                clearButton.addEventListener("click", function () {
+                    betStakeCounter = 1;
+                    clearBetSlip();
+                });
 
                 const placeBetButton = document.getElementsByName("bet-place-button")[0];
 
@@ -203,6 +237,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     //
                     // });
 
+                    //clear betStakeCounter
+                    betStakeCounter = 1;
                     clearBetSlip();
                 });
 
@@ -368,6 +404,7 @@ function tableBetPlacementCreate() {
     const td02 = document.createElement("td");
     const bt2 = document.createElement("button");
     bt2.innerText = "CLEAR";
+    bt2.name = "bet-clear-button";
     td02.appendChild(bt2);
     tr0.appendChild(td02);
 
