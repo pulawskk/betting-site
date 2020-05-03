@@ -36,12 +36,12 @@ public class BetSlipServiceImpl implements BetSlipService {
     }
 
     @Override
-    public BetSlip saveBetSlip(List<Selection> selections, String stake, List<String> betSlipTypeList, User user) {
+    public BetSlip saveBetSlip(List<Selection> selections, String stake, List<BetSlipType> betSlipTypeList, User user) {
         BetLeg betLeg = BetLeg.builder().betLegName("first")
                 .created(now()).modified(now())
                 .stake(new BigDecimal(stake)).build();
-        //TODO change it to automatically set, grab info from request about betslip type
-        BetSlipType betSlipType = betSlipTypeList.contains("multi") ? BetSlipType.MULTIPLE : BetSlipType.SINGLE;
+        //TODO change it when list contains more that one
+        BetSlipType betSlipType = betSlipTypeList.get(0);
         BetSlip betSlip = BetSlip.builder().betSlipType(betSlipType).created(now()).modified(now()).build();
 
         selections.forEach(selection -> {

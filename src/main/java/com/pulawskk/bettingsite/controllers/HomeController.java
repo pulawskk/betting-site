@@ -4,6 +4,8 @@ import com.pulawskk.bettingsite.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,15 +19,6 @@ public class HomeController {
     public String indexPage() {
 
         return "homeView";
-    }
-
-    @GetMapping(value = "/after")
-    public String afterPage() {
-//        if(userService.userLoggedIn() == null) {
-//            return "login";
-//        }
-        System.out.println("after -> " + userService.displayAuthName());
-        return "after";
     }
 
     @GetMapping(value = {"/home"})
