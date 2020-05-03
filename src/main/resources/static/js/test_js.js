@@ -178,7 +178,7 @@ function placeBetSlip() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8081/settler/post",
+        url: "http://172.21.0.3:8081/settler/post",
         data: data,
         contentType: "application/json",
     });
