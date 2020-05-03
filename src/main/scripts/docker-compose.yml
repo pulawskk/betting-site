@@ -2,6 +2,7 @@ version: '3'
 
 services:
   bspostgres:
+    container_name: justbspostgres
     image: postgres:9.6
     restart: always
     ports:
@@ -10,13 +11,27 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: bsdb
+    networks:
+      bs_network:
+        ipv4_address: 172.23.0.2
 
   bs:
+    container_name: justbsapp
     image: pulawskk11/bettingsite:latest
     restart: always
     ports:
-      - '8081:8081'
+      - '8085:8085'
     depends_on:
       - bspostgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://bspostgres:5432/bsdb?useSSL=false
+    networks:
+      bs_network:
+        ipv4_address: 172.23.0.3
+
+networks:
+  bs_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16

@@ -2,11 +2,11 @@ package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -15,18 +15,21 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = {"/", "/index"})
-    public String indexPage() {
+    @Value("${ipnetwork.app.bs}")
+    private String projectIp;
 
-        return "homeView";
-    }
+    @Value("${server.port}")
+    private String projectPort;
 
     @GetMapping(value = {"/home"})
-    public String homePage(HttpSession session) {
+    public String homePage(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         if(userService.userLoggedIn() != null) {
             session.setAttribute("isLoggedIn", true);
         }
-        System.out.println("home -> " + userService.displayAuthName());
+        session.setAttribute("appIp", projectIp);
+        session.setAttribute("appPort", projectPort);
+
         return "index";
     }
 

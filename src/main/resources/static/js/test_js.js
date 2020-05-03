@@ -170,17 +170,21 @@ function placeBetSlip() {
             + '","userType":"' + user_type_cell + '"}';
 
         selections = selections.concat(selection).concat(',');
-        console.dir("id: " + i + " | " + uniqueId + " | " + competition_cell + " | " + event_time_cell + " | " + event_name_cell + " | " + market_type_cell + " | " + odd_value_cell + " | " + user_type_cell);
     }
     selections = selections.substring(0, selections.length-1);
     selections = selections.concat(']');
     var data = '{"stake":" ' + placedStake + ' ","types":["' + betSlipType + '"],' + selections + '}';
 
+    const appIp = document.getElementById("hidden-ip").innerText;
+    const appPort = document.getElementById("hidden-port").innerText;
+    const appUrl = "http://" + appIp + ":" + appPort + "/settler/post";
+
     $.ajax({
         type: "POST",
-        url: "http://172.21.0.3:8081/settler/post",
+        url: appUrl,
         data: data,
         contentType: "application/json",
+
     });
 
     //clear betStakeCounter

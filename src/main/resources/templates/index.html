@@ -451,6 +451,8 @@
           <div id="left-content">
             <p name="stake-test">test stake</p>
             <button class="get-session-data">click to get data from session</button>
+            <div hidden id="hidden-port" th:text="${session.appPort}"></div>
+            <div hidden id="hidden-ip" th:text="${session.appIp}"></div>
             <div layout:fragment="my-left-content">
               <p th:text= "'CUSOTM LEFT CONTENT'"></p>
             </div>
