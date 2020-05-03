@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>11</java.version>
+        <docker.image.prefix>pulawskk11</docker.image.prefix>
+        <docker.image.name>bettingsite</docker.image.name>
     </properties>
 
     <dependencies>
@@ -117,6 +119,65 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+                <configuration>
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                    <verbose>true</verbose>
+
+                    <images>
+                        <image>
+                            <name>${docker.image.prefix}/${docker.image.name}</name>
+                            <alias>bettingsite</alias>
+                            <build>
+                                <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>latest</tags>
+                                <tags>${project.version}</tags>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>8081:8081</port>
+                                </ports>
+                                <env>
+                                    <SPRING_DATASOURCE_URL>jdbc:postgresql://mypostgres:5432/postgres?useSSL=false</SPRING_DATASOURCE_URL>
+                                </env>
+                                <links>
+                                    <link>mypostgres:mypostgres</link>
+                                </links>
+                                <dependsOn>
+                                    <container>mypostgres</container>
+                                </dependsOn>
+                            </run>
+                        </image>
+                        <image>
+                            <name>postgres:9.6</name>
+                            <alias>mypostgres</alias>
+                            <run>
+                                <ports>
+                                    <port>5430:5430</port>
+                                </ports>
+                                <env>
+                                    <POSTGRES_USER>postgres</POSTGRES_USER>
+                                    <POSTGRES_PASSWORD>postgres</POSTGRES_PASSWORD>
+                                    <POSTGRES_DB>bsdb</POSTGRES_DB>
+                                </env>
+                                <log>
+                                    <enabled>true</enabled>
+                                    <color>blue</color>
+                                </log>
+                                <wait>
+                                    <time>10000</time>
+                                </wait>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
