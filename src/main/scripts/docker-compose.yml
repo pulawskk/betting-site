@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  bspostgres:
+    image: postgres:9.6
+    restart: always
+    ports:
+      - '5430:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bsdb
+
+  bs:
+    image: pulawskk11/bettingsite:latest
+    restart: always
+    ports:
+      - '8081:8081'
+    depends_on:
+      - bspostgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bspostgres:5432/bsdb?useSSL=false
