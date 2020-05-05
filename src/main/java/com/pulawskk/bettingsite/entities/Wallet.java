@@ -19,7 +19,7 @@ public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
-    @SequenceGenerator(name="new_generator", sequenceName = "wallet_seq", initialValue = 10)
+    @SequenceGenerator(name="new_generator", sequenceName = "wallet_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "balance")

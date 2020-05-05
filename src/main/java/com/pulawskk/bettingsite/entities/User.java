@@ -10,7 +10,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
-    @SequenceGenerator(name="new_generator", sequenceName = "user_seq", initialValue = 10)
+    @SequenceGenerator(name="new_generator", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "email")

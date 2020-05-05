@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
-    @SequenceGenerator(name="new_generator", sequenceName = "role_seq", initialValue = 5)
+    @SequenceGenerator(name="new_generator", sequenceName = "role_seq", allocationSize = 1)
     private Integer id;
 
     @Column(name = "role")

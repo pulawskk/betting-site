@@ -21,7 +21,7 @@ import java.util.List;
 public class BetLeg {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
-    @SequenceGenerator(name="new_generator", sequenceName = "betleg_seq", initialValue = 101)
+    @SequenceGenerator(name="new_generator", sequenceName = "betleg_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "bet_leg_name")

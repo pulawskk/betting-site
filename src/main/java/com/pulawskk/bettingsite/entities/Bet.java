@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "new_generator")
-    @SequenceGenerator(name="new_generator", sequenceName = "bet_seq", initialValue = 101)
+    @SequenceGenerator(name="new_generator", sequenceName = "bet_seq", allocationSize = 1)
 
     private Long id;
 
