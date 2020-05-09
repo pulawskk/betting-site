@@ -1,0 +1,69 @@
+version: '3'
+
+services:
+  bspostgres:
+    container_name: bspostgres
+    image: postgres:9.6
+    restart: always
+    ports:
+      - '5430:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bsdb
+    networks:
+      bs_network:
+        ipv4_address: 177.23.0.2
+
+  bs:
+    container_name: bsapp
+    image: pulawskk11/bettingsite:latest
+    restart: always
+    ports:
+      - '8087:8085'
+    depends_on:
+      - bspostgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://bspostgres:5432/bsdb?useSSL=false
+      SPRING_PROFILE_ACTIVE: dev
+      IPNETWORK_APP_BS: 177.23.0.3
+    networks:
+      bs_network:
+        ipv4_address: 177.23.0.3
+
+  seapostgres:
+    container_name: seapostgres
+    image: postgres:9.6
+    restart: always
+    ports:
+      - '5431:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: seadb
+    networks:
+      bs_network:
+        ipv4_address: 177.23.0.4
+
+  seapp:
+    container_name: seaapp
+    image: pulawskk11/sportseventapi:latest
+    restart: always
+    ports:
+      - '8085:8085'
+    depends_on:
+      - seapostgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://seapostgres:5432/seadb?useSSL=false
+      BETTING_SERVERIP: 177.23.0.3
+      BETTING_SERVERPORT: 8085
+    networks:
+      bs_network:
+        ipv4_address: 177.23.0.5
+
+networks:
+  bs_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 177.23.0.0/16

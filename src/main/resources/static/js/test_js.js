@@ -183,8 +183,9 @@ function placeBetSlip() {
         type: "POST",
         url: appUrl,
         data: data,
+        dataType: 'json',
         contentType: "application/json",
-
+        crossDomain: true
     });
 
     //clear betStakeCounter

@@ -20,11 +20,13 @@ services:
     image: pulawskk11/bettingsite:latest
     restart: always
     ports:
-      - '8085:8085'
+      - '8087:8085'
     depends_on:
       - bspostgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://bspostgres:5432/bsdb?useSSL=false
+      SPRING_PROFILE_ACTIVE: dev
+      IPNETWORK_APP_BS: 172.23.0.3
     networks:
       bs_network:
         ipv4_address: 172.23.0.3
