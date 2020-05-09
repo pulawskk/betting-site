@@ -129,7 +129,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="charts.html">
+      <a class="nav-link" th:href="@{/statistics/form}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Form & H2H</span></a>
     </li>
@@ -166,14 +166,14 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="charts.html">
+      <a class="nav-link" th:href="@{/betSlips/shared}">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>Shared bets</span></a>
+        <span>Shared bet slips</span></a>
     </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" href="charts.html">
+      <a class="nav-link" th:href="@{/betSlips/propositions}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Bet propositions</span></a>
     </li>
@@ -449,8 +449,6 @@
 
         <div class="main-page-content-layout">
           <div id="left-content">
-            <p name="stake-test">test stake</p>
-            <button class="get-session-data">click to get data from session</button>
             <div hidden id="hidden-port" th:text="${session.appPort}"></div>
             <div hidden id="hidden-ip" th:text="${session.appIp}"></div>
             <div layout:fragment="my-left-content">
