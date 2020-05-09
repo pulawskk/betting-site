@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS betslip
             references appuser
 );
 
-create sequence IF NOT EXISTS betslip_seq START WITH 1;
+create sequence IF NOT EXISTS betslip_seq START WITH 4;
 alter sequence betslip_seq increment 1;
 alter table betslip alter column id set default nextval('public.betslip_seq');
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS betleg
             references betslip
 );
 
-create sequence IF NOT EXISTS betleg_seq START WITH 1;
+create sequence IF NOT EXISTS betleg_seq START WITH 4;
 alter sequence betleg_seq increment 1;
 alter table betleg alter column id set default nextval('public.betleg_seq');
 
@@ -142,6 +142,6 @@ CREATE TABLE IF NOT EXISTS bet
             references betleg
 );
 
-create sequence IF NOT EXISTS bet_seq START WITH 1;
+create sequence IF NOT EXISTS bet_seq START WITH 4;
 alter sequence bet_seq increment 1;
 alter table bet alter column id set default nextval('public.bet_seq');

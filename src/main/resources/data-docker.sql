@@ -111,14 +111,14 @@ INSERT INTO public.game (id, competition, end_date, game_status, name, result, s
 INSERT INTO public.game (id, competition, end_date, game_status, name, result, selection, start_date, unique_id) select 4, 'FA Cup', '2019-11-25 22:55:30.048000', 'PREMATCH', 'Chelsea vs Huddersfield', null, '5.87;6.19;1.77', '2019-11-25 22:50:30.048000', 'adbafe5' where not exists (select * from game where id = 4);
 -- INSERT INTO public.game (id, competition, end_date, game_status, name, result, selection, start_date, unique_id) VALUES (46, 'FA Cup', '2019-11-25 22:55:30.048000', 'PREMATCH', 'Brentford vs Leicester', null, '1.94;4.86;1.34', '2019-11-25 22:50:30.048000', 'c7c813f');
 --
--- INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (1, 'ACTIVE', 'SINGLE', 11.42, '2019-12-11 20:06:08.294000', '2019-12-11 20:06:08.295000', null, 1);
--- INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (2, 'ACTIVE', 'SINGLE', 13.40, '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', null, 1);
--- INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (3, 'ACTIVE', 'SINGLE', 2.68, '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', null, 1);
---
--- INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (1, 'first', 11.42, '2019-12-11 20:06:08.294000', '2019-12-11 20:06:08.294000', 'WIN', 2.00, 1);
--- INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (2, 'first', 13.40, '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', 'LOSE', 2.00, 2);
--- INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (3, 'first', 2.68, '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', 'LOSE', 2.00, 3);
---
--- INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (1, 'RESULTED', '2019-12-11 20:06:08.295000', '2019-12-11 20:06:08.295000', 5.71, 'WIN', '1bdb5d4', '1', 1);
--- INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (2, 'RESULTED', '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', 6.70, 'LOSE', '1bdb5d4', 'X', 2);
--- INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (3, 'RESULTED', '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', 1.34, 'LOSE', '1bdb5d4', '2', 3);
+INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (1, 'ACTIVE', 'SINGLE', 11.42, '2019-12-11 20:06:08.294000', '2019-12-11 20:06:08.295000', null, 1);
+INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (2, 'ACTIVE', 'SINGLE', 13.40, '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', null, 1);
+INSERT INTO public.betslip (id, bet_slip_status, bet_slip_type, bet_slip_win, created, modified, result, user_id) VALUES (3, 'ACTIVE', 'SINGLE', 2.68, '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', null, 1);
+
+INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (1, 'first', 11.42, '2019-12-11 20:06:08.294000', '2019-12-11 20:06:08.294000', 'WIN', 2.00, 1);
+INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (2, 'first', 13.40, '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', 'LOSE', 2.00, 2);
+INSERT INTO public.betleg (id, bet_leg_name, bet_leg_win, created, modified, result, stake, bet_slip_id) VALUES (3, 'first', 2.68, '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', 'LOSE', 2.00, 3);
+
+INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (1, 'RESULTED', '2019-12-11 20:06:08.295000', '2019-12-11 20:06:08.295000', 5.71, 'WIN', '1bdb5d4', '1', 1);
+INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (2, 'RESULTED', '2019-12-11 20:06:12.677000', '2019-12-11 20:06:12.677000', 6.70, 'LOSE', '1bdb5d4', 'X', 2);
+INSERT INTO public.bet (id, bet_status, created, modified, odd, result, selection_id, type, bet_leg_id) VALUES (3, 'RESULTED', '2019-12-11 20:06:17.065000', '2019-12-11 20:06:17.065000', 1.34, 'LOSE', '1bdb5d4', '2', 3);

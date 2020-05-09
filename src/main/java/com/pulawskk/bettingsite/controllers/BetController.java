@@ -34,6 +34,8 @@ public class BetController {
 
         if (status.equals("active")) {
             betSlips = betSlipService.betSlipsActiveForUser(userId);
+        } else if(status.equals("resulted")) {
+            betSlips = betSlipService.betSlipsResultedForUser(userId);
         }
 
         model.addAttribute("betSlips", betSlips);

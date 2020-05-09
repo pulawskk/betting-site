@@ -99,7 +99,12 @@ public class BetSlipServiceImpl implements BetSlipService {
 
     @Override
     public List<BetSlip> betSlipsActiveForUser(Long userId) {
-        return betSlipRepository.findBetSlipsByBetSlipStatusIsActiveAndUserId(userId);
+        return betSlipRepository.findActiveBetSlipsForUser(userId);
+    }
+
+    @Override
+    public List<BetSlip> betSlipsResultedForUser(Long userId) {
+        return betSlipRepository.findResultedBetSlipsForUser(userId);
     }
 
     @Override
