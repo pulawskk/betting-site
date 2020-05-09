@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Football games</title>
+    </head>
+
+    <body>
+        <div layout:fragment="my-left-content">
+            <h2>bet slips</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">status</th>
+                        <th scope="col">type</th>
+                        <th scope="col">potential win</th>
+                        <th scope="col">created</th>
+                    </tr>
+                </thead>
+
+                <tr th:each="betSlip : ${betSlips}">
+                    <td th:text="${betSlip.getId()}"></td>
+                    <td th:text="${betSlip.getBetSlipStatus()}"></td>
+                    <td th:text="${betSlip.getBetSlipType()}"></td>
+                    <td th:text="${betSlip.getBetSlipWin()}"></td>
+                    <td th:text="${#temporals.format(betSlip.getCreated(), 'dd-MM HH:mm')}"></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

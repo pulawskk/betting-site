@@ -97,6 +97,21 @@ public class BetSlipServiceImpl implements BetSlipService {
         return betSlipRepository.save(betSlip);
     }
 
+    @Override
+    public List<BetSlip> betSlipsActiveForUser(Long userId) {
+        return betSlipRepository.findBetSlipsByBetSlipStatusIsActiveAndUserId(userId);
+    }
+
+    @Override
+    public List<BetSlip> betSlipsWonForUser(Long userId) {
+        return null;
+    }
+
+    @Override
+    public List<BetSlip> betSlipsLostForUser(Long userId) {
+        return null;
+    }
+
     private String convertUserType(String typeFromSite) {
         switch (typeFromSite) {
             case "0":

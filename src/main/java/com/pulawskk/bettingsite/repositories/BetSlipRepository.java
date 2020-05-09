@@ -14,4 +14,8 @@ public interface BetSlipRepository extends JpaRepositoryImplementation<BetSlip, 
     @Query(value = "SELECT * FROM betslip as bs " +
             "WHERE bs.result IS NULL", nativeQuery = true)
     List<BetSlip> findAllUnresulted();
+
+    @Query(value = "SELECT * FROM betslip as bs " +
+            "WHERE bs.result IS NULL AND bs.user_id = ?1", nativeQuery = true)
+    List<BetSlip> findBetSlipsByBetSlipStatusIsActiveAndUserId(Long userId);
 }
