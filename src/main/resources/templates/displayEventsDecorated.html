@@ -40,22 +40,10 @@
                                                     <span th:if="${iterStat.index == 1}">X</span>
                                                     <span th:if="${iterStat.index == 2}">2</span>
                                                 </td>
-    <!--                                            <td>-->
-    <!--                                                <form th:action="@{/settler/bet}" method="post">-->
-    <!--                                                    <input type="hidden" name="value" th:value="${selection.toPlainString()}" th:object="${selection}">-->
-    <!--                                                    <input type="hidden" name="marketName" th:value="${event.getName()}" th:object="${selection}">-->
-    <!--                                                    <input type="hidden" name="uniqueId" th:value="${event.getUniqueId()}" th:object="${selection}">-->
-    <!--                                                    <input type="hidden" name="competition" th:value="${event.getCompetition()}" th:object="${selection}">-->
-    <!--                                                    <input type="hidden" name="marketType" th:value="${market.getKey().toString()}" th:object="${selection}">-->
-    <!--                                                    <input type="hidden" name="userType" th:value="${iterStat.index}" th:object="${selection}">-->
-    <!--                                                    <button name="selection" th:text="${selection.toPlainString()}" type="submit"></button>-->
-    <!--                                                </form>-->
-    <!--                                            </td>-->
                                                 <td>
                                                     <button th:name="${'odd_button_' + event.getUniqueId() + '_' + selection.toPlainString() + '_' + iterStat.index}"
                                                             th:attr="data-el_event-id=${event.getUniqueId()}, data-el_event-name=${event.getName()}, data-el_market-type=${market.getKey().toString()}, data-el_selection=${selection.toPlainString()}, data-el_user-type=${iterStat.index}, data-el_competition=${event.getCompetition()}, data-el_start-date=${#temporals.format(event.getStartGame(), 'dd-MM HH:mm')}"
                                                             th:text="${'new' + selection.toPlainString()}"></button>
-                                                    <!--                                                        th:attr="data-id=${event.getUniqueId()}, data-event-name=${event.getName()}, data-market-type =${market.getKey().toString()}, data-selection=selection.toPlainString(), data-user-type=${iterStat.index}, data-competition=${event.getCompetition()}"-->
                                                 </td>
                                             </tr>
                                         </table>
@@ -67,45 +55,5 @@
                 </table>
             </div>
         </div>
-<!--            <div th:if="${session.selections != null}">-->
-
-<!--                <table>-->
-<!--                    <tr th:each="selection : ${session.selections}">-->
-<!--                        &lt;!&ndash;/*@thymesVar id="value" type="com.pulawskk.bettingsite.models.Selection"*/&ndash;&gt;-->
-<!--                        <td th:text="${selection.value}"></td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-
-<!--                <form th:action="@{/settler/placeBet}" method="post">-->
-<!--                    &lt;!&ndash;/*@thymesVar id="betSlipDto" type="com.pulawskk.bettingsite.models.BetSlipDto"*/&ndash;&gt;-->
-<!--                    <input type="number" name="stake" placeholder="2" value="2" th:object="${betSlipDto}">-->
-<!--                    <span th:if="${session.selections.size() == 1}">-->
-<!--                            <div>-->
-<!--                                single:-->
-<!--                                <input type="checkbox" name="singleBetSlip" value="single" checked="checked">-->
-<!--                            </div>-->
-<!--                            <div>-->
-<!--                                multiple:-->
-<!--                                <input type="checkbox" name="multiBetSlip" value="multi" disabled="disabled">-->
-<!--                            </div>-->
-<!--                        </span>-->
-<!--                    <span th:if="${session.selections.size() > 1}">-->
-<!--                            <div>-->
-<!--                                single:-->
-<!--                                <input type="checkbox" name="singleBetSlip" value="single">-->
-<!--                            </div>-->
-<!--                            <div>-->
-<!--                                multiple:-->
-<!--                                <input type="checkbox" name="multiBetSlip" value="multi" checked="checked">-->
-<!--                            </div>-->
-<!--                        </span>-->
-
-<!--                    <button name="betSlip" th:text="'PLACE BETSLIP'" type="submit"></button>-->
-<!--                </form>-->
-<!--            </div>-->
-
-
-        </div>
     </body>
-
 </html>
