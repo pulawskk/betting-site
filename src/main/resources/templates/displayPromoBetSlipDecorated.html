@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Football games</title>
+    </head>
+
+    <body>
+        <div layout:fragment="my-left-content">
+            <div th:if="${betSlipPromotion.getBetPromotionDtoList().size() == 0}" th:text="'Sorry, we do not have events for that competition right now'"></div>
+            <div th:if="${betSlipPromotion.getBetPromotionDtoList().size() > 0}">
+
+                <h2>Promotional bet</h2>
+
+                <table class="table" style="max-width: 90%">
+                    <thead class="thead-dark">
+                        <th scope="col">id</th>
+                        <th scope="col">competition</th>
+                        <th scope="col">name</th>
+                        <th scope="col">market type</th>
+                        <th scope="col">proposal</th>
+                        <th scope="col">odd</th>
+                        <th scope="col">starts at</th>
+                    </thead>
+
+                    <tr th:each="bet : ${betSlipPromotion.getBetPromotionDtoList()}">
+                        <td th:text="${bet.getUniqueId()}"></td>
+                        <td th:text="${bet.getCompetition()}"></td>
+                        <td th:text="${bet.getName()}"></td>
+                        <td th:text="${bet.getMarketType()}"></td>
+                        <td th:text="${bet.getAutoType()}"></td>
+                        <td th:text="${bet.getOdd()}"></td>
+                        <td th:text="${bet.getStartGame()}"></td>
+                    </tr>
+                </table>
+
+                <form method="post" th:action="@{/settler/promo}">
+                    <div class="form-group">
+                        <h4 th:text="'current course: ' + ${betSlipPromotion.getCourse()}"></h4>
+                        <h3 th:text="'new promo course: ' + ${betSlipPromotion.getNewCourse()}"></h3>
+                        <h4 th:text="'choose your stake'"></h4>
+                        <input type="text" name="stake" placeholder="5">
+                        <button class="btn btn-primary" type="submit">PLACE A BET</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

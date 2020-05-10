@@ -173,9 +173,9 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-      <a class="nav-link" th:href="@{/betSlips/propositions}">
+      <a class="nav-link" th:href="@{/events/promo}">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>Bet propositions</span></a>
+        <span>Bet promo</span></a>
     </li>
 
     <!-- Divider -->
@@ -244,17 +244,6 @@
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
                 method="post" th:action="@{/events/games/search}">
             <div class="input-group">
-
-
-<!--              <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/events/games/search}">-->
-<!--                <input class="form-control mr-sm-2" type="search"-->
-<!--                       th:name="teamName" placeholder="Search for team (Chelsea)...." aria-label="Search">-->
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--              </form>-->
-
-
-
-
               <input type="search" class="form-control bg-light border-0 small" th:name="teamName"
                      placeholder="Search for team..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">

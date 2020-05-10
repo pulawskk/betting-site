@@ -28,7 +28,7 @@ public class BetPlacementController {
     }
 
     @PostMapping(value = "/post", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String afterPage(@RequestBody BetSlipSentDto betSlipSentDto) {
+    public String placeBet(@RequestBody BetSlipSentDto betSlipSentDto) {
 
         List<Selection> selections = new ArrayList<>();
         betSlipSentDto.getSelections().forEach(selectionDto ->
@@ -45,6 +45,6 @@ public class BetPlacementController {
         String stakeRequest = betSlipSentDto.getStake().trim();
         User currentUser = userService.userLoggedIn();
         betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList, currentUser);
-        return "redirect:/events/football";
+        return "redirect:";
     }
 }

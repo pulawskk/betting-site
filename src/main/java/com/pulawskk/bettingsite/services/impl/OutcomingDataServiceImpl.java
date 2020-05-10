@@ -5,16 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.enums.SelectionType;
-import com.pulawskk.bettingsite.models.Event;
-import com.pulawskk.bettingsite.models.EventDto;
-import com.pulawskk.bettingsite.models.Result;
-import com.pulawskk.bettingsite.models.ResultDto;
+import com.pulawskk.bettingsite.models.*;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.OutcomingDataService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
+import java.util.stream.IntStream;
 
 @Service
 public class OutcomingDataServiceImpl implements OutcomingDataService {
@@ -117,5 +118,45 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
         return eventDtos;
     }
 
+    @Override
+    public BetSlipPromotionDto prepareBetSlipPromotion() {
+        List<BetPromotionDto> betPromotionDtos = new ArrayList<>();
 
+        Set.copyOf(preparePrematchEvents()).stream().limit(2).forEach(e -> {
+            Map<SelectionType, List<BigDecimal>> selections = e.getSelections();
+            List<BigDecimal> odds = selections.get(SelectionType.WIN_1X2);
+
+            String autoType = "";
+            Random random = new Random();
+            int randomType = random.nextInt(3);
+            if (randomType == 0) {
+                autoType = "Home";
+            } else if (randomType == 1) {
+                autoType = "Draw";
+            } else if (randomType == 2) {
+                autoType = "Away";
+            }
+
+            BetPromotionDto betPromotionDto = BetPromotionDto.builder()
+                    .uniqueId(e.getUniqueId())
+                    .competition(e.getCompetition())
+                    .name(e.getName())
+                    .marketType("WIN_1X2")
+                    .autoType(autoType)
+                    .startGame(e.getStartGame().format(DateTimeFormatter.ofPattern("dd-MM HH:mm")))
+                    .odd(odds.get(randomType).toString()).build();
+            betPromotionDtos.add(betPromotionDto);
+        });
+
+        BigDecimal[] course = {BigDecimal.ONE};
+
+        betPromotionDtos.forEach(b -> {
+            course[0] = course[0].multiply(new BigDecimal(b.getOdd()));
+        });
+
+        return BetSlipPromotionDto.builder().betPromotionDtoList(betPromotionDtos)
+                .course(course[0].setScale(2, RoundingMode.CEILING).toString())
+                .newCourse(course[0].multiply(new BigDecimal("1.15")).setScale(2, RoundingMode.CEILING).toString())
+                .build();
+    }
 }

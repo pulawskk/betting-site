@@ -1,8 +1,6 @@
 package com.pulawskk.bettingsite.services;
 
-import com.pulawskk.bettingsite.models.Event;
-import com.pulawskk.bettingsite.models.EventDto;
-import com.pulawskk.bettingsite.models.Result;
+import com.pulawskk.bettingsite.models.*;
 
 import java.util.List;
 
@@ -12,4 +10,6 @@ public interface OutcomingDataService {
     List<Result> prepareAllResults();
 
     List<EventDto> prepareAllEventInfoForSpecificTeam(String teamName);
+
+    BetSlipPromotionDto prepareBetSlipPromotion();
 }

@@ -1,8 +1,6 @@
 package com.pulawskk.bettingsite.controllers;
 
-import com.pulawskk.bettingsite.models.Event;
-import com.pulawskk.bettingsite.models.EventDto;
-import com.pulawskk.bettingsite.models.Result;
+import com.pulawskk.bettingsite.models.*;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
 import com.pulawskk.bettingsite.utils.FilterUtils;
@@ -11,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -60,5 +59,12 @@ public class EventController {
     @GetMapping("/games/search")
     public String displayResultsEventForTeam(Model model) {
         return "displayEventsForTeamDecorated";
+    }
+
+
+    @GetMapping("/promo")
+    public String findEventsForPromotionBet(Model model) {
+        model.addAttribute("betSlipPromotion", outcomingDataServiceImpl.prepareBetSlipPromotion());
+        return "displayPromoBetSlipDecorated";
     }
 }
