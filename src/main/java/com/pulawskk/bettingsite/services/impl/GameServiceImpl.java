@@ -6,6 +6,7 @@ import com.pulawskk.bettingsite.services.GameService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -47,6 +48,11 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game findGameById(String uniqueId) {
         return gameRepository.findGameByUniqueId(uniqueId);
+    }
+
+    @Override
+    public List<Game> findAllGamesForSpecificTeam(String teamName) {
+        return gameRepository.findAllByNameContaining(teamName);
     }
 
 

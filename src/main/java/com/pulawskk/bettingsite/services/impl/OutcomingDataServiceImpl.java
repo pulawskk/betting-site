@@ -1,9 +1,12 @@
 package com.pulawskk.bettingsite.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.enums.SelectionType;
 import com.pulawskk.bettingsite.models.Event;
+import com.pulawskk.bettingsite.models.EventDto;
 import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.GameService;
@@ -79,4 +82,40 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
         }
         return results;
     }
+
+    @Override
+    public List<EventDto> prepareAllEventInfoForSpecificTeam(String teamName) {
+        List<EventDto> eventDtos = new ArrayList<>();
+
+        gameService.findAllGamesForSpecificTeam(teamName).forEach(g -> {
+            String result = "N/A";
+
+            if(g.getResult() != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    ResultDto resultDto = objectMapper.readValue(g.getResult(), ResultDto.class);
+                    StringBuffer stringBuffer = new StringBuffer();
+                    stringBuffer.append(resultDto.getHomeScores())
+                                .append(" - ")
+                                .append(resultDto.getAwayScores());
+                    result = stringBuffer.toString();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            EventDto eventDto = EventDto.builder()
+                    .uniqueId(g.getUniqueId())
+                    .competition(g.getCompetition())
+                    .name(g.getName())
+                    .startGame(g.getStart_date().toString())
+                    .result(result)
+                    .build();
+            eventDtos.add(eventDto);
+        });
+
+        return eventDtos;
+    }
+
+
 }

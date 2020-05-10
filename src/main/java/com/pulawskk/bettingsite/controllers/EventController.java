@@ -1,15 +1,14 @@
 package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.models.Event;
+import com.pulawskk.bettingsite.models.EventDto;
 import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
 import com.pulawskk.bettingsite.utils.FilterUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,5 +48,17 @@ public class EventController {
                 .stream().filter(FilterUtils.filterResultsByPeriod(period)).collect(Collectors.toList());
         model.addAttribute("results", results);
         return "displayResultsDecorated";
+    }
+
+    @PostMapping("/games/search")
+    public String displayAllGamesForSpecificTeam(@RequestParam(defaultValue = "") String teamName, Model model) {
+        List<EventDto> eventDtos = outcomingDataServiceImpl.prepareAllEventInfoForSpecificTeam(teamName);
+        model.addAttribute("eventDtos", eventDtos);
+        return displayResultsEventForTeam(model);
+    }
+
+    @GetMapping("/games/search")
+    public String displayResultsEventForTeam(Model model) {
+        return "displayEventsForTeamDecorated";
     }
 }

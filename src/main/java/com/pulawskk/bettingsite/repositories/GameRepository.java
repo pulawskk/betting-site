@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -26,4 +27,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Set<Game> findAllByGameStatusCompleted();
 
     Game findGameByUniqueId(String uniqueId);
+
+    List<Game> findAllByNameContaining(String teamName);
 }

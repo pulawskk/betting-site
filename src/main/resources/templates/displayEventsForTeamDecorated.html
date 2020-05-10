@@ -2,29 +2,31 @@
 <html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Football games</title>
+    <meta charset="UTF-8">
+    <title>Events</title>
 </head>
 <body>
     <div layout:fragment="my-left-content">
-        <h2>results</h2>
+        <h2>Results</h2>
         <table class="table" style="max-width: 90%">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">id</th>
                     <th scope="col">competition</th>
                     <th scope="col">name</th>
-                    <th scope="col">ended at</th>
+                    <th scope="col">start time</th>
+                    <th scope="col">result</th>
                 </tr>
             </thead>
 
-            <tr th:each="result : ${results}">
-                <td th:text="${result.getUniqueId()}"></td>
-                <td th:text="${result.getCompetition()}"></td>
-                <td th:text="${result.getName()}"></td>
-                <td th:text="${#temporals.format(result.getEndGame(), 'dd-MM HH:mm')}"></td>
+            <tr th:each="eventDto : ${eventDtos}">
+                <td th:text="${eventDto.getUniqueId()}"></td>
+                <td th:text="${eventDto.getCompetition()}"></td>
+                <td th:text="${eventDto.getName()}"></td>
+                <td th:text="${eventDto.getStartGame()}"></td>
+                <td th:text="${eventDto.getResult()}"></td>
             </tr>
         </table>
     </div>
 </body>
-
 </html>
