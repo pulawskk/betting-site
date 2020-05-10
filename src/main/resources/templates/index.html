@@ -91,10 +91,9 @@
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Results from:</h6>
-          <a class="collapse-item" href="utilities-color.html">Today</a>
-          <a class="collapse-item" href="utilities-border.html">Yesterday</a>
-          <a class="collapse-item" href="utilities-animation.html">2-5 days</a>
-          <a class="collapse-item" href="utilities-other.html">Another</a>
+          <a class="collapse-item" th:href="@{/events/results/today}">Today</a>
+          <a class="collapse-item" th:href="@{/events/results/yesterday}">Yesterday</a>
+          <a class="collapse-item" th:href="@{/events/results/lastWeek}">Last week</a>
         </div>
       </div>
     </li>

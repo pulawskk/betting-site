@@ -5,6 +5,9 @@ import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.models.ResultDto;
 
+import java.time.LocalDateTime;
+import java.util.function.Predicate;
+
 public interface ResultUtils {
 
     default String eventResult1X2(Game game) {

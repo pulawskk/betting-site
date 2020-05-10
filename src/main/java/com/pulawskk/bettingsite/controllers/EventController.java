@@ -1,21 +1,19 @@
 package com.pulawskk.bettingsite.controllers;
 
-import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.models.Event;
 import com.pulawskk.bettingsite.models.Result;
-import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.impl.OutcomingDataServiceImpl;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.pulawskk.bettingsite.utils.FilterUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Controller
@@ -45,15 +43,11 @@ public class EventController {
         return "displayEventsDecorated";
     }
 
-    @GetMapping("/results")
-    public String displayAllResults(Model model) {
-        List<Result> results = outcomingDataServiceImpl.prepareAllResults();
-        if(!results.isEmpty()) {
-            model.addAttribute("results", results);
-            results.forEach(result -> {
-                System.out.println("DISPLAYING result name -> " + result.getName());
-            });
-        }
-        return "displayResults";
+    @GetMapping("/results/{period}")
+    public String displayAllResults(@PathVariable String period, Model model) {
+        List<Result> results = outcomingDataServiceImpl.prepareAllResults()
+                .stream().filter(FilterUtils.filterResultsByPeriod(period)).collect(Collectors.toList());
+        model.addAttribute("results", results);
+        return "displayResultsDecorated";
     }
 }

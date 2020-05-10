@@ -18,8 +18,8 @@
         <tr th:each="result : ${results}">
             <td th:text="${result.getUniqueId()}"></td>
             <td th:text="${result.getCompetition()}"></td>
-            <td th:text="${#temporals.format(result.getEndGame(), 'dd-MM HH:mm')}"></td>
             <td th:text="${result.getName()}"></td>
+            <td th:text="${#temporals.format(result.getEndGame(), 'dd-MM HH:mm')}"></td>
         </tr>
     </table>
 </body>
