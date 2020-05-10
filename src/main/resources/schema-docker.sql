@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS game
     unique_id varchar(255)
 );
 
-create sequence IF NOT EXISTS game_seq START WITH 5;
+create sequence IF NOT EXISTS game_seq START WITH 11;
 alter sequence game_seq increment 1;
 alter table game alter column id set default nextval('public.game_seq');
 
