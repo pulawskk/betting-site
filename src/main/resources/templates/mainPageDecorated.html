@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Football games</title>
+    </head>
+
+    <body>
+        <div layout:fragment="my-left-content">
+            <div sec:authorize="isAuthenticated()" >
+                <div class="text-center">
+                    <div class="text-primary h4" th:text="'Betting site welcomes you ' + ${session.userName} + '!'"></div>
+                </div>
+            </div>
+
+            <div class="card text-white bg-dark mb-3" style="max-width: 90%;">
+                <div class="card-header text-dark">Welcome on betting site page! Let check guide how to start gambling</div>
+                <div class="card-body">
+                    <h5 class="card-title">How to place a bet?</h5>
+                    <p class="card-text">Please select competition in Fixtures.</p>
+                    <h5 class="card-title">How to check winnings?</h5>
+                    <p class="card-text">Please select your resulted bets.</p>
+                    <h5 class="card-title">How to cash in/out?</h5>
+                    <p class="card-text">Please enter Cash in or Cash out and follow instructions.</p>
+
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

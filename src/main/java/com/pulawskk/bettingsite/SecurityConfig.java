@@ -48,19 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/games/**").permitAll()
-                .antMatchers("/settler/**").permitAll()
-                .antMatchers("/home").permitAll()
+                .antMatchers("/games/**").hasRole("USER")
                 .antMatchers("/events/**").hasRole("USER")
+                .antMatchers("/settler/**").hasRole("USER")
+                .antMatchers("/mainBoard").hasRole("USER")
+                .antMatchers("/welcomeBoard").permitAll()
                 .and().formLogin()
                 .loginPage("/login")
-                    .defaultSuccessUrl("/home", true)
+                    .defaultSuccessUrl("/mainBoard", true)
                     .failureUrl("/login?error=true")
                     .usernameParameter("email")
                     .passwordParameter("password")
                 .and().logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/home").and().exceptionHandling()
+                    .logoutSuccessUrl("/welcomeBoard").and().exceptionHandling()
                 .accessDeniedPage("/warning_403");
     }
 

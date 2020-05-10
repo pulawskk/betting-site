@@ -1,5 +1,6 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,16 +22,21 @@ public class HomeController {
     @Value("${server.port}")
     private String projectPort;
 
-    @GetMapping(value = {"/home"})
+    @GetMapping(value = {"/mainBoard"})
     public String homePage(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        if(userService.userLoggedIn() != null) {
-            session.setAttribute("isLoggedIn", true);
-        }
+        User loggedInUser = userService.userLoggedIn();
+        session.setAttribute("userName", loggedInUser.getName());
+        session.setAttribute("isLoggedIn", true);
         session.setAttribute("appIp", projectIp);
         session.setAttribute("appPort", projectPort);
 
-        return "index";
+        return "mainPageDecorated";
+    }
+
+    @GetMapping("/welcomeBoard")
+    public String welcomeBoard(){
+        return "welcomePageDecorated";
     }
 
     @GetMapping(value = "/login")
