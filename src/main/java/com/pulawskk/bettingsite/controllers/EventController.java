@@ -11,9 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/events")
@@ -27,15 +30,18 @@ public class EventController {
         this.userService = userService;
     }
 
-    @GetMapping("/football")
-    public String displayAvailableEvents(Model model, Selection selection) {
-        List<Event> events = outcomingDataServiceImpl.preparePrematchEvents();
-        if (!events.isEmpty()) {
-            model.addAttribute("events", events);
+    @GetMapping("/football/{competitionName}")
+    public String displayAvailableEvents(@PathVariable String competitionName, Model model) {
+        if (competitionName.contains("-")) {
+            competitionName = competitionName.replaceAll("-", " ");
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findByEmail(authentication.getName());
-        model.addAttribute("currentUser", currentUser);
+        final String competitionNameToFilter = competitionName;
+
+        List<Event> events;
+        events = outcomingDataServiceImpl.preparePrematchEvents().stream()
+                .filter(e -> e.getCompetition().equals(competitionNameToFilter)).collect(Collectors.toList());
+
+        model.addAttribute("events", events);
         return "displayEventsDecorated";
     }
 
