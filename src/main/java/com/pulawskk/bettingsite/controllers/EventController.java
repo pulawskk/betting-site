@@ -67,4 +67,12 @@ public class EventController {
         model.addAttribute("betSlipPromotion", outcomingDataServiceImpl.prepareBetSlipPromotion());
         return "displayPromoBetSlipDecorated";
     }
+
+    @GetMapping("/table/{competitionName}")
+    public String prepareTableForCompetition(@PathVariable String competitionName, Model model) {
+        competitionName = competitionName.contains("-") ? competitionName.replace("-", " ") : competitionName;
+        List<StatisticTeamDto> statisticTeamDtos = outcomingDataServiceImpl.prepareStatisticsForCompetition(competitionName);
+        model.addAttribute("statisticTeams", statisticTeamDtos);
+        return "displayTableDecorated";
+    }
 }

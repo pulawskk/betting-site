@@ -12,4 +12,8 @@ public interface OutcomingDataService {
     List<EventDto> prepareAllEventInfoForSpecificTeam(String teamName);
 
     BetSlipPromotionDto prepareBetSlipPromotion();
+
+    List<StatisticTeamDto> prepareStatisticsForCompetition(String competitionName);
+
+    StatisticTeamDto prepareStatisticsForCompetitionForTeam(String competitionName, String teamName);
 }

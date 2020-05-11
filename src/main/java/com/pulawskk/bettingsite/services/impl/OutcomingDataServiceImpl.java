@@ -8,6 +8,7 @@ import com.pulawskk.bettingsite.enums.SelectionType;
 import com.pulawskk.bettingsite.models.*;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.OutcomingDataService;
+import com.pulawskk.bettingsite.utils.FilterUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -158,5 +160,122 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
                 .course(course[0].setScale(2, RoundingMode.CEILING).toString())
                 .newCourse(course[0].multiply(new BigDecimal("1.15")).setScale(2, RoundingMode.CEILING).toString())
                 .build();
+    }
+
+    @Override
+    public List<StatisticTeamDto> prepareStatisticsForCompetition(String competitionName) {
+        List<StatisticTeamDto> statisticTeams = new ArrayList<>();
+
+        List<String> teamInPremierLeague = new ArrayList<>();
+        teamInPremierLeague.add("Chelsea");
+        teamInPremierLeague.add("Arsenal");
+        teamInPremierLeague.add("Manchester United");
+        teamInPremierLeague.add("Manchester City");
+        teamInPremierLeague.add("West Ham United");
+        teamInPremierLeague.add("Crystal Palace");
+        teamInPremierLeague.add("Aston Villa");
+        teamInPremierLeague.add("Norwich");
+        teamInPremierLeague.add("Leicester");
+        teamInPremierLeague.add("Southampton");
+        teamInPremierLeague.add("Sheffield United");
+        teamInPremierLeague.add("Tottenham");
+        teamInPremierLeague.add("Brighton");
+        teamInPremierLeague.add("Everton");
+        teamInPremierLeague.add("Liverpool");
+        teamInPremierLeague.add("Watford");
+        teamInPremierLeague.add("Wolverhampton Wanders");
+        teamInPremierLeague.add("Bournemouth");
+        teamInPremierLeague.add("Burnley");
+
+        teamInPremierLeague.forEach(t -> {
+            statisticTeams.add(prepareStatisticsForCompetitionForTeam(competitionName, t));
+        });
+
+        Comparator<StatisticTeamDto> comp = (o1, o2) -> {
+            if (o1.getTotalPoints() > o2.getTotalPoints()) {
+                return 1;
+            }
+            return 0;
+        };
+
+//        Comparator<StatisticTeamDto> totalGoalsComparator = Comparator.comparingInt(StatisticTeamDto::getTotalPoints);
+//        statisticTeams.sort(totalGoalsComparator);
+
+        statisticTeams.sort((t1,t2) -> {
+            if (t1.getTotalPoints() < t2.getTotalPoints()) {
+                return 1;
+            } else if (t1.getTotalPoints() > t2.getTotalPoints()) {
+                return -1;
+            } else {
+                if (t1.getGamesPlayed() > t2.getGamesPlayed()) {
+                    return 1;
+                } else if(t1.getGamesPlayed() < t2.getGamesPlayed()) {
+                    return -1;
+                }
+            }
+            return 0;
+        });
+
+        return statisticTeams;
+    }
+
+    @Override
+    public StatisticTeamDto prepareStatisticsForCompetitionForTeam(String competitionName, String teamName) {
+        StatisticTeamDto statisticTeam =
+                StatisticTeamDto.builder()
+                                .teamName(teamName)
+                                .competitionName(competitionName)
+                                .build();
+
+        List<Game> games = Set.copyOf(gameService.findAllCompletedGames()).stream()
+                .filter(g -> g.getCompetition().equals(competitionName))
+                .filter(g -> g.getName().contains(teamName))
+                .collect(Collectors.toList());
+
+        games.stream().forEach(g -> {
+            Gson gson = new Gson();
+            ResultDto resultDto = gson.fromJson(g.getResult(), ResultDto.class);
+
+            final boolean teamIsHome = g.getName().indexOf(teamName) < g.getName().indexOf("vs");
+
+            final int homeScores = Integer.parseInt(resultDto.getHomeScores());
+            final int awayScores = Integer.parseInt(resultDto.getAwayScores());
+
+            int pointsToAdd = 0;
+
+            if (homeScores == awayScores) {
+                pointsToAdd = 1;
+            }
+
+            if (teamIsHome) {
+                statisticTeam.setTotalCorners(statisticTeam.getTotalCorners() + Integer.parseInt(resultDto.getHomeCorners()));
+                statisticTeam.setTotalGoalsScored(statisticTeam.getTotalGoalsScored() + homeScores);
+                statisticTeam.setTotalGoalsConceded(statisticTeam.getTotalGoalsConceded() + awayScores);
+                statisticTeam.setTotalCorners(statisticTeam.getTotalCorners() + Integer.parseInt(resultDto.getHomeCorners()));
+                statisticTeam.setTotalOffsides(statisticTeam.getTotalOffsides() + Integer.parseInt(resultDto.getHomeOffsides()));
+                statisticTeam.setTotalYellowCards(statisticTeam.getTotalYellowCards() + Integer.parseInt(resultDto.getHomeYellowCards()));
+                statisticTeam.setTotalRedCards(statisticTeam.getTotalRedCards() + Integer.parseInt(resultDto.getHomeRedCards()));
+
+                if(pointsToAdd < 1 && homeScores > awayScores) {
+                    pointsToAdd = 3;
+                }
+
+            } else {
+                statisticTeam.setTotalCorners(statisticTeam.getTotalCorners() + Integer.parseInt(resultDto.getAwayCorners()));
+                statisticTeam.setTotalGoalsScored(statisticTeam.getTotalGoalsScored() + awayScores);
+                statisticTeam.setTotalGoalsConceded(statisticTeam.getTotalGoalsConceded() + homeScores);
+                statisticTeam.setTotalCorners(statisticTeam.getTotalCorners() + Integer.parseInt(resultDto.getAwayCorners()));
+                statisticTeam.setTotalOffsides(statisticTeam.getTotalOffsides() + Integer.parseInt(resultDto.getAwayOffsides()));
+                statisticTeam.setTotalYellowCards(statisticTeam.getTotalYellowCards() + Integer.parseInt(resultDto.getAwayYellowCards()));
+                statisticTeam.setTotalRedCards(statisticTeam.getTotalRedCards() + Integer.parseInt(resultDto.getAwayRedCards()));
+
+                if(pointsToAdd < 1 && homeScores < awayScores) {
+                    pointsToAdd = 3;
+                }
+            }
+            statisticTeam.setTotalPoints(statisticTeam.getTotalPoints() + pointsToAdd);
+        });
+        statisticTeam.setGamesPlayed(games.size());
+        return statisticTeam;
     }
 }

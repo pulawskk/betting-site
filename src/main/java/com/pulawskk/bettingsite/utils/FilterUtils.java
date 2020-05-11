@@ -37,4 +37,7 @@ public final class FilterUtils {
         return predicate;
     }
 
+    public static Predicate<Result> filterResultsByCompetitionPremierLeague = result ->
+            result.getCompetition().equals("Premier League");
+
 }

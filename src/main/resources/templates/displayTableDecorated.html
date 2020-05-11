@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events</title>
+</head>
+<body>
+    <div layout:fragment="my-left-content">
+        <h2>Results</h2>
+        <table class="table" style="max-width: 90%">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">team</th>
+                    <th scope="col">games played</th>
+                    <th scope="col">points</th>
+                    <th scope="col">totalGoalsScored</th>
+                    <th scope="col">totalGoalsConceded</th>
+                    <th scope="col">totalYellowCards</th>
+                    <th scope="col">totalRedCards</th>
+                </tr>
+            </thead>
+
+            <tr th:each="team : ${statisticTeams}">
+                <td th:text="${team.getTeamName()}"></td>
+                <td th:text="${team.getGamesPlayed()}"></td>
+                <td th:text="${team.getTotalPoints()}"></td>
+                <td th:text="${team.getTotalGoalsScored()}"></td>
+                <td th:text="${team.getTotalGoalsConceded()}"></td>
+                <td th:text="${team.getTotalYellowCards()}"></td>
+                <td th:text="${team.getTotalRedCards()}"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
