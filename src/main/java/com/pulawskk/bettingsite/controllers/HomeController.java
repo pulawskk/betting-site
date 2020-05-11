@@ -2,6 +2,7 @@ package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.services.UserService;
+import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,13 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final WalletService walletService;
+
+    public HomeController(UserService userService, WalletService walletService) {
+        this.userService = userService;
+        this.walletService = walletService;
+    }
 
     @Value("${ipnetwork.app.bs}")
     private String projectIp;
@@ -30,6 +36,7 @@ public class HomeController {
         session.setAttribute("isLoggedIn", true);
         session.setAttribute("appIp", projectIp);
         session.setAttribute("appPort", projectPort);
+        session.setAttribute("balance", walletService.findBalanceForUser(loggedInUser.getId()));
 
         return "mainPageDecorated";
     }

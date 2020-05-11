@@ -253,10 +253,18 @@
               </div>
             </div>
           </form>
+
         </div>
 
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
+
+          <!-- balance info-->
+          <li class="nav-item">
+            <div class="container mr-3 p-3">
+              <h4 th:text="'Current balance: ' + ${session.balance} + 'PLN'"></h4>
+            </div>
+          </li>
 
           <!-- Nav Item - Search Dropdown (Visible Only XS) -->
           <li class="nav-item dropdown no-arrow d-sm-none">

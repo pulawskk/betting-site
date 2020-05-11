@@ -6,11 +6,13 @@ import com.pulawskk.bettingsite.models.BetSlipSentDto;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import com.pulawskk.bettingsite.services.UserService;
-import org.springframework.beans.factory.annotation.Value;
+import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +23,17 @@ public class BetPlacementController {
 
     private final BetSlipService betSlipService;
     private final UserService userService;
+    private final WalletService walletService;
 
-    public BetPlacementController(BetSlipService betSlipService, UserService userService) {
+    public BetPlacementController(BetSlipService betSlipService, UserService userService, WalletService walletService) {
         this.betSlipService = betSlipService;
         this.userService = userService;
+        this.walletService = walletService;
     }
 
     @PostMapping(value = "/post", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String placeBet(@RequestBody BetSlipSentDto betSlipSentDto) {
-
+    public String placeBet(@RequestBody BetSlipSentDto betSlipSentDto, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         List<Selection> selections = new ArrayList<>();
         betSlipSentDto.getSelections().forEach(selectionDto ->
             selections.add(Selection.builder()
@@ -45,6 +49,7 @@ public class BetPlacementController {
         String stakeRequest = betSlipSentDto.getStake().trim();
         User currentUser = userService.userLoggedIn();
         betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList, currentUser);
+        session.setAttribute("balance", walletService.findBalanceForUser(currentUser.getId()));
         return "redirect:";
     }
 }
