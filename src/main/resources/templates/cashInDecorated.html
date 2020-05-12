@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events</title>
+</head>
+<body>
+    <div layout:fragment="my-left-content">
+
+        <form method="post" th:action="@{/wallet/cashInAction}" th:object="${cashInForm}">
+            <br>
+            <label for="amount">Amount you want to deposit: </label>
+            <input type="number" th:field="*{amount}">
+            <span class="validationError"
+                th:if="${#fields.hasErrors('amount')}"
+                th:errors="*{amount}">Amount is less or equals 10</span>
+            <br>
+
+            <label for="paymentMethod">Please select method payment: </label>
+            <div th:each="method : ${session.methodPayments}">
+                <input type="radio" th:field="*{paymentMethod}" th:value="${method}" th:text="${method}" />
+<!--                    <label th:for="${#ids.prev('type')}" th:text="#{${'seedstarter.type.' + ty}}">Wireframe</label>-->
+            </div>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('paymentMethod')}"
+                  th:errors="*{paymentMethod}"></span>
+            <br>
+            <input type="submit" value="DEPOSIT">
+        </form>
+    </div>
+</body>
+</html>

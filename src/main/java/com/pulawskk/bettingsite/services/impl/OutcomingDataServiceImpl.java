@@ -8,16 +8,13 @@ import com.pulawskk.bettingsite.enums.SelectionType;
 import com.pulawskk.bettingsite.models.*;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.OutcomingDataService;
-import com.pulawskk.bettingsite.utils.FilterUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 public class OutcomingDataServiceImpl implements OutcomingDataService {

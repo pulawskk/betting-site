@@ -24,8 +24,8 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional
-    public void updateBalance(double newAmount, Long userId) {
-        walletRepository.updateBalanceForUser(newAmount, userId);
+    public void updateBalance(double addAmount, Long userId) {
+        walletRepository.updateBalanceForUser(addAmount, userId);
     }
 
     @Override
