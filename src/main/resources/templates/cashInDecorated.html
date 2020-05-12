@@ -13,7 +13,7 @@
             <input type="number" th:field="*{amount}">
             <span class="validationError"
                 th:if="${#fields.hasErrors('amount')}"
-                th:errors="*{amount}">Amount is less or equals 10</span>
+                th:errors="*{amount}"></span>
             <br>
 
             <label for="paymentMethod">Please select method payment: </label>

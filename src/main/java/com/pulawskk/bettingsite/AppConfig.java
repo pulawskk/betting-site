@@ -2,8 +2,11 @@ package com.pulawskk.bettingsite;
 
 import com.pulawskk.bettingsite.controllers.EventController;
 import com.pulawskk.bettingsite.services.OutcomingDataService;
+import com.pulawskk.bettingsite.services.UserService;
+import com.pulawskk.bettingsite.validators.MaxWithdrawValidator;
 import com.rabbitmq.client.ConnectionFactory;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,9 @@ import java.security.NoSuchAlgorithmException;
 @EnableScheduling
 public class AppConfig {
 
+    @Autowired
+    private UserService userService;
+
     @Bean
     public ConnectionFactory createNewConnectionFactory() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
         String URI = "amqp://mxddlpbm:3nP42tVOl_XbgGvhODI8nIu4GdAPXB2g@golden-kangaroo.rmq.cloudamqp.com/mxddlpbm";
@@ -33,5 +39,10 @@ public class AppConfig {
     @Bean
     public LayoutDialect layoutDialect() {
         return new LayoutDialect();
+    }
+
+    @Bean
+    public MaxWithdrawValidator maxWithdrawValidator() {
+        return new MaxWithdrawValidator(userService);
     }
 }

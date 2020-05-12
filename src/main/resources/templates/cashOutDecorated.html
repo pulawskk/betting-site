@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events</title>
+</head>
+<body>
+    <div layout:fragment="my-left-content">
+
+        <form method="post" th:action="@{/wallet/cashOutAction}" th:object="${cashOutForm}">
+            <br>
+            <label for="amount">Amount you want to withdraw: </label>
+            <input type="number" th:field="*{amount}">
+            <span class="validationError"
+                th:if="${#fields.hasErrors('amount')}"
+                th:errors="*{amount}"></span>
+            <br>
+
+            <label for="bankAccount">Please your bank account: </label>
+            <input type="text" th:field="*{bankAccount}">
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('bankAccount')}"
+                  th:errors="*{bankAccount}"></span>
+            <br>
+            <input type="submit" value="WITHDRAW">
+        </form>
+    </div>
+</body>
+</html>

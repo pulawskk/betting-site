@@ -1,13 +1,9 @@
 package com.pulawskk.bettingsite.validators;
 
 import com.pulawskk.bettingsite.services.UserService;
-import org.springframework.stereotype.Component;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-
-@Component
 public class MaxWithdrawValidator implements ConstraintValidator<MaxWithdraw, Integer> {
 
     private final UserService userService;
@@ -20,11 +16,12 @@ public class MaxWithdrawValidator implements ConstraintValidator<MaxWithdraw, In
 
     @Override
     public void initialize(MaxWithdraw constraintAnnotation) {
-        currentBalance = userService.userLoggedIn().getWallet().getBalance().intValue();
+
     }
 
     @Override
     public boolean isValid(Integer incomingNumber, ConstraintValidatorContext constraintValidatorContext) {
+        currentBalance = userService.userLoggedIn().getWallet().getBalance().intValue();
         return incomingNumber <= currentBalance;
     }
 }

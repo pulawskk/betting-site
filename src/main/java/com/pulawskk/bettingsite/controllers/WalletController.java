@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.controllers;
 
 import com.pulawskk.bettingsite.models.CashInForm;
+import com.pulawskk.bettingsite.models.CashOutForm;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.stereotype.Controller;
@@ -50,11 +51,24 @@ public class WalletController {
         System.out.println("Proccessing deposit: " + cashInForm.getAmount());
         System.out.println("Proccessing deposit: " + cashInForm.getPaymentMethod());
         walletService.updateBalance(cashInForm.getAmount(), userService.userLoggedIn().getId());
-        return "redirect:/wallet/cashIn";
+        return "redirect:/mainBoard";
     }
 
     @GetMapping("/cashOut")
-    public String cashOutMoney() {
+    public String cashOutMoney(Model model) {
+        model.addAttribute("cashOutForm", new CashOutForm());
         return "cashOutDecorated";
+    }
+
+    @PostMapping("/cashOutAction")
+    public String cashOutMoneyAction(@Valid CashOutForm cashOutForm, Errors errors) {
+        if (errors.hasErrors()) {
+            return "cashOutDecorated";
+        }
+
+        System.out.println("WITHDRAW process: " + cashOutForm.getBankAccount());
+        System.out.println("WITHDRAW process: " + cashOutForm.getAmount());
+        walletService.subtractBetPlaceStake(cashOutForm.getAmount(), userService.userLoggedIn().getId());
+        return "redirect:/mainBoard";
     }
 }
