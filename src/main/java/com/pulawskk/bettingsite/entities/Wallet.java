@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -32,10 +33,7 @@ public class Wallet {
     @OneToOne
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "wallet_wallet_audit",
-                joinColumns = @JoinColumn(name = "wallet_id"),
-                inverseJoinColumns = @JoinColumn(name = "wallet_audit_id"))
+    @OneToMany(mappedBy = "wallet")
     private List<WalletAudit> walletAudits;
 
     @Builder
@@ -44,5 +42,12 @@ public class Wallet {
         this.balance = balance;
         this.modified = modified;
         this.user = user;
+    }
+
+    public void addWalletAudit(WalletAudit walletAudit) {
+        if (walletAudits == null) {
+            walletAudits = new ArrayList<>();
+        }
+        walletAudits.add(walletAudit);
     }
 }

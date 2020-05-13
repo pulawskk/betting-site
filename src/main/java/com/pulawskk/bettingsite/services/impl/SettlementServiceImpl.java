@@ -4,6 +4,7 @@ import com.pulawskk.bettingsite.entities.*;
 import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.enums.ResultType;
+import com.pulawskk.bettingsite.enums.WalletTransactionType;
 import com.pulawskk.bettingsite.services.*;
 import com.pulawskk.bettingsite.utils.ResultUtils;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -90,7 +91,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
                 BigDecimal currentBalance = walletService.findBalanceForUser(user.getId());
                 System.out.println("current balance: " + currentBalance);
                 BigDecimal newAmount = currentBalance.add(winning);
-                walletService.updateBalance(newAmount.doubleValue(), user.getId());
+                walletService.updateBalance(newAmount.doubleValue(), user.getId(), WalletTransactionType.BET_WON);
                 System.out.println("bet slip is win");
             }
             betSlipService.save(betSlip);

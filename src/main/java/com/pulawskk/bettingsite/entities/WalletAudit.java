@@ -1,6 +1,7 @@
 package com.pulawskk.bettingsite.entities;
 
 import com.pulawskk.bettingsite.enums.WalletTransactionType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 
 @Setter
 @Getter
@@ -33,4 +33,14 @@ public class WalletAudit {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    private Wallet wallet;
+
+    @Builder
+    public WalletAudit(BigDecimal amountInTransaction, WalletTransactionType transactionType, LocalDateTime createdAt, Wallet wallet) {
+        this.amountInTransaction = amountInTransaction;
+        this.transactionType = transactionType;
+        this.createdAt = createdAt;
+        this.wallet = wallet;
+    }
 }

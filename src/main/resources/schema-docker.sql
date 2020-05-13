@@ -161,14 +161,3 @@ CREATE TABLE IF NOT EXISTS wallet_audit
 create sequence IF NOT EXISTS wallet_audit_seq START WITH 1;
 alter sequence wallet_audit_seq increment 1;
 alter table wallet_audit alter column id set default nextval('public.wallet_audit_seq');
-
-
-CREATE TABLE IF NOT EXISTS wallet_wallet_audit
-(
-    wallet_id bigint not null
-            references wallet,
-    wallet_audit_id integer not null
-            references wallet_audit,
-    constraint wallet_wallet_audit_pkey
-        primary key (wallet_id, wallet_audit_id)
-);

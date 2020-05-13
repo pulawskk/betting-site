@@ -7,6 +7,7 @@ import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import com.pulawskk.bettingsite.enums.BetStatus;
+import com.pulawskk.bettingsite.enums.WalletTransactionType;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.repositories.BetLegRepository;
 import com.pulawskk.bettingsite.repositories.BetRepository;
@@ -67,7 +68,7 @@ public class BetSlipServiceImpl implements BetSlipService {
         betSlip.setUser(user);
 
         betSlip.addBetLeg(betLeg);
-        walletService.subtractBetPlaceStake(new BigDecimal(stake).doubleValue(), user.getId());
+        walletService.subtractBetPlaceStake(new BigDecimal(stake).doubleValue(), user.getId(), WalletTransactionType.BET_PLACE);
         BetSlip savedBetSlip = betSlipRepository.save(betSlip);
 
         BetLeg savedBetLeg = null;

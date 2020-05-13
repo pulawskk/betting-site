@@ -1,5 +1,8 @@
 package com.pulawskk.bettingsite.controllers;
 
+import com.pulawskk.bettingsite.entities.Wallet;
+import com.pulawskk.bettingsite.entities.WalletAudit;
+import com.pulawskk.bettingsite.enums.WalletTransactionType;
 import com.pulawskk.bettingsite.models.CashInForm;
 import com.pulawskk.bettingsite.models.CashOutForm;
 import com.pulawskk.bettingsite.services.UserService;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +29,10 @@ public class WalletController {
 
     private final WalletService walletService;
     private final UserService userService;
-    private final WalletAuditService walletAuditService;
 
     public WalletController(WalletService walletService, UserService userService, WalletAuditService walletAuditService) {
         this.walletService = walletService;
         this.userService = userService;
-        this.walletAuditService = walletAuditService;
     }
 
     @GetMapping("/cashIn")
@@ -53,7 +56,12 @@ public class WalletController {
 
         System.out.println("Proccessing deposit: " + cashInForm.getAmount());
         System.out.println("Proccessing deposit: " + cashInForm.getPaymentMethod());
-        walletService.updateBalance(cashInForm.getAmount(), userService.userLoggedIn().getId());
+        walletService.updateBalance(cashInForm.getAmount(), userService.userLoggedIn().getId(), WalletTransactionType.DEPOSIT);
+//        WalletAudit walletAudit = WalletAudit.builder()
+//                .amountInTransaction(new BigDecimal(cashInForm.getAmount()))
+//                .createdAt(LocalDateTime.now())
+//                .transactionType(WalletTransactionType.DEPOSIT).build();
+//        walletAuditService.saveTransaction(walletAudit);
         return "redirect:/mainBoard";
     }
 
@@ -71,7 +79,7 @@ public class WalletController {
 
         System.out.println("WITHDRAW process: " + cashOutForm.getBankAccount());
         System.out.println("WITHDRAW process: " + cashOutForm.getAmount());
-        walletService.subtractBetPlaceStake(cashOutForm.getAmount(), userService.userLoggedIn().getId());
+        walletService.subtractBetPlaceStake(cashOutForm.getAmount(), userService.userLoggedIn().getId(), WalletTransactionType.WITHDRAW);
         return "redirect:/mainBoard";
     }
 }

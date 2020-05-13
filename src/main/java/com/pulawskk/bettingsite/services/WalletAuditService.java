@@ -1,5 +1,7 @@
 package com.pulawskk.bettingsite.services;
 
-public interface WalletAuditService {
+import com.pulawskk.bettingsite.entities.WalletAudit;
 
+public interface WalletAuditService {
+    WalletAudit saveTransaction(WalletAudit walletAudit);
 }
