@@ -75,4 +75,18 @@ public class EventController {
         model.addAttribute("statisticTeams", statisticTeamDtos);
         return "displayTableDecorated";
     }
+
+    @GetMapping("/form")
+    public String prepareTeamForm() {
+        return "teamFormDecorated";
+    }
+
+    @PostMapping("/form")
+    public String displayTeamForm(@RequestParam String teamName, @RequestParam String competitionName, Model model) {
+        List<StatisticTeamDto> statisticForTeam = outcomingDataServiceImpl
+                .prepareStatisticsForCompetition(competitionName).stream()
+                .filter(s -> s.getTeamName().equals(teamName)).collect(Collectors.toList());
+        model.addAttribute("statistics", statisticForTeam);
+        return "teamFormResultDecorated";
+    }
 }

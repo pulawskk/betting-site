@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html layout:decorator="index" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Football games</title>
+    </head>
+
+    <body>
+        <div layout:fragment="my-left-content">
+            <div>
+                <form method="post" th:action="@{/events/form}">
+                    <label>Please insert team name from Premier League:</label>
+                    <input type="hidden" name="competitionName" value="Premier League">
+                    <input type="text" name="teamName">
+                    <button type="submit">SEARCH</button>
+                </form>
+            </div>
+        </div>
+    </body>
+
+</html>
