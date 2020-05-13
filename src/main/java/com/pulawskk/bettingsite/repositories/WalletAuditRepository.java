@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository
 public interface WalletAuditRepository extends JpaRepository<WalletAudit, Long> {
 
+    List<WalletAudit> findAllByWalletIdOrderByCreatedAtDesc(Long walletId);
 }
