@@ -261,7 +261,7 @@
 
           <!-- balance info-->
           <li class="nav-item">
-            <div class="container mr-3 p-3">
+            <div class="container mr-3 p-3" th:if="${session.isLoggedIn != null}">
               <h4 th:text="'Current balance: ' + ${session.balance} + 'PLN'"></h4>
             </div>
           </li>

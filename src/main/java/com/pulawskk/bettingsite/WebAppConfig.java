@@ -17,5 +17,6 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/monthlyBonus").setViewName("monthlyBonusDecorated");
+        registry.addViewController("/").setViewName("welcomePageDecorated");
     }
 }

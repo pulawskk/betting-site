@@ -3,6 +3,7 @@ package com.pulawskk.bettingsite.controllers;
 import com.pulawskk.bettingsite.models.CashInForm;
 import com.pulawskk.bettingsite.models.CashOutForm;
 import com.pulawskk.bettingsite.services.UserService;
+import com.pulawskk.bettingsite.services.WalletAuditService;
 import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,12 @@ public class WalletController {
 
     private final WalletService walletService;
     private final UserService userService;
+    private final WalletAuditService walletAuditService;
 
-    public WalletController(WalletService walletService, UserService userService) {
+    public WalletController(WalletService walletService, UserService userService, WalletAuditService walletAuditService) {
         this.walletService = walletService;
         this.userService = userService;
+        this.walletAuditService = walletAuditService;
     }
 
     @GetMapping("/cashIn")
