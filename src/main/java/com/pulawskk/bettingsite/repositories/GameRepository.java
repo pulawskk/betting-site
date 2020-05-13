@@ -29,4 +29,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Game findGameByUniqueId(String uniqueId);
 
     List<Game> findAllByNameContaining(String teamName);
+
+    @Query(value = "SELECT * FROM game WHERE name LIKE '%'+?2+'%' ORDER BY start_date DESC LIMIT ?1", nativeQuery = true)
+    List<Game> findLastAmountOfGamesForSpecificTeam(int gamesAmount, String teamName);
 }

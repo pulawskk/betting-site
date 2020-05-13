@@ -75,4 +75,10 @@ public class EventController {
         model.addAttribute("statisticTeams", statisticTeamDtos);
         return "displayTableDecorated";
     }
+
+    @GetMapping("/profit/{profitName}")
+    public String prepareProfitableTeam(@PathVariable String profitName) {
+        outcomingDataServiceImpl.prepareResultsForTeam(3, "Chelsea");
+        return "profitTeamDecorated";
+    }
 }

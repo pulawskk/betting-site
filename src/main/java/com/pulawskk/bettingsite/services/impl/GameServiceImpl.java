@@ -55,5 +55,8 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAllByNameContaining(teamName);
     }
 
-
+    @Override
+    public List<Game> findLastAmountOfGamesForSpecificTeam(int number, String teamName) {
+        return findLastAmountOfGamesForSpecificTeam(number, teamName);
+    }
 }

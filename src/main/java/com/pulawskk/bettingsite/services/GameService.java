@@ -19,4 +19,6 @@ public interface GameService {
     Game findGameById(String uniqueId);
 
     List<Game> findAllGamesForSpecificTeam(String teamName);
+
+    List<Game> findLastAmountOfGamesForSpecificTeam(int number, String teamName);
 }

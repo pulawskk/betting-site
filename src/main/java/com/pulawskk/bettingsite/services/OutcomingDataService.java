@@ -16,4 +16,6 @@ public interface OutcomingDataService {
     List<StatisticTeamDto> prepareStatisticsForCompetition(String competitionName);
 
     StatisticTeamDto prepareStatisticsForCompetitionForTeam(String competitionName, String teamName);
+
+    List<ResultDto> prepareResultsForTeam(int numberOfGames, String teamName);
 }

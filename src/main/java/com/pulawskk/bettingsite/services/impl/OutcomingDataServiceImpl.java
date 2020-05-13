@@ -275,4 +275,11 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
         statisticTeam.setGamesPlayed(games.size());
         return statisticTeam;
     }
+
+    @Override
+    public List<ResultDto> prepareResultsForTeam(int numberOfGames, String teamName) {
+        List<Game> lastGames = gameService.findLastAmountOfGamesForSpecificTeam(numberOfGames,teamName);
+        System.out.println("SIZE OF LAST GAMES: " + lastGames);
+        return null;
+    }
 }
