@@ -145,3 +145,32 @@ CREATE TABLE IF NOT EXISTS bet
 create sequence IF NOT EXISTS bet_seq START WITH 1;
 alter sequence bet_seq increment 1;
 alter table bet alter column id set default nextval('public.bet_seq');
+
+CREATE TABLE IF NOT EXISTS wallet_audit
+(
+    id bigint not null
+        constraint wallet_audit_pkey
+            primary key,
+    amount_transaction numeric(19,2),
+    created_at timestamp,
+    transaction_type varchar(20),
+    wallet_id bigint
+            references wallet
+);
+
+create sequence IF NOT EXISTS wallet_audit_seq START WITH 1;
+alter sequence wallet_audit_seq increment 1;
+alter table wallet_audit alter column id set default nextval('public.wallet_audit_seq');
+
+
+CREATE TABLE IF NOT EXISTS appuser_role
+(
+    appuser_id bigint not null
+        constraint fkluiqisdo4bhlelc0g41l78wav
+            references appuser,
+    role_id integer not null
+        constraint fkpt5rmp9wlf49ivgikhsk5emdh
+            references role,
+    constraint appuser_role_pkey
+        primary key (appuser_id, role_id)
+);
