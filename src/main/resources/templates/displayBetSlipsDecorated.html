@@ -13,6 +13,7 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">status</th>
+                        <th scope="col">result</th>
                         <th scope="col">type</th>
                         <th scope="col">potential win</th>
                         <th scope="col">created</th>
@@ -22,6 +23,7 @@
                 <tr th:each="betSlip : ${betSlips}">
                     <td th:text="${betSlip.getId()}"></td>
                     <td th:text="${betSlip.getBetSlipStatus()}"></td>
+                    <td th:text="${betSlip.getResult()}"></td>
                     <td th:text="${betSlip.getBetSlipType()}"></td>
                     <td th:text="${betSlip.getBetSlipWin()}"></td>
                     <td th:text="${#temporals.format(betSlip.getCreated(), 'dd-MM HH:mm')}"></td>
