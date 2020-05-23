@@ -88,10 +88,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
                 betSlip.setBetSlipStatus(BetSlipStatus.RESULTED);
                 User user = betSlip.getUser();
                 BigDecimal winning = betSlip.getBetSlipWin();
-                BigDecimal currentBalance = walletService.findBalanceForUser(user.getId());
-                System.out.println("current balance: " + currentBalance);
-                BigDecimal newAmount = currentBalance.add(winning);
-                walletService.updateBalance(newAmount.doubleValue(), user.getId(), WalletTransactionType.BET_WON);
+                walletService.updateBalance(winning.doubleValue(), user.getId(), WalletTransactionType.BET_WON);
                 System.out.println("bet slip is win");
             }
             betSlipService.save(betSlip);
