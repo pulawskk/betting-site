@@ -23,7 +23,10 @@
                 <tr th:each="betSlip : ${betSlips}">
                     <td th:text="${betSlip.getId()}"></td>
                     <td th:text="${betSlip.getBetSlipStatus()}"></td>
-                    <td th:text="${betSlip.getResult()}"></td>
+                    <td>
+                        <p th:if="${betSlip.getResult() == null}" th:text="pending"></p>
+                        <p th:text="${betSlip.getResult()}"></p>
+                    </td>
                     <td th:text="${betSlip.getBetSlipType()}"></td>
                     <td th:text="${betSlip.getBetSlipWin()}"></td>
                     <td th:text="${#temporals.format(betSlip.getCreated(), 'dd-MM HH:mm')}"></td>
