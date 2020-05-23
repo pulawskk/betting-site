@@ -8,6 +8,8 @@ import com.pulawskk.bettingsite.enums.BetSlipStatus;
 import com.pulawskk.bettingsite.enums.BetSlipType;
 import com.pulawskk.bettingsite.enums.BetStatus;
 import com.pulawskk.bettingsite.enums.WalletTransactionType;
+import com.pulawskk.bettingsite.exceptions.BetPlaceValidatorException;
+import com.pulawskk.bettingsite.exceptions.StakePlaceValidatorException;
 import com.pulawskk.bettingsite.models.Selection;
 import com.pulawskk.bettingsite.repositories.BetLegRepository;
 import com.pulawskk.bettingsite.repositories.BetRepository;
@@ -17,7 +19,7 @@ import com.pulawskk.bettingsite.services.WalletService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
 
 import static java.time.LocalDateTime.*;
 
@@ -38,6 +40,15 @@ public class BetSlipServiceImpl implements BetSlipService {
 
     @Override
     public BetSlip saveBetSlip(List<Selection> selections, String stake, List<BetSlipType> betSlipTypeList, User user) {
+        BigDecimal currentBalance = walletService.findBalanceForUser(user.getId());
+        try {
+            betSlipValidation(selections, stake, currentBalance);
+        } catch (RuntimeException exp) {
+            System.out.println(exp.getMessage());
+            return null;
+        }
+
+
         BetLeg betLeg = BetLeg.builder().betLegName("first")
                 .created(now()).modified(now())
                 .stake(new BigDecimal(stake)).build();
@@ -86,6 +97,23 @@ public class BetSlipServiceImpl implements BetSlipService {
         });
 
         return savedBetSlip;
+    }
+
+    private void betSlipValidation(List<Selection> selections, String stake, BigDecimal currentBalance) throws BetPlaceValidatorException, StakePlaceValidatorException{
+        double stakeDouble = Double.parseDouble(stake);
+        if (stakeDouble < 2) {
+            throw new StakePlaceValidatorException("Stake can not be less than 2!");
+        }
+
+        if (stakeDouble > currentBalance.doubleValue()) {
+            throw new StakePlaceValidatorException("Stake can not be grater than you balance!");
+        }
+
+        Set<String> gamesId = new HashSet<>();
+        selections.forEach(s -> gamesId.add(s.getUniqueId()));
+        if (gamesId.size() < selections.size()) {
+            throw new BetPlaceValidatorException();
+        }
     }
 
     @Override
