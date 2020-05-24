@@ -137,8 +137,40 @@ function placeBetSlip() {
 
     let placedStake = document.getElementById("customer-stake").value;
 
+    let placedStakeNumber = parseFloat(placedStake);
+    const balance = parseFloat(document.getElementById("hidden-balance").innerText);
+
+    if (balance === 0) {
+        alert("Please deposit some money to place a betslip!");
+        return;
+    }
+
     if (placedStake.length === 0) {
         placedStake = '5';
+        if (parseFloat(placedStake) > balance) {
+            alert("Maximum allowed stake is: " + balance);
+            return;
+        }
+    } else {
+        if (isNaN(placedStakeNumber)) {
+            alert("Stake has a wrong number format")
+            return;
+        }
+
+        if (placedStakeNumber < 0) {
+            alert("Stake can not be negative!")
+            return;
+        }
+
+        if (placedStakeNumber < 2) {
+            alert("Stake must be at least 2!")
+            return;
+        }
+
+        if (placedStakeNumber > balance) {
+            alert("Maximum allowed stake is: " + balance);
+            return;
+        }
     }
 
     const betsChosen = document.getElementsByClassName("bet-chosen-content");

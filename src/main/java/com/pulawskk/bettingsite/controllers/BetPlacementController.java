@@ -31,7 +31,7 @@ public class BetPlacementController {
         this.walletService = walletService;
     }
 
-    @PostMapping(value = "/post", produces= MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String placeBet(@RequestBody BetSlipSentDto betSlipSentDto, HttpServletRequest request) {
         HttpSession session = request.getSession();
         List<Selection> selections = new ArrayList<>();
@@ -50,6 +50,7 @@ public class BetPlacementController {
         User currentUser = userService.userLoggedIn();
         betSlipService.saveBetSlip(selections, stakeRequest, betSlipTypeList, currentUser);
         session.setAttribute("balance", walletService.findBalanceForUser(currentUser.getId()));
-        return "redirect:";
+        System.out.println("please redirect");
+        return "mainPageDecorated";
     }
 }
