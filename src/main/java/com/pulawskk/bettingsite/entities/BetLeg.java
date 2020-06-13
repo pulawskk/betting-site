@@ -51,7 +51,7 @@ public class BetLeg {
 
     @Builder
     public BetLeg(Long id, String betLegName, LocalDateTime created, LocalDateTime modified, BetSlip betSlip,
-                  List<Bet> bets, BigDecimal stake, BigDecimal betLegWin) {
+                  List<Bet> bets, BigDecimal stake, BigDecimal betLegWin, ResultType result) {
         this.id = id;
         this.betLegName = betLegName;
         this.created = created;
@@ -60,6 +60,7 @@ public class BetLeg {
         this.bets = bets;
         this.stake = stake;
         this.betLegWin = betLegWin;
+        this.result = result;
     }
 
     public void addBet(Bet bet) {
