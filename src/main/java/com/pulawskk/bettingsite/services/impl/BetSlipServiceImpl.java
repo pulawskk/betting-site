@@ -99,7 +99,7 @@ public class BetSlipServiceImpl implements BetSlipService {
         return savedBetSlip;
     }
 
-    private void betSlipValidation(List<Selection> selections, String stake, BigDecimal currentBalance) throws BetPlaceValidatorException, StakePlaceValidatorException{
+    void betSlipValidation(List<Selection> selections, String stake, BigDecimal currentBalance) throws BetPlaceValidatorException, StakePlaceValidatorException{
         double stakeDouble = Double.parseDouble(stake);
         if (stakeDouble < 2) {
             throw new StakePlaceValidatorException("Stake can not be less than 2!");
@@ -146,7 +146,7 @@ public class BetSlipServiceImpl implements BetSlipService {
         return null;
     }
 
-    private String convertUserType(String typeFromSite) {
+    String convertUserType(String typeFromSite) {
         switch (typeFromSite) {
             case "0":
                 return "1";
