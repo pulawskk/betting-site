@@ -13,8 +13,6 @@ public interface BetSlipService {
 
     List<BetSlip> findAllUnresulted();
 
-    BetSlip save(BetSlip betSlip);
-
     List<BetSlip> betSlipsActiveForUser(Long userId);
 
     List<BetSlip> betSlipsResultedForUser(Long userId);

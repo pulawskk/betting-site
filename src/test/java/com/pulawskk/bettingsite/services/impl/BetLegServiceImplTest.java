@@ -38,7 +38,7 @@ class BetLegServiceImplTest {
     }
 
     @Test
-    void findAllUnresulted() {
+    void shouldReturnAllUnresultedBetLeg_whenExistInDb() {
         //given
         List<BetLeg> expectedUnresultedList = Lists.newArrayList(betLeg);
         when(betLegRepository.findAllUnresulted()).thenReturn(expectedUnresultedList);
@@ -52,7 +52,7 @@ class BetLegServiceImplTest {
     }
 
     @Test
-    void save() {
+    void shouldSaveBetLeg_whenBetLegIsValid() {
         //given
         BetLeg betLegToBeSaved = BetLeg.builder().betLegName("first").build();
         when(betLegRepository.save(betLegToBeSaved)).thenReturn(betLeg);
