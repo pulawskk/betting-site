@@ -37,7 +37,8 @@ public class WalletAudit {
     private Wallet wallet;
 
     @Builder
-    public WalletAudit(BigDecimal amountInTransaction, WalletTransactionType transactionType, LocalDateTime createdAt, Wallet wallet) {
+    public WalletAudit(Long id, BigDecimal amountInTransaction, WalletTransactionType transactionType, LocalDateTime createdAt, Wallet wallet) {
+        this.id = id;
         this.amountInTransaction = amountInTransaction;
         this.transactionType = transactionType;
         this.createdAt = createdAt;
