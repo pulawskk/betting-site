@@ -30,14 +30,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User isLoggedIn() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (email != null) {
-            return findByEmail(email);
-        }
-        return null;
-    }
-
     public String displayAuthName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
