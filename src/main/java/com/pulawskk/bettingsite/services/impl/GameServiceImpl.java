@@ -54,6 +54,4 @@ public class GameServiceImpl implements GameService {
     public List<Game> findAllGamesForSpecificTeam(String teamName) {
         return gameRepository.findAllByNameContaining(teamName);
     }
-
-
 }
