@@ -183,6 +183,7 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
         teamInPremierLeague.add("Wolverhampton Wanders");
         teamInPremierLeague.add("Bournemouth");
         teamInPremierLeague.add("Burnley");
+        teamInPremierLeague.add("Newcastle United");
 
         teamInPremierLeague.forEach(t -> {
             statisticTeams.add(prepareStatisticsForCompetitionForTeam(competitionName, t));
