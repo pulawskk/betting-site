@@ -95,25 +95,25 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
         });
     }
 
-    private boolean isAnyUnresultedBetLeg(List<BetLeg> betLegs) {
+    boolean isAnyUnresultedBetLeg(List<BetLeg> betLegs) {
         return betLegs.stream()
                 .map(BetLeg::getResult)
                 .anyMatch(Objects::isNull);
     }
 
-    private boolean isAnyLostBetLeg(List<BetLeg> betLegs) {
+    boolean isAnyLostBetLeg(List<BetLeg> betLegs) {
         return betLegs.stream()
                 .anyMatch(bl -> ResultType.LOSE.equals(bl.getResult()));
     }
 
-    private boolean isAllBetLegsWin(List<BetLeg> betLegs) {
+    boolean isAllBetLegsWin(List<BetLeg> betLegs) {
         return betLegs.stream()
                 .allMatch(bl -> ResultType.WIN.equals(bl.getResult()));
     }
 
     @Override
     public void processResultingBets(String uniqueId) {
-        System.out.println("that bet is going to be resulted: " + uniqueId);
+        System.out.println("that event is going to be resulted: " + uniqueId);
         List<Bet> bets = betService.findAllBetsByUniqueEventId(uniqueId);
         Game game = gameService.findGameById(uniqueId);
         String gameResult = eventResult1X2(game);

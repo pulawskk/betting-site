@@ -188,16 +188,6 @@ public class OutcomingDataServiceImpl implements OutcomingDataService {
             statisticTeams.add(prepareStatisticsForCompetitionForTeam(competitionName, t));
         });
 
-        Comparator<StatisticTeamDto> comp = (o1, o2) -> {
-            if (o1.getTotalPoints() > o2.getTotalPoints()) {
-                return 1;
-            }
-            return 0;
-        };
-
-//        Comparator<StatisticTeamDto> totalGoalsComparator = Comparator.comparingInt(StatisticTeamDto::getTotalPoints);
-//        statisticTeams.sort(totalGoalsComparator);
-
         statisticTeams.sort((t1,t2) -> {
             if (t1.getTotalPoints() < t2.getTotalPoints()) {
                 return 1;

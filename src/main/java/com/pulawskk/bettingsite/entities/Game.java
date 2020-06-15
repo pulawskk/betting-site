@@ -49,7 +49,8 @@ public class Game {
     @Builder
     public Game(Long id, String selection, String competition,
                 LocalDateTime end_date, LocalDateTime start_date,
-                String name, GameStatus gameStatus, String uniqueId) {
+                String name, GameStatus gameStatus, String uniqueId, String result) {
+        this.result = result;
         this.id = id;
         this.selection = selection;
         this.competition = competition;

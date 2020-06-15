@@ -51,7 +51,8 @@ public class Bet {
     private LocalDateTime modified;
 
     @Builder
-    public Bet(Long id, String selectionId, String type, BigDecimal odd, BetLeg betLeg, LocalDateTime created, LocalDateTime modified, BetStatus betStatus) {
+    public Bet(Long id, String selectionId, String type, BigDecimal odd, BetLeg betLeg, LocalDateTime created, LocalDateTime modified, BetStatus betStatus, ResultType resultType) {
+        this.result = resultType;
         this.id = id;
         this.selectionId = selectionId;
         this.type = type;
