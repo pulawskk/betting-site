@@ -43,7 +43,7 @@ public class WalletServiceImpl implements WalletService {
         addAudit(subtractAmount, userId, transactionType);
     }
 
-    private void addAudit(double amount, Long userId, WalletTransactionType transactionType) {
+    void addAudit(double amount, Long userId, WalletTransactionType transactionType) {
         Optional<Wallet> wallet = walletRepository.findById(userId);
 
         wallet.ifPresent(w -> {
