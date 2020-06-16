@@ -61,7 +61,6 @@ public class EventController {
         return "displayEventsForTeamDecorated";
     }
 
-
     @GetMapping("/promo")
     public String findEventsForPromotionBet(Model model) {
         model.addAttribute("betSlipPromotion", outcomingDataServiceImpl.prepareBetSlipPromotion());
