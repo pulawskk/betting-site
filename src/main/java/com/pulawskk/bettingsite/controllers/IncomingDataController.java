@@ -22,7 +22,6 @@ public class IncomingDataController {
     }
 
     @PostMapping("/game")
-    @ResponseBody
     public String receiveGame(@RequestBody GameDto gameDto) {
         System.out.println("new game is coming: ");
         System.out.println(gameDto.getOddsH());
@@ -33,7 +32,6 @@ public class IncomingDataController {
     }
 
     @PostMapping("/result")
-    @ResponseBody
     public String receiveResult(@RequestBody ResultDto resultDto) {
         System.out.println("new result is coming: ");
         System.out.println("Result: " + resultDto.getTeamHome() + " " + resultDto.getHomeScores() + "-"
@@ -48,5 +46,4 @@ public class IncomingDataController {
         jmsHandleService.receiveResultDataJms();
         return "login";
     }
-
 }
