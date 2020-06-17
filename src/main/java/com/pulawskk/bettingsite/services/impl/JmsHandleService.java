@@ -3,18 +3,21 @@ package com.pulawskk.bettingsite.services.impl;
 import com.google.gson.Gson;
 import com.pulawskk.bettingsite.entities.Game;
 import com.pulawskk.bettingsite.models.GameDto;
-import com.pulawskk.bettingsite.models.Result;
 import com.pulawskk.bettingsite.models.ResultDto;
 import com.pulawskk.bettingsite.services.GameService;
 import com.pulawskk.bettingsite.services.IncomingDataService;
 import com.pulawskk.bettingsite.utils.GameUtils;
 import com.rabbitmq.client.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
 public class JmsHandleService implements IncomingDataService, GameUtils {
+
+    private final Logger logger = LoggerFactory.getLogger(JmsHandleService.class);
 
     private static final String GAME_QUEUE = "FA CUP prematch";
     private static final String RESULT_QUEUE = "FA CUP result";
@@ -53,8 +56,9 @@ public class JmsHandleService implements IncomingDataService, GameUtils {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 GameDto gameDto = gson.fromJson(message, GameDto.class);
-                System.out.println("JMS game message: " + message);
-                System.out.println(gameDto.getTeamHome() + " VS " + gameDto.getTeamAway());
+
+                logger.info("[" + getClass().getSimpleName()
+                        + "] method: receiveGameDataJms, result id: " + gameDto.getUniqueId());
 
                 Game game = processGameFromGameDto(gameDto);
                 gameService.savePrematchGame(game);
@@ -70,8 +74,9 @@ public class JmsHandleService implements IncomingDataService, GameUtils {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 ResultDto resultDto = gson.fromJson(message, ResultDto.class);
-                System.out.println("JMS result message: " + message);
-                System.out.println(resultDto.getTeamHome() + " VS " + resultDto.getTeamAway());
+
+                logger.info("[" + getClass().getSimpleName()
+                                + "] method: receiveResultDataJms, result id: " + resultDto.getUniqueId());
 
                 final String jsonResultString = processResultFromResultDto(resultDto);
                 final String uniqueId = resultDto.getUniqueId();

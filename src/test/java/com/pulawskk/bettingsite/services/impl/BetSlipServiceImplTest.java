@@ -102,7 +102,6 @@ class BetSlipServiceImplTest {
 
         //when
         BetSlip actualBetSlip = betSlipService.saveBetSlip(selectionList, stake, betSlipTypeList, user);
-        System.out.println(actualBetSlip);
 
         //then
         assertThat(actualBetSlip.getBetLegs().size(), is(1));

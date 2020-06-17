@@ -16,6 +16,8 @@ import com.pulawskk.bettingsite.repositories.BetRepository;
 import com.pulawskk.bettingsite.repositories.BetSlipRepository;
 import com.pulawskk.bettingsite.services.BetSlipService;
 import com.pulawskk.bettingsite.services.WalletService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +27,8 @@ import static java.time.LocalDateTime.*;
 
 @Service
 public class BetSlipServiceImpl implements BetSlipService {
+
+    private final Logger logger = LoggerFactory.getLogger(BetSlipServiceImpl.class);
 
     private final BetSlipRepository betSlipRepository;
     private final BetLegRepository betLegRepository;
@@ -44,10 +48,10 @@ public class BetSlipServiceImpl implements BetSlipService {
         try {
             betSlipValidation(selections, stake, currentBalance);
         } catch (RuntimeException exp) {
-            System.out.println(exp.getMessage());
+            logger.warn("[" + getClass().getSimpleName() + "] method: saveBetSLip, exception: " + exp.getMessage());
+
             return null;
         }
-
 
         BetLeg betLeg = BetLeg.builder().betLegName("first")
                 .created(now()).modified(now())

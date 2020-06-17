@@ -7,6 +7,8 @@ import com.pulawskk.bettingsite.enums.ResultType;
 import com.pulawskk.bettingsite.enums.WalletTransactionType;
 import com.pulawskk.bettingsite.services.*;
 import com.pulawskk.bettingsite.utils.ResultUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.Objects;
 
 @Service
 public class SettlementServiceImpl implements SettlementService, ResultUtils {
+
+    private final Logger logger = LoggerFactory.getLogger(SettlementServiceImpl.class);
 
     private final BetService betService;
     private final BetLegService betLegService;
@@ -45,17 +49,17 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
             if(findAnyLoseBet.action(bets)) {
                betLeg.setResult(ResultType.LOSE);
-               System.out.println("betleg is lost");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetLegChecking, betLeg with id: " + betLeg.getId() + " is lost");
             }
 
             if(findAnyNullBet.action(bets)) {
-                System.out.println("betleg is still unresulted");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetLegChecking, betLeg with id: " + betLeg.getId() + " is still unresulted");
                 return;
             }
 
             if(findAllWinBets.action(bets)) {
                 betLeg.setResult(ResultType.WIN);
-                System.out.println("betleg is win");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetLegChecking, betLeg with id: " + betLeg.getId() + " is win");
             }
             betLegService.save(betLeg);
         });
@@ -75,11 +79,11 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
             if(isAnyLostBetLeg(betLegs)) {
                 betSlip.setResult(ResultType.LOSE);
                 betSlip.setBetSlipStatus(BetSlipStatus.RESULTED);
-                System.out.println("bet slip is lost");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetSlipChecking, betSlip with id: " + betSlip.getId() + " is lost");
             }
 
             if(isAnyUnresultedBetLeg(betLegs)) {
-                System.out.println("bet slip is still unresulted");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetSlipChecking, betSlip with id: " + betSlip.getId() + " is still unresulted");
                 return;
             }
 
@@ -89,7 +93,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
                 User user = betSlip.getUser();
                 BigDecimal winning = betSlip.getBetSlipWin();
                 walletService.updateBalance(winning.doubleValue(), user.getId(), WalletTransactionType.BET_WON);
-                System.out.println("bet slip is win");
+                logger.info("[" + getClass().getSimpleName() + "] method: runBetSlipChecking, betSlip with id: " + betSlip.getId() + " is win");
             }
             betSlipService.save(betSlip);
         });
@@ -113,7 +117,7 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
     @Override
     public void processResultingBets(String uniqueId) {
-        System.out.println("that event is going to be resulted: " + uniqueId);
+        logger.info("[" + getClass().getSimpleName() + "] method: processResultingBets, event with id: " + uniqueId + " is going to be resulted");
         List<Bet> bets = betService.findAllBetsByUniqueEventId(uniqueId);
         Game game = gameService.findGameById(uniqueId);
         String gameResult = eventResult1X2(game);
@@ -130,8 +134,11 @@ public class SettlementServiceImpl implements SettlementService, ResultUtils {
 
     @Scheduled(cron = "45 0/1 * * * ?")
     void scheduleRunning() {
-        System.out.println("start checking");
+        logger.info("[" + getClass().getSimpleName() + "] method: scheduleRunning, betSlips and betLegs started to be verify");
+        long start = System.currentTimeMillis();
         runBetLegChecking();
         runBetSlipChecking();
+        long end = System.currentTimeMillis();
+        logger.info("[" + getClass().getSimpleName() + "] method: scheduleRunning, checking lasts: " + (end-start) + "ms.");
     }
 }

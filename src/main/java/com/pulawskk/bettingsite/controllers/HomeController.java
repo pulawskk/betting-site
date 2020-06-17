@@ -3,6 +3,9 @@ package com.pulawskk.bettingsite.controllers;
 import com.pulawskk.bettingsite.entities.User;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.WalletService;
+import com.pulawskk.bettingsite.services.impl.BetServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+
+    private final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     private final UserService userService;
     private final WalletService walletService;
@@ -48,15 +53,16 @@ public class HomeController {
 
     @GetMapping(value = "/login")
     public String loginCheck() {
-        System.out.println("login -> " + userService.displayAuthName());
+        logger.info("[" + getClass().getSimpleName()
+                + "] method: loginCheck, logged in user: " + userService.displayAuthName());
         return "login";
     }
 
     @GetMapping(value = {"/logout"})
     public String logout(HttpSession session) {
         session.setAttribute("isLoggedIn", null);
-        System.out.println("sucessfully logged out!");
-        System.out.println("home -> " + userService.displayAuthName());
+        logger.info("[" + getClass().getSimpleName()
+                + "] method: logout, successfully logged out user: " + userService.displayAuthName());
         return "homeView";
     }
 }

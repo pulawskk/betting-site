@@ -3,6 +3,8 @@ package com.pulawskk.bettingsite.services.impl;
 import com.pulawskk.bettingsite.entities.Bet;
 import com.pulawskk.bettingsite.repositories.BetRepository;
 import com.pulawskk.bettingsite.services.BetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,17 +12,23 @@ import java.util.List;
 @Service
 public class BetServiceImpl implements BetService {
 
+    private final Logger logger = LoggerFactory.getLogger(BetServiceImpl.class);
+
     private final BetRepository betRepository;
 
     public BetServiceImpl(BetRepository betRepository) {
         this.betRepository = betRepository;
     }
 
-
     @Override
     public List<Bet> findAllPrematchBets() {
+        long start = System.currentTimeMillis();
         List<Bet> prematchBets = betRepository.findAllPrematchBets();
-        System.out.println("number of prematch bets: " + prematchBets.size());
+        long end = System.currentTimeMillis();
+
+        logger.info("[" + getClass().getSimpleName()
+                + "] method: findAllPrematchBets, number of prematch bets: "
+                + prematchBets.size() + " found in " + (end - start) + " ms.");
         return prematchBets;
     }
 

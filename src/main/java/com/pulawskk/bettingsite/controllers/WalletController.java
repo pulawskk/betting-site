@@ -1,6 +1,5 @@
 package com.pulawskk.bettingsite.controllers;
 
-import com.pulawskk.bettingsite.entities.Wallet;
 import com.pulawskk.bettingsite.entities.WalletAudit;
 import com.pulawskk.bettingsite.enums.WalletTransactionType;
 import com.pulawskk.bettingsite.models.CashInForm;
@@ -8,6 +7,8 @@ import com.pulawskk.bettingsite.models.CashOutForm;
 import com.pulawskk.bettingsite.services.UserService;
 import com.pulawskk.bettingsite.services.WalletAuditService;
 import com.pulawskk.bettingsite.services.WalletService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,6 +25,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/wallet")
 public class WalletController {
+
+    private final Logger logger = LoggerFactory.getLogger(WalletController.class);
 
     private final WalletService walletService;
     private final UserService userService;
@@ -53,10 +56,11 @@ public class WalletController {
         if (errors.hasErrors()) {
             return "cashInDecorated";
         }
-
-        System.out.println("Proccessing deposit: " + cashInForm.getAmount());
-        System.out.println("Proccessing deposit: " + cashInForm.getPaymentMethod());
-        walletService.updateBalance(cashInForm.getAmount(), userService.userLoggedIn().getId(), WalletTransactionType.DEPOSIT);
+        Long userId = userService.userLoggedIn().getId();
+        logger.info("[" + getClass().getSimpleName()
+                + "] method: cashInMoneyAction, processing deposit for user id: " + userId + "amount: "
+                + cashInForm.getAmount() + " with payment method: " + cashInForm.getPaymentMethod());
+        walletService.updateBalance(cashInForm.getAmount(), userId, WalletTransactionType.DEPOSIT);
         return "redirect:/mainBoard";
     }
 
@@ -71,10 +75,11 @@ public class WalletController {
         if (errors.hasErrors()) {
             return "cashOutDecorated";
         }
-
-        System.out.println("WITHDRAW process: " + cashOutForm.getBankAccount());
-        System.out.println("WITHDRAW process: " + cashOutForm.getAmount());
-        walletService.subtractBetPlaceStake(cashOutForm.getAmount(), userService.userLoggedIn().getId(), WalletTransactionType.WITHDRAW);
+        Long userId = userService.userLoggedIn().getId();
+        logger.info("[" + getClass().getSimpleName()
+                + "] method: cashOutMoneyAction, processing withdrawal for user id: " + userId
+                + "amount: " + cashOutForm.getAmount() + " for bank account number: " + cashOutForm.getBankAccount());
+        walletService.subtractBetPlaceStake(cashOutForm.getAmount(), userId, WalletTransactionType.WITHDRAW);
         return "redirect:/mainBoard";
     }
 
