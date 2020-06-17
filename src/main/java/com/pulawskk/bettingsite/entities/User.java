@@ -96,6 +96,10 @@ public class User {
         this.active = active;
     }
 
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
     public Wallet getWallet() {
         return wallet;
     }

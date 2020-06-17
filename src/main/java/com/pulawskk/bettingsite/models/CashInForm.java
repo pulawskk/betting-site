@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class CashInForm {
 
-    @NotNull(message = "You must select payment method!")
+    @NotBlank(message = "You must select payment method!")
     private String paymentMethod;
 
     @Min(value = 11, message = "Amount must be grater than 10")
