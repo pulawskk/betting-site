@@ -25,6 +25,7 @@ public class IncomingDataController {
         this.jmsHandleService = jmsHandleService;
     }
 
+    @CrossOrigin
     @PostMapping("/game")
     public String receiveGame(@RequestBody GameDto gameDto) {
         logger.info("[" + getClass().getSimpleName() + "] method: receiveGame, new game is coming with id: " + gameDto.getUniqueId());

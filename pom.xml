@@ -10,13 +10,13 @@
     </parent>
     <groupId>com.pulawskk</groupId>
     <artifactId>betting-site</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>betting-site</name>
     <description>Betting site imitation</description>
 
     <properties>
         <java.version>11</java.version>
-        <docker.image.prefix>pulawskk11</docker.image.prefix>
+        <docker.image.prefix>pulawskk</docker.image.prefix>
         <docker.image.name>bettingsite</docker.image.name>
     </properties>
 

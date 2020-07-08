@@ -17,7 +17,7 @@ services:
 
   bs:
     container_name: justbsapp
-    image: pulawskk11/bettingsite:latest
+    image: pulawskk/bettingsite:latest
     restart: always
     ports:
       - '8087:8085'
