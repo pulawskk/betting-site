@@ -17,7 +17,7 @@ services:
 
   bs:
     container_name: bsapp
-    image: pulawskk/bettingsite:latest
+    image: pulawskk/bettingsite:0.0.1
     restart: always
     ports:
       - '8087:8085'
@@ -47,7 +47,7 @@ services:
 
   seapp:
     container_name: seaapp
-    image: pulawskk/sportseventapi:latest
+    image: pulawskk/sportseventapi:0.0.1
     restart: always
     ports:
       - '8080:8080'
